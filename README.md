@@ -100,6 +100,8 @@ Pages 的啟用、帳戶方案與 repo 可見性依自己的 GitHub 帳戶為準
 
 前往 **Actions → LowFly scan → Run workflow**，先使用 `mock` 看格式，再選 `test-telegram` 驗證真實推播，最後選 `normal`。
 
+若透過已連接的 GitHub 工具操作，也可以由 repo 擁有者建立標題以 `[LowFly scan]` 開頭的 Issue，啟動一次 `normal` 正式掃描；重新開啟同一 Issue 可重試。其他使用者建立的 Issue 不會啟動掃描，Issue 內文不會傳入 shell。這個入口同樣先檢查四個 Secrets，缺少時明確失敗並保留紀錄，不會假裝取得票價。
+
 | mode | 動作 | 寫入正式資料 |
 | --- | --- | --- |
 | `normal` | 正式掃描與依門檻通知 | 是 |
