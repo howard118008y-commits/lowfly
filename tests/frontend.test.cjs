@@ -101,3 +101,50 @@ test("Service Worker 首次離線沒有資料時回 503", async () => {
   const h = workerHarness();h.setOffline();
   assert.equal((await h.request("https://example.test/repo/data/pairs.json")).status,503);
 });
+
+async function appHarness(overrides = {}, offline = false) {
+  const html = fs.readFileSync(path.join(__dirname, '../docs/index.html'), 'utf8');
+  const makeElement = () => ({innerHTML:'', textContent:'', hidden:false, checked:false, dataset:{}, attributes:{},
+    classList:{add(){},remove(){},toggle(){}}, setAttribute(k,v){this.attributes[k]=v;}, removeAttribute(k){delete this.attributes[k];},
+    addEventListener(){}, querySelectorAll(){return [];}, showModal(){}, close(){}});
+  const nodes = Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(m=>[m[1],makeElement()]));
+  const payload = Object.fromEntries(['summary','pairs','history','alerts'].map(name=>[name,JSON.parse(fs.readFileSync(path.join(__dirname,`../docs/data/${name}.json`)))]));
+  Object.assign(payload.summary, overrides);
+  const document = {getElementById(id){assert.ok(nodes[id],`缺少頁面元素 ${id}`);return nodes[id];},
+    querySelectorAll(selector){return selector === '.view' ? ['home','calendar','records','settings'].map(id=>Object.assign(nodes[id],{id})) : [];}};
+  const context = {document,window:{LowFly:U,LOWFLY_CONFIG:{owner:'',repo:'',branch:'main'},addEventListener(){}},
+    location:{hash:'',hostname:'example.test',pathname:'/lowfly/',href:'https://example.test/lowfly/'},navigator:{onLine:!offline},
+    localStorage:{setItem(){},getItem(){return null;}},setInterval(){},AbortSignal,URL,console,
+    fetch:async url=>{if(offline)throw Error('offline');return {ok:true,headers:{get(){return null;}},json:async()=>payload[url.match(/(\w+)\.json/)[1]]};}};
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../docs/app.js'),'utf8'),context);
+  await new Promise(resolve=>setImmediate(resolve));
+  return nodes;
+}
+
+test('未驗證快取不會成為首頁已驗證最低價', async () => {
+  const cache={pair_key:'2026-11-02_2026-11-05',outbound:'2026-11-02',inbound:'2026-11-05',nights:3,price:999,ratio:.2,verified:false,airline:'測試航空'};
+  const nodes=await appHarness({cheapest_verified:null,deals:[cache]});
+  assert.match(nodes.cheapest.innerHTML,/等待第一筆票價/);
+  assert.doesNotMatch(nodes.cheapest.innerHTML,/999|Google 已驗證/);
+  assert.match(nodes.deals.innerHTML,/快取 · 待確認/);
+  assert.equal(nodes['deal-section'].hidden,false);
+});
+
+test('最低價不重複，其他好價分批展開且完整 87 組日曆可用', async () => {
+  const fare=i=>({pair_key:`2026-11-${10+i}_2026-11-${13+i}`,outbound:`2026-11-${10+i}`,inbound:`2026-11-${13+i}`,nights:3,price:3980+i,ratio:.46,verified:true,airline:'測試航空',google_flights_url:'https://www.google.com/travel/flights'});
+  const nodes=await appHarness({cheapest_verified:fare(0),deals:[0,1,2,3,4].map(fare)});
+  assert.match(nodes.cheapest.innerHTML,/3,980/);
+  assert.equal((nodes.deals.innerHTML.match(/<article/g)||[]).length,2);
+  assert.equal((nodes['remaining-deals'].innerHTML.match(/<article/g)||[]).length,2);
+  assert.doesNotMatch(nodes.deals.innerHTML,/3,980/);
+  assert.equal(nodes['more-deals'].hidden,false);
+  assert.equal((nodes.heatmap.innerHTML.match(/data-pair=/g)||[]).length,87);
+  assert.match(nodes.heatmap.innerHTML,/<th scope="col">出發日<\/th><th scope="col">3 晚/);
+});
+
+test('首次離線無資料時在主要票價卡顯示可恢復的錯誤', async () => {
+  const nodes=await appHarness({},true);
+  assert.match(nodes.cheapest.innerHTML,/暫時無法讀取票價/);
+  assert.match(nodes.cheapest.innerHTML,/重新整理/);
+  assert.equal(nodes.refresh.disabled,false);
+});

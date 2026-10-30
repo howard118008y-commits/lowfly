@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#173f35">
+  <meta name="theme-color" content="#56463b">
   <meta name="description" content="桃園⇄澳門直飛來回機票雷達：好價格，低飛就看見。">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -20,52 +20,57 @@
 <body>
   <div class="app-shell">
     <header class="app-header">
-      <a href="#home" class="brand" aria-label="低飛 LowFly 首頁"><img src="./icons/icon.svg" width="42" height="42" alt=""><span>低飛 <small>LowFly</small></span></a>
-      <button id="refresh" class="icon-button" aria-label="重新載入資料" title="重新載入資料">↻</button>
+      <a href="#home" class="brand" aria-label="低飛 LowFly 首頁"><img src="./icons/icon.svg" width="38" height="38" alt=""><span>低飛 <small>LowFly</small></span></a>
+      <button id="refresh" class="icon-button" aria-label="重新載入資料" title="重新載入資料"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6.2 7a7 7 0 0 1 11.5-1L20 9M4 15l2.3 3A7 7 0 0 0 18 17"/></svg></button>
     </header>
     <div id="connection" class="connection" role="status" aria-live="polite">正在讀取航線資料…</div>
     <main id="main" tabindex="-1">
       <section id="home" class="view" aria-labelledby="home-title">
-        <div class="page-heading"><p class="eyebrow">你的直飛價格雷達</p><h1 id="home-title">好價格，低飛就看見。</h1><p id="route-label" class="muted">桃園 TPE ⇄ 澳門 MFM · 直飛來回 · 1 位成人</p></div>
-        <div id="baseline-card" class="baseline-card skeleton">正在取得基準價…</div>
-        <div class="section-heading"><h2>目前好價</h2><span id="deal-count" class="subtle-label"></span></div>
-        <p id="deal-explainer" class="muted small">Google 驗證價優先；快取價格會另外標示。</p>
-        <div id="deals" class="deal-list"></div>
-        <div id="cheapest"></div>
-        <div class="section-heading"><h2>掃描狀態</h2><span class="subtle-label">每天 4 次</span></div>
-        <div id="budget" class="budget-card"></div>
+        <div class="page-heading home-heading"><h1 id="home-title">好價，輕鬆出發。</h1></div>
+        <article class="fare-card" aria-label="航線與最低票價">
+          <div id="route-label" class="route-band" aria-label="桃園 TPE 往返澳門 MFM，直飛來回，1 位成人">
+            <div><span>桃園</span><strong>TPE</strong></div>
+            <div class="route-journey"><span>直飛來回</span><svg viewBox="0 0 120 24" aria-hidden="true"><path d="M2 12h40m36 0h40"/><path d="m48 12 23-8-7 8 7 8-23-8Z"/></svg><small>1 位成人</small></div>
+            <div><span>澳門</span><strong>MFM</strong></div>
+          </div>
+          <div id="cheapest" class="fare-body skeleton" aria-live="polite">正在查看票價…</div>
+        </article>
         <p id="updated" class="updated" aria-live="polite"></p>
+        <section id="deal-section" aria-labelledby="deals-title" hidden>
+          <div class="section-heading"><h2 id="deals-title">其他好價</h2><span id="deal-count" class="subtle-label"></span></div>
+          <div id="deals" class="deal-list"></div>
+          <details id="more-deals" class="disclosure" hidden><summary id="more-deals-label">更多日期</summary><div id="remaining-deals" class="deal-list"></div></details>
+        </section>
+        <p class="home-note">每天替你看價，好價用 Telegram 提醒。</p>
       </section>
       <section id="calendar" class="view" aria-labelledby="calendar-title" hidden>
-        <div class="page-heading"><p class="eyebrow">找到適合你的出發日</p><h1 id="calendar-title">價格日曆</h1><p class="muted">橫向滑動看日期，點一格看價格紀錄。</p></div>
-        <label class="filter"><input id="deals-only" type="checkbox">只看 ≤70% 好價</label>
-        <div id="heatmap" class="heatmap-wrap" role="region" aria-label="機票價格熱力圖，可橫向捲動" tabindex="0"></div>
-        <div class="legend"><span class="r50">≤50%</span><span class="r70">≤70%</span><span class="r85">≤85%</span><span class="r100">≤100%</span><span class="rhigh">&gt;100%</span><span class="rnone">無資料</span></div>
-        <p class="muted small">✓ Google 已驗證　·　其餘為 Aviasales 快取。顏色依目前基準價計算。</p>
+        <div class="page-heading"><h1 id="calendar-title">選個出發日</h1><p class="muted">選晚數，看來回票價。</p></div>
+        <label class="filter"><input id="deals-only" type="checkbox">只看好價</label>
+        <div id="heatmap" class="heatmap-wrap" role="region" aria-label="來回票價日曆，依出發日與住宿晚數排列" tabindex="0"></div>
+        <details class="disclosure calendar-help"><summary>怎麼看票價？</summary><p>✓ 已經 Google 驗證；「快取」票價仍待確認。點一格可看詳情與歷史。</p><div class="legend"><span class="r50">≤50%</span><span class="r70">≤70%</span><span class="r85">≤85%</span><span class="r100">≤100%</span><span class="rhigh">&gt;100%</span><span class="rnone">無資料</span></div><p>百分比為目前基準價的比例；「只看好價」保留 ≤70% 的票價。</p></details>
       </section>
       <section id="records" class="view" aria-labelledby="records-title" hidden>
-        <div class="page-heading"><p class="eyebrow">每一次提醒，都留下依據</p><h1 id="records-title">通知紀錄</h1><p class="muted">回頭看，當時的好價是不是真的划算。</p></div>
+        <div class="page-heading"><h1 id="records-title">好價提醒</h1><p class="muted">留住每次值得出發的價格。</p></div>
         <div id="record-stats" class="record-stats"></div>
-        <p class="muted small">低點比例＝保留紀錄中判為「低點」的筆數 ÷ 保留紀錄總數；價格變動不代表購票結果。</p>
         <div id="alert-list" class="deal-list"></div>
+        <details id="record-help" class="disclosure" hidden><summary>關於提醒紀錄</summary><p>低點比例＝保留紀錄中判為「低點」的筆數 ÷ 保留紀錄總數；價格變動不代表購票結果。紀錄保留至出發後 90 天。</p></details>
       </section>
       <section id="settings" class="view" aria-labelledby="settings-title" hidden>
-        <div class="page-heading"><p class="eyebrow">保持簡單，自動掃描</p><h1 id="settings-title">設定</h1><p class="muted">此處為唯讀資料，設定由 GitHub 管理。</p></div>
-        <div id="settings-values" class="settings-card"></div>
-        <a id="edit-config" class="primary-button" target="_blank" rel="noopener noreferrer">在 GitHub 編輯 config.yaml ↗</a>
-        <p id="config-note" class="muted small"></p>
-        <button id="clear-cache" class="secondary-button">清除離線快取</button>
-        <p id="cache-status" class="muted small" role="status"></p>
-        <div class="install-note"><h2>把低飛放進口袋</h2><p>iPhone：用 Safari 開啟，點「分享」→「加入主畫面」。</p><p>Android：用 Chrome 開啟，點選單 →「安裝應用程式」。</p></div>
+        <div class="page-heading"><h1 id="settings-title">更多</h1><p class="muted">讓好價，自動來找你。</p></div>
+        <div id="settings-overview" class="settings-overview"></div>
+        <details class="disclosure"><summary>價格參考與掃描狀態</summary><div id="baseline-card" class="baseline-card">正在取得價格參考…</div><div id="budget" class="budget-card"></div><p id="scan-time" class="muted small"></p></details>
+        <details class="disclosure"><summary>掃描與通知規則</summary><div id="settings-values" class="settings-card"></div><a id="edit-config" class="primary-button" target="_blank" rel="noopener noreferrer">調整規則 ↗</a><p id="config-note" class="muted small"></p></details>
+        <details class="disclosure"><summary>加入手機主畫面</summary><div class="install-note"><p>iPhone：用 Safari 開啟，點「分享」→「加入主畫面」。</p><p>Android：用 Chrome 開啟，點選單 →「安裝應用程式」。</p></div></details>
+        <details class="disclosure"><summary>離線資料</summary><p>離線時顯示上次儲存的票價。</p><button id="clear-cache" class="secondary-button">清除離線快取</button><p id="cache-status" class="muted small" role="status"></p></details>
       </section>
     </main>
     <footer class="app-footer">低飛 LowFly · 只找好價，不代訂機票</footer>
   </div>
   <nav class="tab-bar" aria-label="主要導覽">
-    <a href="#home" data-tab="home" aria-current="page"><span aria-hidden="true">⌂</span>首頁</a>
-    <a href="#calendar" data-tab="calendar"><span aria-hidden="true">▦</span>日曆</a>
-    <a href="#records" data-tab="records"><span aria-hidden="true">◷</span>紀錄</a>
-    <a href="#settings" data-tab="settings"><span aria-hidden="true">⚙</span>設定</a>
+    <a href="#home" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10H3V10Zm6 10v-7h6v7"/></svg>好價</a>
+    <a href="#calendar" data-tab="calendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18m-13 4h2m4 0h2m-8 4h2m4 0h2"/></svg>日曆</a>
+    <a href="#records" data-tab="records"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Zm4 12h4"/></svg>提醒</a>
+    <a href="#settings" data-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>更多</a>
   </nav>
   <dialog id="pair-dialog" aria-labelledby="pair-title">
     <div class="dialog-handle" aria-hidden="true"></div>
