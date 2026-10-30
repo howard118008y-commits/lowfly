@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#173f35">
+  <meta name="description" content="桃園⇄澳門直飛來回機票雷達：好價格，低飛就看見。">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="低飛">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <title>低飛 LowFly｜機票雷達</title>
+  <script defer src="./config.js"></script>
+  <script defer src="./utils.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <a href="#home" class="brand" aria-label="低飛 LowFly 首頁"><img src="./icons/icon.svg" width="42" height="42" alt=""><span>低飛 <small>LowFly</small></span></a>
+      <button id="refresh" class="icon-button" aria-label="重新載入資料" title="重新載入資料">↻</button>
+    </header>
+    <div id="connection" class="connection" role="status" aria-live="polite">正在讀取航線資料…</div>
+    <main id="main" tabindex="-1">
+      <section id="home" class="view" aria-labelledby="home-title">
+        <div class="page-heading"><p class="eyebrow">你的直飛價格雷達</p><h1 id="home-title">好價格，低飛就看見。</h1><p id="route-label" class="muted">桃園 TPE ⇄ 澳門 MFM · 直飛來回 · 1 位成人</p></div>
+        <div id="baseline-card" class="baseline-card skeleton">正在取得基準價…</div>
+        <div class="section-heading"><h2>目前好價</h2><span id="deal-count" class="subtle-label"></span></div>
+        <p id="deal-explainer" class="muted small">Google 驗證價優先；快取價格會另外標示。</p>
+        <div id="deals" class="deal-list"></div>
+        <div id="cheapest"></div>
+        <div class="section-heading"><h2>掃描狀態</h2><span class="subtle-label">每天 4 次</span></div>
+        <div id="budget" class="budget-card"></div>
+        <p id="updated" class="updated" aria-live="polite"></p>
+      </section>
+      <section id="calendar" class="view" aria-labelledby="calendar-title" hidden>
+        <div class="page-heading"><p class="eyebrow">找到適合你的出發日</p><h1 id="calendar-title">價格日曆</h1><p class="muted">橫向滑動看日期，點一格看價格紀錄。</p></div>
+        <label class="filter"><input id="deals-only" type="checkbox">只看 ≤70% 好價</label>
+        <div id="heatmap" class="heatmap-wrap" role="region" aria-label="機票價格熱力圖，可橫向捲動" tabindex="0"></div>
+        <div class="legend"><span class="r50">≤50%</span><span class="r70">≤70%</span><span class="r85">≤85%</span><span class="r100">≤100%</span><span class="rhigh">&gt;100%</span><span class="rnone">無資料</span></div>
+        <p class="muted small">✓ Google 已驗證　·　其餘為 Aviasales 快取。顏色依目前基準價計算。</p>
+      </section>
+      <section id="records" class="view" aria-labelledby="records-title" hidden>
+        <div class="page-heading"><p class="eyebrow">每一次提醒，都留下依據</p><h1 id="records-title">通知紀錄</h1><p class="muted">回頭看，當時的好價是不是真的划算。</p></div>
+        <div id="record-stats" class="record-stats"></div>
+        <p class="muted small">低點比例＝保留紀錄中判為「低點」的筆數 ÷ 保留紀錄總數；價格變動不代表購票結果。</p>
+        <div id="alert-list" class="deal-list"></div>
+      </section>
+      <section id="settings" class="view" aria-labelledby="settings-title" hidden>
+        <div class="page-heading"><p class="eyebrow">保持簡單，自動掃描</p><h1 id="settings-title">設定</h1><p class="muted">此處為唯讀資料，設定由 GitHub 管理。</p></div>
+        <div id="settings-values" class="settings-card"></div>
+        <a id="edit-config" class="primary-button" target="_blank" rel="noopener noreferrer">在 GitHub 編輯 config.yaml ↗</a>
+        <p id="config-note" class="muted small"></p>
+        <button id="clear-cache" class="secondary-button">清除離線快取</button>
+        <p id="cache-status" class="muted small" role="status"></p>
+        <div class="install-note"><h2>把低飛放進口袋</h2><p>iPhone：用 Safari 開啟，點「分享」→「加入主畫面」。</p><p>Android：用 Chrome 開啟，點選單 →「安裝應用程式」。</p></div>
+      </section>
+    </main>
+    <footer class="app-footer">低飛 LowFly · 只找好價，不代訂機票</footer>
+  </div>
+  <nav class="tab-bar" aria-label="主要導覽">
+    <a href="#home" data-tab="home" aria-current="page"><span aria-hidden="true">⌂</span>首頁</a>
+    <a href="#calendar" data-tab="calendar"><span aria-hidden="true">▦</span>日曆</a>
+    <a href="#records" data-tab="records"><span aria-hidden="true">◷</span>紀錄</a>
+    <a href="#settings" data-tab="settings"><span aria-hidden="true">⚙</span>設定</a>
+  </nav>
+  <dialog id="pair-dialog" aria-labelledby="pair-title">
+    <div class="dialog-handle" aria-hidden="true"></div>
+    <button id="close-dialog" class="icon-button close-dialog" aria-label="關閉詳情">×</button>
+    <div id="pair-detail"></div>
+  </dialog>
+  <noscript><p class="empty">請開啟 JavaScript 以查看價格與離線資料。</p></noscript>
+</body>
+</html>

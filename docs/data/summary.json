@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-10-30T07:17:37+08:00",
+  "app": "低飛 LowFly",
+  "route": {
+    "origin": "TPE",
+    "destination": "MFM",
+    "label": "桃園 ⇄ 澳門",
+    "direct_only": true,
+    "adults": 1
+  },
+  "currency": "TWD",
+  "timezone": "Asia/Taipei",
+  "window": {
+    "days_ahead": 30,
+    "min_lead_days": 2,
+    "stay_nights": [
+      3,
+      4,
+      5
+    ]
+  },
+  "thresholds": {
+    "instant": 0.5,
+    "digest": 0.7
+  },
+  "baseline": {
+    "value": null,
+    "google_low": null,
+    "google_high": null,
+    "n_ranges": 0,
+    "lookback_days": 45
+  },
+  "budget": {
+    "serpapi_used_month": 0,
+    "serpapi_quota": 250,
+    "serpapi_used_day": 0,
+    "serpapi_daily_budget": 8,
+    "monthly_safety": 10,
+    "reserve_for_candidates": 3,
+    "reverify_hours": 12,
+    "tp_pairs": 0
+  },
+  "deals": [],
+  "cheapest_verified": null,
+  "stats": {
+    "alerts_sent": 0,
+    "digests_sent": 0,
+    "runs": 0
+  },
+  "schedule": {
+    "runs_per_day": 4
+  },
+  "dedupe": {
+    "min_drop_ratio": 0.03,
+    "cooldown_hours": 48
+  },
+  "digest": {
+    "hour_local": 9,
+    "top_n": 5
+  },
+  "demo": false
+}

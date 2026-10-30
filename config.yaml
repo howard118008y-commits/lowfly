@@ -1,0 +1,42 @@
+app_name: "低飛 LowFly"
+timezone: "Asia/Taipei"
+currency: "TWD"
+route:
+  origin: "TPE"
+  destination: "MFM"
+  label: "桃園 ⇄ 澳門"
+  direct_only: true
+  adults: 1
+window:
+  days_ahead: 30
+  min_lead_days: 2
+  stay_nights: [3, 4, 5]
+thresholds:
+  instant: 0.50
+  digest: 0.70
+baseline:
+  google_stat: "mid"
+  lookback_days: 45
+  min_observations: 1
+  weights:
+    google_typical: 1.0
+    own_history: 0.0
+    social: 0.0
+sources:
+  travelpayouts:
+    enabled: true
+  serpapi:
+    enabled: true
+    monthly_quota: 250
+    monthly_safety: 10
+    daily_budget: 8
+    reserve_for_candidates: 3
+    reverify_hours: 12
+schedule:
+  runs_per_day: 4
+digest:
+  hour_local: 9
+  top_n: 5
+dedupe:
+  min_drop_ratio: 0.03
+  cooldown_hours: 48
