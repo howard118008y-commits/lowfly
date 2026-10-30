@@ -1,6 +1,8 @@
 """驗收以外的額度邊界、失敗備援、歷史與 CLI 防回歸。"""
 import copy
 import json
+import os
+import subprocess
 from datetime import timedelta
 from pathlib import Path
 from unittest.mock import Mock
@@ -19,6 +21,28 @@ from lowfly.sources.travelpayouts import fetch_month
 from lowfly.state import default_state, load_state, save_state
 
 from conftest import KEY, KEY2, NOW, make_serp, make_tp, state_with_baseline
+
+
+@pytest.mark.parametrize("mode,provided,missing", [
+    ("mock", (), ()),
+    ("test-telegram", ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"), ()),
+    ("dry-run", ("SERPAPI_API_KEY", "TRAVELPAYOUTS_TOKEN"), ()),
+    ("normal", ("SERPAPI_API_KEY", "TRAVELPAYOUTS_TOKEN", "TELEGRAM_BOT_TOKEN"), ("TELEGRAM_CHAT_ID",)),
+    ("normal", ("SERPAPI_API_KEY", "TRAVELPAYOUTS_TOKEN", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"), ()),
+    ("force-digest", (), ("SERPAPI_API_KEY", "TRAVELPAYOUTS_TOKEN", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID")),
+])
+def test_workflow_missing_secrets_fail_before_scanning(mode, provided, missing):
+    workflow = yaml.safe_load((Path(__file__).resolve().parents[1] / ".github/workflows/scan.yml").read_text())
+    first = workflow["jobs"]["scan"]["steps"][0]
+    result = subprocess.run(["bash", "-c", first["run"]],
+                            env={"PATH": os.defpath, "MODE": mode, **{key: "non-secret-test-value" for key in provided}},
+                            capture_output=True, text=True, timeout=5)
+    assert result.returncode == (1 if missing else 0)
+    for key in missing:
+        assert key in result.stdout
+    for key in provided:
+        assert key not in result.stdout
+    assert "non-secret-test-value" not in result.stdout + result.stderr
 
 
 def test_round_half_away_from_zero():

@@ -74,7 +74,9 @@ git push -u origin main
 
 金鑰只填 Secrets；不要放進 `config.yaml`、`docs/config.js`、Issue、截圖或公開 JSON。請先與既有 bot 開始對話，再填入正確 chat ID。
 
-本機正式掃描可由自己的 shell 設定同名環境變數；本專案不會自動讀 `.env`。缺少任一來源金鑰就警告並跳過該來源；缺少 Telegram 設定只預覽文字與產生圖片，不把預覽標為已送達。
+本機正式掃描可由自己的 shell 設定同名環境變數；本專案不會自動讀 `.env`。本機缺少任一來源金鑰會警告並跳過該來源；缺少 Telegram 設定只預覽文字與產生圖片，不把預覽標為已送達。
+
+雲端 Actions 會先檢查該模式需要的 Secrets：正式掃描／強制摘要需要四個，Telegram 測試需要 Telegram 兩個，dry-run 需要兩個價格來源，mock 不需金鑰。缺少時只列出缺少的名稱並明確失敗，不啟動掃描、不寫入正式資料，避免把略過來源的執行誤認為成功。
 
 ## GitHub Pages 設定
 

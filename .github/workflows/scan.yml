@@ -31,6 +31,30 @@ jobs:
     env:
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
+      - name: 檢查本次模式所需 Secrets
+        env:
+          MODE: ${{ inputs.mode || 'normal' }}
+          SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+          TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        shell: bash
+        run: |
+          case "$MODE" in
+            mock) required=() ;;
+            test-telegram) required=(TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID) ;;
+            dry-run) required=(SERPAPI_API_KEY TRAVELPAYOUTS_TOKEN) ;;
+            normal|force-digest) required=(SERPAPI_API_KEY TRAVELPAYOUTS_TOKEN TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID) ;;
+            *) echo "不支援的執行模式" >&2; exit 2 ;;
+          esac
+          missing=0
+          for secret_name in "${required[@]}"; do
+            if [[ -z "${!secret_name:-}" ]]; then
+              echo "::error title=Missing repository Secret::${secret_name} 尚未設定；本次不執行掃描，也不更新正式資料。"
+              missing=1
+            fi
+          done
+          [[ "$missing" -eq 0 ]]
       - uses: actions/checkout@v4
         with:
           ref: main
