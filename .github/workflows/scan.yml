@@ -26,20 +26,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  scan:
+  # 先檢查 Secrets：排程觸發時若缺金鑰就「跳過」（黃色警告，不寄失敗信）；
+  # 手動觸發或 issue 觸發時缺金鑰仍直接失敗，讓人一眼看到。
+  preflight:
     if: >-
       github.ref == 'refs/heads/main' &&
       (github.event_name != 'issues' ||
        (github.actor == github.repository_owner &&
         startsWith(github.event.issue.title, '[LowFly scan]')))
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    env:
-      PYTHONDONTWRITEBYTECODE: "1"
+    timeout-minutes: 2
+    outputs:
+      ready: ${{ steps.secrets.outputs.ready }}
     steps:
       - name: 檢查本次模式所需 Secrets
+        id: secrets
         env:
           MODE: ${{ inputs.mode || 'normal' }}
+          EVENT: ${{ github.event_name }}
           SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
           TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -53,14 +57,39 @@ jobs:
             normal|force-digest) required=(SERPAPI_API_KEY TRAVELPAYOUTS_TOKEN TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID) ;;
             *) echo "不支援的執行模式" >&2; exit 2 ;;
           esac
-          missing=0
+          missing=()
           for secret_name in "${required[@]}"; do
-            if [[ -z "${!secret_name:-}" ]]; then
-              echo "::error title=Missing repository Secret::${secret_name} 尚未設定；本次不執行掃描，也不更新正式資料。"
-              missing=1
-            fi
+            if [[ -z "${!secret_name:-}" ]]; then missing+=("$secret_name"); fi
           done
-          [[ "$missing" -eq 0 ]]
+          if [[ ${#missing[@]} -eq 0 ]]; then
+            echo "ready=true" >> "${GITHUB_OUTPUT:-/dev/null}"
+            exit 0
+          fi
+          echo "ready=false" >> "${GITHUB_OUTPUT:-/dev/null}"
+          {
+            echo "### LowFly：缺少 Secrets，本次未掃描"
+            echo "尚未設定：\`${missing[*]}\`"
+            echo "到 Settings → Secrets and variables → Actions → New repository secret 補上即可恢復。"
+          } >> "${GITHUB_STEP_SUMMARY:-/dev/null}"
+          if [[ "$EVENT" == "schedule" ]]; then
+            for n in "${missing[@]}"; do
+              echo "::warning title=Missing repository Secret::${n} 尚未設定；排程本次跳過，不掃描、不更新正式資料。"
+            done
+            exit 0
+          fi
+          for n in "${missing[@]}"; do
+            echo "::error title=Missing repository Secret::${n} 尚未設定；本次不執行掃描，也不更新正式資料。"
+          done
+          exit 1
+
+  scan:
+    needs: preflight
+    if: needs.preflight.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
       - uses: actions/checkout@v4
         with:
           ref: main
@@ -110,12 +139,12 @@ jobs:
           git config user.email "lowfly-bot@users.noreply.github.com"
           git add data/ docs/data/
           if git diff --cached --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "changed=false" >> "${GITHUB_OUTPUT:-/dev/null}"
           else
             git commit -m "chore(state): scan $(date -u +'%Y-%m-%dT%H:%MZ') [skip ci]"
             git pull --rebase --autostash origin main
             git push origin HEAD:main
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "changed=true" >> "${GITHUB_OUTPUT:-/dev/null}"
           fi
       - name: 請求 main／docs 的 Pages 建置
         if: steps.persist.outputs.changed == 'true'

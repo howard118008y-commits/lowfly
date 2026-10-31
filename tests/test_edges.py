@@ -33,7 +33,7 @@ from conftest import KEY, KEY2, NOW, make_serp, make_tp, state_with_baseline
 ])
 def test_workflow_missing_secrets_fail_before_scanning(mode, provided, missing):
     workflow = yaml.safe_load((Path(__file__).resolve().parents[1] / ".github/workflows/scan.yml").read_text())
-    first = workflow["jobs"]["scan"]["steps"][0]
+    first = workflow["jobs"]["preflight"]["steps"][0]
     result = subprocess.run(["bash", "-c", first["run"]],
                             env={"PATH": os.defpath, "MODE": mode, **{key: "non-secret-test-value" for key in provided}},
                             capture_output=True, text=True, timeout=5)
@@ -43,6 +43,19 @@ def test_workflow_missing_secrets_fail_before_scanning(mode, provided, missing):
     for key in provided:
         assert key not in result.stdout
     assert "non-secret-test-value" not in result.stdout + result.stderr
+
+
+def test_workflow_schedule_skips_quietly_when_secrets_missing():
+    """排程缺金鑰時只跳過（exit 0＋warning），不讓整個 run 變紅、每天寄失敗信。"""
+    workflow = yaml.safe_load((Path(__file__).resolve().parents[1] / ".github/workflows/scan.yml").read_text())
+    first = workflow["jobs"]["preflight"]["steps"][0]
+    result = subprocess.run(["bash", "-e", "-o", "pipefail", "-c", first["run"]],
+                            env={"PATH": os.defpath, "MODE": "normal", "EVENT": "schedule"},
+                            capture_output=True, text=True, timeout=5)
+    assert result.returncode == 0
+    assert "::warning" in result.stdout and "::error" not in result.stdout
+    assert workflow["jobs"]["scan"]["needs"] == "preflight"
+    assert "needs.preflight.outputs.ready == 'true'" in workflow["jobs"]["scan"]["if"]
 
 
 def test_round_half_away_from_zero():
