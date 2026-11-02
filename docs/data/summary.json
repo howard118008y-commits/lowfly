@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T17:31:18+08:00",
+  "generated_at": "2026-11-02T22:04:20+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -24,6 +24,11 @@
         "source": null,
         "samples": 5,
         "min_samples": 15
+      },
+      "average": {
+        "value": 7728,
+        "samples": 5,
+        "days": 30
       },
       "deals": [],
       "cheapest_verified": null,
@@ -60,63 +65,6 @@
       }
     },
     {
-      "id": "TYO",
-      "label": "桃園 ⇄ 東京",
-      "origin": "TPE",
-      "destination": "TYO",
-      "direct_only": true,
-      "adults": 1,
-      "stay_nights": [
-        4,
-        5,
-        6
-      ],
-      "color": "#23468F",
-      "baseline": {
-        "value": null,
-        "google_low": null,
-        "google_high": null,
-        "n_ranges": 0,
-        "lookback_days": 45,
-        "source": null,
-        "samples": 11,
-        "min_samples": 15
-      },
-      "deals": [],
-      "cheapest_verified": null,
-      "cheapest_cached": {
-        "pair_key": "TYO:2026-11-27_2026-12-01",
-        "route_id": "TYO",
-        "outbound": "2026-11-27",
-        "inbound": "2026-12-01",
-        "nights": 4,
-        "price": 9709.0,
-        "source": "travelpayouts",
-        "total": 9709.0,
-        "fare": 7829.0,
-        "bag_fee": 1880.0,
-        "bag_estimated": false,
-        "ratio": null,
-        "airline": "酷航",
-        "flight_no": "TR 874",
-        "depart_time": "14:25",
-        "arrive_time": "18:30",
-        "return_depart_time": "22:25",
-        "origin_airport": "TPE",
-        "destination_airport": "NRT",
-        "duration_to": 185,
-        "duration_back": 245,
-        "airline_code": "TR",
-        "verified": false,
-        "checked_at": "2026-11-02T17:31:18+08:00",
-        "price_level": null,
-        "tp_price": 9709.0,
-        "tp_at": "2026-11-02T17:31:18+08:00",
-        "url": "https://www.aviasales.com/search/TPE2711TYO01121?t=GK17957895001795804200000185TPENRT17961639001796175000000245NRTTPE_18b4d387d89d3bb40cf25941500c7953_19273&search_date=01112026&expected_price_uuid=01a19486-b5f9-8040-2e3a-76c003558430&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=vEbqiSUN9xAI8eKCEWR8oA&expected_price_source=share&expected_price_currency=twd&expected_price=7829",
-        "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+TYO+2026-11-27+return+2026-12-01+nonstop+1+adult&curr=TWD&hl=zh-TW"
-      }
-    },
-    {
       "id": "MFM",
       "label": "桃園 ⇄ 澳門",
       "origin": "TPE",
@@ -138,6 +86,11 @@
         "source": null,
         "samples": 2,
         "min_samples": 15
+      },
+      "average": {
+        "value": 6596,
+        "samples": 2,
+        "days": 30
       },
       "deals": [],
       "cheapest_verified": null,
@@ -171,6 +124,68 @@
         "tp_at": "2026-11-02T17:31:18+08:00",
         "url": "https://www.aviasales.com/search/TPE1211MFM16111?t=NX17945187001794525900000120TPEMFM17948160001794821700000095MFMTPE_4bde55a353db3011e55a000b869b517c_15727&search_date=31102026&expected_price_uuid=01a1932c-aa9a-8040-2dd2-6d43373104b5&static_fare_key=TY%7CP0%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=n7CHcTL7tW6KWN5o2zx-kQ&expected_price_source=share&expected_price_currency=twd&expected_price=6389",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+MFM+2026-11-12+return+2026-11-16+nonstop+1+adult&curr=TWD&hl=zh-TW"
+      }
+    },
+    {
+      "id": "TYO",
+      "label": "桃園 ⇄ 東京",
+      "origin": "TPE",
+      "destination": "TYO",
+      "direct_only": true,
+      "adults": 1,
+      "stay_nights": [
+        4,
+        5,
+        6
+      ],
+      "color": "#23468F",
+      "baseline": {
+        "value": null,
+        "google_low": null,
+        "google_high": null,
+        "n_ranges": 0,
+        "lookback_days": 45,
+        "source": null,
+        "samples": 11,
+        "min_samples": 15
+      },
+      "average": {
+        "value": 12091,
+        "samples": 11,
+        "days": 30
+      },
+      "deals": [],
+      "cheapest_verified": null,
+      "cheapest_cached": {
+        "pair_key": "TYO:2026-11-27_2026-12-01",
+        "route_id": "TYO",
+        "outbound": "2026-11-27",
+        "inbound": "2026-12-01",
+        "nights": 4,
+        "price": 9709.0,
+        "source": "travelpayouts",
+        "total": 9709.0,
+        "fare": 7829.0,
+        "bag_fee": 1880.0,
+        "bag_estimated": false,
+        "ratio": null,
+        "airline": "酷航",
+        "flight_no": "TR 874",
+        "depart_time": "14:25",
+        "arrive_time": "18:30",
+        "return_depart_time": "22:25",
+        "origin_airport": "TPE",
+        "destination_airport": "NRT",
+        "duration_to": 185,
+        "duration_back": 245,
+        "airline_code": "TR",
+        "verified": false,
+        "checked_at": "2026-11-02T17:31:18+08:00",
+        "price_level": null,
+        "tp_price": 9709.0,
+        "tp_at": "2026-11-02T17:31:18+08:00",
+        "url": "https://www.aviasales.com/search/TPE2711TYO01121?t=GK17957895001795804200000185TPENRT17961639001796175000000245NRTTPE_18b4d387d89d3bb40cf25941500c7953_19273&search_date=01112026&expected_price_uuid=01a19486-b5f9-8040-2e3a-76c003558430&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=vEbqiSUN9xAI8eKCEWR8oA&expected_price_source=share&expected_price_currency=twd&expected_price=7829",
+        "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+TYO+2026-11-27+return+2026-12-01+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
     }
   ],
