@@ -11,190 +11,190 @@
       "tp_price": 4496.0,
       "tp_airline": "UO",
       "tp_url": "https://www.aviasales.com/search/TPE2611HKG30111?t=UO17957277001795735500000130TPEHKG17960508001796057100000105HKGTPE_29e7fa1964ee02f5543d90d89e11620f_11170&search_date=27102026&expected_price_uuid=01a17e30-54d8-8040-6c84-0b3346e46072&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k13UjTUsKMl0CuRyHmVJKg&expected_price_source=share&expected_price_currency=twd&expected_price=4496",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "HKG:2026-11-05_2026-11-09": {
       "tp_price": 4659.0,
       "tp_airline": "UO",
       "tp_url": "https://www.aviasales.com/search/TPE0511HKG09111?t=UO17939133001793921100000130TPEHKG17942496001794255900000105HKGTPE_fd3cb1f0dfabd894193e451d500d6282_11531&search_date=02112026&expected_price_uuid=01a199f3-3a5a-8040-a727-191772ba5dbb&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=F3UBBb7_VoLZmFo0iD6vhQ&expected_price_source=share&expected_price_currency=twd&expected_price=4659",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "HKG:2026-11-25_2026-11-29": {
       "tp_price": 4777.0,
       "tp_airline": "UO",
       "tp_url": "https://www.aviasales.com/search/TPE2511HKG29111?t=UO17956413001795649100000130TPEHKG17959542001795960500000105HKGTPE_abf4ef911c7447c0ad3bbb6bf186d515_11782&search_date=29102026&expected_price_uuid=01a1866a-7cc2-8030-6eb1-802e15685b54&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=BgfQcNn8049hGAdAj2PiPw&expected_price_source=share&expected_price_currency=twd&expected_price=4777",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "HKG:2026-11-10_2026-11-14": {
       "tp_price": 5061.0,
       "tp_airline": "UO",
       "tp_url": "https://www.aviasales.com/search/TPE1011HKG14111?t=UO17943453001794353100000130TPEHKG17946816001794687900000105HKGTPE_f9e2e95d8740990037c6791dd9b9dd52_12574&search_date=27102026&expected_price_uuid=01a17d9a-555e-8030-6944-e579d7e7dae7&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=F3UBBb7_VoLZmFo0iD6vhQ&expected_price_source=share&expected_price_currency=twd&expected_price=5061",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "HKG:2026-11-19_2026-11-23": {
       "tp_price": 5642.0,
       "tp_airline": "UO",
       "tp_url": "https://www.aviasales.com/search/TPE1911HKG23111?t=UO17950965001795104000000125TPEHKG17954592001795465500000105HKGTPE_213841c7a1173e000b9e07c916bfd548_13888&search_date=31102026&expected_price_uuid=01a19026-0751-8030-693c-eb246b636d9b&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=t1a1kSiu2crxATNsAxrtjA&expected_price_source=share&expected_price_currency=twd&expected_price=5642",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-27_2026-12-01": {
       "tp_price": 7829.0,
       "tp_airline": "TR",
       "tp_url": "https://www.aviasales.com/search/TPE2711TYO01121?t=GK17957895001795804200000185TPENRT17961639001796175000000245NRTTPE_18b4d387d89d3bb40cf25941500c7953_19273&search_date=01112026&expected_price_uuid=01a19486-b5f9-8040-2e3a-76c003558430&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=vEbqiSUN9xAI8eKCEWR8oA&expected_price_source=share&expected_price_currency=twd&expected_price=7829",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-25_2026-11-29": {
       "tp_price": 8384.0,
       "tp_airline": "TR",
       "tp_url": "https://www.aviasales.com/search/TPE2511TYO29111?t=GK17956167001795631400000185TPENRT17959911001796002200000245NRTTPE_5c94a27052ae535c0686a5634370a876_20638&search_date=01112026&expected_price_uuid=01a1968f-86e2-8040-2fc8-cb4471b3960a&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=vEbqiSUN9xAI8eKCEWR8oA&expected_price_source=share&expected_price_currency=twd&expected_price=8384",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-15_2026-11-19": {
       "tp_price": 9438.0,
       "tp_airline": "TR",
       "tp_url": "https://www.aviasales.com/search/TPE1511TYO19111?t=IT17947254001794740100000185TPENRT17950644001795074900000235HNDTPE_0137322fad4f169701c820b7e7257545_23390&search_date=02112026&expected_price_uuid=01a19a4e-3a23-8031-2938-168cd54f9061&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=Bmp9jZodBZ_lyl7XNoFtAQ&expected_price_source=share&expected_price_currency=twd&expected_price=9438",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-21_2026-11-25": {
       "tp_price": 10472.0,
       "tp_airline": "TR",
       "tp_url": "https://www.aviasales.com/search/TPE2111TYO25111?t=TR17952711001795285800000185TPENRT17956086001795619700000245NRTTPE_230e48fb977dc27810ef2cbca840e880_25777&search_date=01112026&expected_price_uuid=01a1958e-a31e-8040-6fad-7ea82be00199&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=ysd9WUoXlqltMG0lPfoCGg&expected_price_source=share&expected_price_currency=twd&expected_price=10472",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-23_2026-11-27": {
       "tp_price": 10622.0,
       "tp_airline": "TR",
       "tp_url": "https://www.aviasales.com/search/TPE2311TYO27111?t=IT17954166001795431300000185TPENRT17957556001795766100000235HNDTPE_3d7b4029884de54404de4003ee97239b_26404&search_date=28102026&expected_price_uuid=01a1819f-4ca5-8030-e5da-28b59b28fffb&static_fare_key=TY%7CP1%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=Bmp9jZodBZ_lyl7XNoFtAQ&expected_price_source=share&expected_price_currency=twd&expected_price=10622",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-28_2026-12-04": {
       "tp_price": 10715.0,
       "tp_airline": "GK",
       "tp_url": "https://www.aviasales.com/search/TPE2811TYO04121?t=GK17958330001795847700000185TPENRT17963730001796385000000260NRTTPE_c56a5a50c20d0fa6b90994f136dd49d6_26375&search_date=31102026&expected_price_uuid=01a193b8-4411-8040-a6d2-2bba661be912&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=VHfiP3xlI2evbMofY1jZhA&expected_price_source=share&expected_price_currency=twd&expected_price=10715",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-21_2026-11-27": {
       "tp_price": 10781.0,
       "tp_airline": "TR",
       "tp_url": "https://www.aviasales.com/search/TPE2111TYO27111?t=IT17952711001795285800000185TPENRT17957556001795766100000235HNDTPE_776322620240d42bfdef91b1a2c01373_26772&search_date=30102026&expected_price_uuid=01a18c19-fba1-8040-25e8-0de8188a1b14&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=Zxo8mDWjaH3ubRUNhDu4hg&expected_price_source=share&expected_price_currency=twd&expected_price=10781",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-22_2026-11-26": {
       "tp_price": 10914.0,
       "tp_airline": "TR",
       "tp_url": "https://www.aviasales.com/search/TPE2211TYO26111?t=IT17953575001795372200000185TPENRT17956923001795704300000260NRTTPE_569a209a2282844a0b297cbe8cb70554_27045&search_date=02112026&expected_price_uuid=01a19aa3-0508-8040-6048-f9c2dd4dbdc3&static_fare_key=TY%7CP1%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=5T9iicVNSA_-ps0yUyjl3A&expected_price_source=share&expected_price_currency=twd&expected_price=10914",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-16_2026-11-20": {
       "tp_price": 12483.0,
       "tp_airline": "MM",
       "tp_url": "https://www.aviasales.com/search/TPE1611TYO20111?t=MM17947959001794810600000185TPENRT17951928001795204800000260NRTTPE_d3208c119318e8b3281e5c82b6358fd4_31070&search_date=27102026&expected_price_uuid=01a17d46-bf23-8040-a2bc-ea00c441fbda&static_fare_key=TY%7CP0%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=jEEHXJy7xpIKlu7IWNMxnQ&expected_price_source=share&expected_price_currency=twd&expected_price=12483",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-12-01_2026-12-05": {
       "tp_price": 8906.0,
       "tp_airline": "TR",
       "tp_url": "https://www.aviasales.com/search/TPE0112TYO05121?t=GK17961078001796122500000185TPENRT17964594001796471400000260NRTTPE_57f24117ba16076364f36b8d357bc718_21923&search_date=01112026&expected_price_uuid=01a1947f-edb0-8040-24d6-aec2c673a31e&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=DS3JL6ofIMahKjVqdRlbBA&expected_price_source=share&expected_price_currency=twd&expected_price=8906",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "MFM:2026-11-12_2026-11-16": {
       "tp_price": 6389.0,
       "tp_airline": "澳門航空",
       "tp_url": "https://www.aviasales.com/search/TPE1211MFM16111?t=NX17945187001794525900000120TPEMFM17948160001794821700000095MFMTPE_4bde55a353db3011e55a000b869b517c_15727&search_date=31102026&expected_price_uuid=01a1932c-aa9a-8040-2dd2-6d43373104b5&static_fare_key=TY%7CP0%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=n7CHcTL7tW6KWN5o2zx-kQ&expected_price_source=share&expected_price_currency=twd&expected_price=6389",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     },
     "MFM:2026-12-01_2026-12-04": {
       "tp_price": 6803.0,
       "tp_airline": "澳門航空",
       "tp_url": "https://www.aviasales.com/search/TPE0112MFM04121?t=NX17961606001796167500000115TPEMFM17963712001796376900000095MFMTPE_10d25622dd9010dba83fc729e2274836_16895&search_date=30102026&expected_price_uuid=01a18bf9-28ee-8030-ec01-5e7f1afe0f5d&static_fare_key=TY%7CP1%7CH1%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=_4WeehknTw4c_bGM0T5g9w&expected_price_source=share&expected_price_currency=twd&expected_price=6803",
-      "tp_at": "2026-11-02T15:26:28+08:00"
+      "tp_at": "2026-11-02T15:42:52+08:00"
     }
   },
   "tp_samples": {
     "HKG:2026-11-26_2026-11-30|2026-11-02": {
       "route": "HKG",
       "price": 4496.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "HKG:2026-11-05_2026-11-09|2026-11-02": {
       "route": "HKG",
       "price": 4659.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "HKG:2026-11-25_2026-11-29|2026-11-02": {
       "route": "HKG",
       "price": 4777.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "HKG:2026-11-10_2026-11-14|2026-11-02": {
       "route": "HKG",
       "price": 5061.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "HKG:2026-11-19_2026-11-23|2026-11-02": {
       "route": "HKG",
       "price": 5642.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-27_2026-12-01|2026-11-02": {
       "route": "TYO",
       "price": 7829.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-25_2026-11-29|2026-11-02": {
       "route": "TYO",
       "price": 8384.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-15_2026-11-19|2026-11-02": {
       "route": "TYO",
       "price": 9438.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-21_2026-11-25|2026-11-02": {
       "route": "TYO",
       "price": 10472.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-23_2026-11-27|2026-11-02": {
       "route": "TYO",
       "price": 10622.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-28_2026-12-04|2026-11-02": {
       "route": "TYO",
       "price": 10715.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-21_2026-11-27|2026-11-02": {
       "route": "TYO",
       "price": 10781.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-22_2026-11-26|2026-11-02": {
       "route": "TYO",
       "price": 10914.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-11-16_2026-11-20|2026-11-02": {
       "route": "TYO",
       "price": 12483.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "TYO:2026-12-01_2026-12-05|2026-11-02": {
       "route": "TYO",
       "price": 8906.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "MFM:2026-11-12_2026-11-16|2026-11-02": {
       "route": "MFM",
       "price": 6389.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     },
     "MFM:2026-12-01_2026-12-04|2026-11-02": {
       "route": "MFM",
       "price": 6803.0,
-      "at": "2026-11-02T15:26:28+08:00"
+      "at": "2026-11-02T15:42:52+08:00"
     }
   },
   "typical_ranges": [],
@@ -207,8 +207,8 @@
   "stats": {
     "alerts_sent": 0,
     "digests_sent": 1,
-    "runs": 2
+    "runs": 3
   },
-  "last_run_at": "2026-11-02T15:26:28+08:00",
+  "last_run_at": "2026-11-02T15:42:52+08:00",
   "last_tp_count": 17
 }
