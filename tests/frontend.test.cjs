@@ -261,3 +261,10 @@ test('票根兩欄並列不含行李／含行李；含託運單欄；舊資料�
   html=(await run(fare(0,false),0))['route-cards'].innerHTML;   // 不帶託運
   assert.doesNotMatch(html,/行李|託運/);
 });
+
+test('票根顯示近 30 天含行李均價與筆數；舊資料沒有均價時不顯示', async () => {
+  let nodes=await appHarness({routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:ticketItem(),average:{value:7100,samples:5,days:30}}})});
+  assert.match(nodes['route-cards'].innerHTML,/近 30 天含行李均價 <b>NT\$ 7,100<\/b>，5 筆/);
+  nodes=await withItem(ticketItem());
+  assert.doesNotMatch(nodes['route-cards'].innerHTML,/均價/);
+});

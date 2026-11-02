@@ -74,6 +74,8 @@ h1,h2,h3,p{margin:0}
 .t-ratio{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;font-size:13px}
 .t-ratio strong{font-size:15px;color:var(--half)}
 .t-ratio span{color:var(--muted);font-size:12px}
+.t-avg{font-size:13px;color:var(--muted);margin-top:4px}
+.t-avg b{font:600 15px var(--num);color:var(--ink)}
 .t-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
 .t-body+.t-actions{padding:0 18px 16px;margin-top:0}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 24px;border-radius:6px;background:var(--route,var(--ink));color:#fff;font-weight:600;text-decoration:none;border:1px solid transparent}

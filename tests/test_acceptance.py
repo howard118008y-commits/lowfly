@@ -59,8 +59,8 @@ def test_07_bootstrap(run_scan):
     calls = []
     third = "MFM:2026-11-10_2026-11-13"
     scanner = run_scan(tp=make_tp({KEY: 5200, KEY2: 6100, third: 8900}), serp=make_serp({}, calls))
-    # 全無基準：MFM 只取 TP 最低的 1 組，其餘額度輪流給尚未驗證的香港、東京。
-    assert [c.split(":")[0] for c in calls] == ["MFM", "HKG", "TYO"] and calls[0] == KEY
+    # 全無基準：MFM 只取 TP 最低的 1 組，其餘額度依優先序（香港＞澳門＞東京）輪流。
+    assert [c.split(":")[0] for c in calls] == ["MFM", "HKG", "MFM"] and calls[0] == KEY
     assert scanner.summary["serpapi_calls"] == 3
     assert scanner.summary["baseline"]["MFM"] == 8600
     assert scanner.summary["digest_sent"] is True

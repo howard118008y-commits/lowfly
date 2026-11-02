@@ -19,19 +19,19 @@ SAME_DATES = "2026-11-14_2026-11-17"
 
 
 def test_a_config_loads_three_routes_in_priority_order(cfg):
-    assert [r["id"] for r in cfg["routes"]] == ["HKG", "TYO", "MFM"]
+    assert [r["id"] for r in cfg["routes"]] == ["HKG", "MFM", "TYO"]
     assert {r["id"]: r["stay_nights"] for r in cfg["routes"]} == {"HKG": [3, 4, 5], "TYO": [4, 5, 6], "MFM": [3, 4, 5]}
-    tyo = cfg["routes"][1]
+    tyo = cfg["routes"][2]
     assert (tyo["destination"], tyo["serpapi_arrival"]) == ("TYO", "NRT,HND")
     assert all(r["direct_only"] and r["adults"] == 1 and r["origin"] == "TPE" for r in cfg["routes"])
-    assert [r["label"] for r in cfg["routes"]] == ["桃園 ⇄ 香港", "桃園 ⇄ 東京", "桃園 ⇄ 澳門"]
+    assert [r["label"] for r in cfg["routes"]] == ["桃園 ⇄ 香港", "桃園 ⇄ 澳門", "桃園 ⇄ 東京"]
 
 
 @pytest.mark.parametrize("mutate", [
     lambda c: c.update(routes=[]),
     lambda c: c["routes"].append(dict(c["routes"][0])),
     lambda c: c["routes"][0].pop("label"),
-    lambda c: c["routes"][1].update(stay_nights=[4, 4]),
+    lambda c: c["routes"][2].update(stay_nights=[4, 4]),
 ])
 def test_a_config_validates_routes(cfg, mutate):
     bad = copy.deepcopy(cfg)
@@ -92,7 +92,7 @@ def test_c_pass1_macau_candidate_before_hongkong_non_candidate(cfg, secrets, tmp
     chosen = scanner._select_pairs(all_keys(scanner), tp_best, baselines)
     assert chosen[0] == mfm_cheap
     assert hkg_dear not in chosen[:1]
-    assert [k.split(":")[0] for k in chosen[1:]] == ["HKG", "TYO"]   # 其餘額度走輪流，從香港開始
+    assert [k.split(":")[0] for k in chosen[1:]] == ["HKG", "MFM"]   # 其餘額度走輪流，從香港開始（優先序 香港＞澳門＞東京）
 
 
 def test_c_pass1_ranks_by_each_routes_own_baseline(cfg, secrets, tmp_path):
@@ -113,7 +113,7 @@ def test_c_pass2_rotates_and_ties_go_to_hong_kong(cfg, secrets, tmp_path):
     scanner.cfg["schedule"]["runs_per_day"] = 1
     scanner.cfg["sources"]["serpapi"]["daily_budget"] = 5
     chosen = scanner._select_pairs(all_keys(scanner), {}, {rid: None for rid in scanner.routes})
-    assert [k.split(":")[0] for k in chosen] == ["HKG", "TYO", "MFM", "HKG", "TYO"]
+    assert [k.split(":")[0] for k in chosen] == ["HKG", "MFM", "TYO", "HKG", "MFM"]
     assert len(set(chosen)) == 5
 
 
@@ -147,10 +147,10 @@ def test_d_tyo_requests_use_city_code_and_both_airports(run_scan):
 
 def test_e_summary_routes_in_priority_order(cfg):
     summary = build_summary(cfg, state_with_baseline(), NOW)
-    assert [r["id"] for r in summary["routes"]] == ["HKG", "TYO", "MFM"]
+    assert [r["id"] for r in summary["routes"]] == ["HKG", "MFM", "TYO"]
     assert not {"route", "baseline", "deals", "cheapest_verified"} & set(summary)
-    assert summary["routes"][1]["stay_nights"] == [4, 5, 6]
-    assert summary["routes"][2]["baseline"]["value"] == 8600
+    assert summary["routes"][2]["stay_nights"] == [4, 5, 6]
+    assert summary["routes"][1]["baseline"]["value"] == 8600
 
 
 def test_e_alerts_carry_route_label(cfg, run_scan):
@@ -205,17 +205,17 @@ def test_g_digest_sends_one_image_per_route_as_album(run_scan, monkeypatch):
     albums = [c for c in calls if c["method"] == "sendMediaGroup"]
     assert len(albums) == 1 and scanner.summary["digest_sent"]
     names = list(albums[0]["files"].values())
-    assert names == [f"digest_2026-11-02_{rid}.png" for rid in ("HKG", "TYO", "MFM")]
+    assert names == [f"digest_2026-11-02_{rid}.png" for rid in ("HKG", "MFM", "TYO")]
     media = json.loads(albums[0]["data"]["media"])
     assert [m["media"] for m in media] == ["attach://p0", "attach://p1", "attach://p2"]
     assert "每日摘要" in media[0]["caption"]                      # 文字摘要放第一張圖
-    assert [m["caption"] for m in media[1:]] == ["桃園 ⇄ 東京", "桃園 ⇄ 澳門"]
+    assert [m["caption"] for m in media[1:]] == ["桃園 ⇄ 澳門", "桃園 ⇄ 東京"]
 
 
 def test_g_digest_long_text_goes_first_then_album(run_scan, monkeypatch):
     scanner = run_scan(state_with_baseline(), force_digest=True)   # 預覽模式，只為產生三張圖
     calls = _recording_post(monkeypatch)
-    paths = [scanner.output_dir / f"digest_2026-11-02_{rid}.png" for rid in ("HKG", "TYO", "MFM")]
+    paths = [scanner.output_dir / f"digest_2026-11-02_{rid}.png" for rid in ("HKG", "MFM", "TYO")]
     assert Telegram("fake", "fake").send_album(paths, ["a", "b", "c"], "長" * 1100)
     assert [c["method"] for c in calls] == ["sendMessage", "sendMediaGroup"]
     assert [m["caption"] for m in json.loads(calls[1]["data"]["media"])] == ["a", "b", "c"]
@@ -226,4 +226,4 @@ def test_g_album_failure_falls_back_to_single_photos(run_scan, monkeypatch):
     scanner = run_scan(state_with_baseline(), force_digest=True, tg=Telegram("fake", "fake"))
     assert scanner.summary["digest_sent"]
     photos = [c for c in calls if c["method"] == "sendPhoto"]
-    assert [list(c["files"].values())[0] for c in photos] == [f"digest_2026-11-02_{rid}.png" for rid in ("HKG", "TYO", "MFM")]
+    assert [list(c["files"].values())[0] for c in photos] == [f"digest_2026-11-02_{rid}.png" for rid in ("HKG", "MFM", "TYO")]

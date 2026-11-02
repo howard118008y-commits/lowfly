@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from .baseline import MIN_TP_PAIRS, compute_baseline, tp_sample_count
+from .baseline import MIN_TP_PAIRS, compute_baseline, tp_average, tp_sample_count
 from .config import ROOT
 from .dates import date_pairs, google_url, pair_key, parse_time, split_key
 from .models import FLIGHT_FIELDS, number
@@ -77,6 +77,7 @@ def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_coun
                                     "n_ranges": baseline.n_ranges if baseline else 0, "lookback_days": cfg["baseline"]["lookback_days"],
                                     "source": baseline.source if baseline else None,
                                     "samples": tp_sample_count(state, cfg, now, route["id"]), "min_samples": MIN_TP_PAIRS},
+                       "average": tp_average(state, cfg, now, route["id"]),
                        "deals": sorted(deals, key=lambda item: (item["ratio"], item["pair_key"])),
                        "cheapest_verified": min(verified, key=lambda p: p["price"]) if verified else None,
                        "cheapest_cached": min(cached, key=lambda p: p["price"]) if cached else None})

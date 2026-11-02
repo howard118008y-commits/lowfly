@@ -101,3 +101,17 @@ def test_g_tp_samples_older_than_lookback_are_pruned(run_scan, cfg):
     scanner = run_scan(state=state, tp=make_tp(later_pairs("HKG", [5000])))
     assert "HKG:old|2000-01-01" not in scanner.state["tp_samples"]
     assert len(scanner.state["tp_samples"]) == 1
+
+
+def test_h_route_average_uses_only_recent_days(cfg):
+    """票根「近 30 天均價」：只算 30 天內的含行李總價樣本；超過 30 天（仍在 45 天回看期內）不算；各航線分開。"""
+    state = default_state()
+    recent, old = (NOW - timedelta(days=1)).isoformat(), (NOW - timedelta(days=40)).isoformat()
+    state["tp_samples"] = {"HKG:a|1": {"route": "HKG", "price": 4000.0, "at": recent, "basis": "total"},
+                           "HKG:b|1": {"route": "HKG", "price": 5001.0, "at": recent, "basis": "total"},
+                           "HKG:c|1": {"route": "HKG", "price": 9000.0, "at": old, "basis": "total"},
+                           "MFM:a|1": {"route": "MFM", "price": 3000.0, "at": recent, "basis": "total"}}
+    routes = {r["id"]: r for r in build_summary(cfg, state, NOW)["routes"]}
+    assert routes["HKG"]["average"] == {"value": 4500, "samples": 2, "days": 30}
+    assert routes["MFM"]["average"] == {"value": 3000, "samples": 1, "days": 30}
+    assert routes["TYO"]["average"] == {"value": None, "samples": 0, "days": 30}

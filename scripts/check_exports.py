@@ -32,11 +32,13 @@ def validate(folder: Path) -> None:
     today = datetime.fromisoformat(summary["generated_at"]).date()
     assert set(docs["pairs"]["baseline"]) == set(ids), "pairs.baseline 須依 route_id 分組"
     for route in routes:
-        for field in ("id", "label", "origin", "destination", "stay_nights", "baseline", "deals", "cheapest_verified", "cheapest_cached"):
+        for field in ("id", "label", "origin", "destination", "stay_nights", "baseline", "average", "deals", "cheapest_verified", "cheapest_cached"):
             assert field in route, f"route 缺少 {field}"
         assert isinstance(route["baseline"]["samples"], int) and route["baseline"]["min_samples"] > 0
         assert route.get("color") is None or re.fullmatch(r"#[0-9A-Fa-f]{6}", route["color"])
         assert route["baseline"].get("source") in (None, "google", "travelpayouts")
+        avg = route["average"]
+        assert avg["days"] > 0 and isinstance(avg["samples"], int) and (avg["value"] is None) == (avg["samples"] == 0)
         assert (route["baseline"]["value"] is None) == (route["baseline"]["source"] is None)
         for field in ("value", "google_low", "google_high", "n_ranges", "lookback_days"):
             assert field in route["baseline"], f"baseline 缺少 {field}"

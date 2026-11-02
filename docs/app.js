@@ -71,6 +71,8 @@
     const pct = fmtPct(item.ratio).replace(/^[-+]/, "");
     return item.ratio < 1 ? `比基準低 ${pct}` : item.ratio > 1 ? `比基準高 ${pct}` : "與基準相同";
   }
+  // 近 N 天均價：舊資料沒有 average 欄位或還沒有樣本時不顯示。
+  const avgLine = r => r.average?.value != null ? `<p class="t-avg">近 ${e(r.average.days)} 天含行李均價 <b>${e(fmtMoney(r.average.value))}</b>，${e(r.average.samples)} 筆</p>` : "";
   const baselineSource = r => r.baseline?.value == null ? "" : r.baseline.source === "travelpayouts" ? "基準 Travelpayouts 中位數" : "基準 Google 典型價格";
   // 價格條碼：未來每個出發日的最低含行李價（高＝貴），本張票的日期用航線色，沒資料的日子留空。
   function barcode(r, activeDate) {
@@ -102,7 +104,7 @@
     const back = item.return_depart_time ? ` ${e(item.return_depart_time)} 起飛` : "";
     const dates = `<p class="t-dates"><span>去 ${e(dayLabel(item.outbound))}</span><span>回 ${e(dayLabel(item.inbound))}${back}</span><span>${item.nights} 晚</span></p>`;
     const ratio = ratioText(r, item), source = baselineSource(r);
-    return `<article class="ticket${half ? " is-half" : ""}" style="--route:${routeColor(r)}" aria-label="${e(label)}"><div class="t-body"><div class="t-head"><span class="airline">${logo(item.airline_code)}<span>${e(airline || r.label)}</span></span><span class="t-tag">${modeText(r)}</span></div>${codes}${names}${dates}</div><div class="tear" aria-hidden="true"></div><div class="t-price">${half ? '<div class="stamp" role="img" aria-label="半價">半價</div>' : ""}${fareBlock(item)}<p class="t-state">${verified ? "Google 已驗證" : "Travelpayouts 快取價，未經 Google 驗證"}</p>${barcode(r, item.outbound)}<p class="t-ratio"><strong>${e(ratio)}</strong>${source ? `<span>${e(source)}</span>` : ""}</p><div class="t-actions">${externalLink(item.google_flights_url, "去訂票", "btn")}<a class="t-link" href="#calendar">看其他日期</a></div></div></article>`;
+    return `<article class="ticket${half ? " is-half" : ""}" style="--route:${routeColor(r)}" aria-label="${e(label)}"><div class="t-body"><div class="t-head"><span class="airline">${logo(item.airline_code)}<span>${e(airline || r.label)}</span></span><span class="t-tag">${modeText(r)}</span></div>${codes}${names}${dates}</div><div class="tear" aria-hidden="true"></div><div class="t-price">${half ? '<div class="stamp" role="img" aria-label="半價">半價</div>' : ""}${fareBlock(item)}<p class="t-state">${verified ? "Google 已驗證" : "Travelpayouts 快取價，未經 Google 驗證"}</p>${barcode(r, item.outbound)}<p class="t-ratio"><strong>${e(ratio)}</strong>${source ? `<span>${e(source)}</span>` : ""}</p>${avgLine(r)}<div class="t-actions">${externalLink(item.google_flights_url, "去訂票", "btn")}<a class="t-link" href="#calendar">看其他日期</a></div></div></article>`;
   }
   function routeCard(r) {
     const cheapest = r.cheapest_verified;

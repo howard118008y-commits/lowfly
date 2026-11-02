@@ -39,6 +39,13 @@ def tp_sample_count(state: dict, cfg: dict, now: datetime, route_id: str) -> int
     return len(_tp_samples(state, route_id, now, now - timedelta(days=int(cfg["baseline"]["lookback_days"]))))
 
 
+def tp_average(state: dict, cfg: dict, now: datetime, route_id: str) -> dict:
+    """票根「近 N 天均價」：該航線近 average_days 天樣本（含行李總價）的平均，沒有樣本時 value 為 None。"""
+    days = int(cfg["baseline"].get("average_days", 30))
+    prices = _tp_samples(state, route_id, now, now - timedelta(days=days))
+    return {"value": round(sum(prices) / len(prices)) if prices else None, "samples": len(prices), "days": days}
+
+
 def _travelpayouts_median(state: dict, bc: dict, now: datetime, route_id: str, cutoff: datetime):
     """該航線回看期內累積的 TP 樣本（含行李總價，每組日期每天一筆）中位數；不足 15 筆則不成立。
     沒有 basis="total" 的舊樣本（只含票價）不可與總價混算，直接忽略。"""

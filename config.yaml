@@ -12,6 +12,13 @@ routes:
     label: "桃園 ⇄ 香港"
     direct_only: true
     adults: 1
+  - id: "MFM"
+    color: "#007A4D"      # 前端票根左緣色條
+    origin: "TPE"
+    destination: "MFM"
+    label: "桃園 ⇄ 澳門"
+    direct_only: true
+    adults: 1
   - id: "TYO"
     color: "#23468F"      # 前端票根左緣色條
     origin: "TPE"
@@ -21,13 +28,6 @@ routes:
     direct_only: true
     adults: 1
     stay_nights: [4, 5, 6]
-  - id: "MFM"
-    color: "#007A4D"      # 前端票根左緣色條
-    origin: "TPE"
-    destination: "MFM"
-    label: "桃園 ⇄ 澳門"
-    direct_only: true
-    adults: 1
 window:
   days_ahead: 30
   min_lead_days: 2
@@ -53,6 +53,7 @@ baggage:
 baseline:
   google_stat: "mid"
   lookback_days: 45
+  average_days: 30          # 票根「近 N 天均價」；不可大於 lookback_days（樣本只保留回看期）
   min_observations: 1
   weights:
     google_typical: 1.0
