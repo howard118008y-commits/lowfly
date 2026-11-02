@@ -108,7 +108,7 @@ async function appHarness(overrides = {}, offline = false, extra = {}) {
     classList:{add(){},remove(){},toggle(){}}, setAttribute(k,v){this.attributes[k]=v;}, removeAttribute(k){delete this.attributes[k];},
     addEventListener(){}, querySelectorAll(){return [];}, showModal(){}, close(){}});
   const nodes = Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(m=>[m[1],makeElement()]));
-  const payload = Object.fromEntries(['summary','pairs','history','alerts'].map(name=>[name,JSON.parse(fs.readFileSync(path.join(__dirname,`../docs/data/${name}.json`)))]));
+  const payload = Object.fromEntries(['summary','pairs','history','alerts'].map(name=>[name,JSON.parse(fs.readFileSync(path.join(__dirname,`fixtures/empty_data/${name}.json`)))]));
   Object.assign(payload.summary, overrides);
   Object.assign(payload, extra);
   if (extra.alerts) payload.alerts.generated_at = payload.summary.generated_at;
@@ -124,7 +124,7 @@ async function appHarness(overrides = {}, offline = false, extra = {}) {
 }
 
 const patchRoutes = (routes, patch) => routes.map(r => ({...r, ...(patch[r.id] || {})}));
-const baseRoutes = () => JSON.parse(fs.readFileSync(path.join(__dirname,'../docs/data/summary.json'))).routes;
+const baseRoutes = () => JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/empty_data/summary.json'))).routes;
 
 test('首頁依優先序疊出每條航線一張卡', async () => {
   const nodes=await appHarness();

@@ -188,6 +188,14 @@ class Scanner:
             if p.get("tp_price") != offer.price:
                 self.history_rows.append({**offer.to_dict(), "observed_at": self.now.isoformat(timespec="seconds")})
             p.update(tp_price=offer.price, tp_airline=offer.airline, tp_url=offer.url, tp_at=self.now.isoformat(timespec="seconds"))
+        # TP 基準用的累積樣本：每組日期每天一筆（同日多次掃描只留最新），保留 lookback_days 天。
+        samples = self.state.setdefault("tp_samples", {})
+        for key, offer in best.items():
+            samples[f"{key}|{self.now.date().isoformat()}"] = {
+                "route": offer.route_id, "price": offer.price, "at": self.now.isoformat(timespec="seconds")}
+        cutoff = self.now - timedelta(days=int(self.cfg["baseline"]["lookback_days"]))
+        for k in [k for k, s in samples.items() if parse_time(s["at"]) < cutoff]:
+            del samples[k]
 
     def _record_serpapi(self, key: str, result) -> None:
         at = self.now.isoformat(timespec="seconds")

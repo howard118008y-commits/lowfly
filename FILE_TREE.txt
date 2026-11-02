@@ -44,6 +44,7 @@ lowfly/
   scripts/generate_icons.py
   scripts/package_source.py
   tests/conftest.py
+  tests/fixtures/empty_data/{summary,pairs,history,alerts}.json
   tests/frontend.test.cjs
   tests/test_acceptance.py
   tests/test_edges.py

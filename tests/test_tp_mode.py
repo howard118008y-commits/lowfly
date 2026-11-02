@@ -1,4 +1,6 @@
 """沒有 SerpApi 時的 Travelpayouts 模式：TP 中位數基準、快取價即時通知、單 run 上限。"""
+from datetime import timedelta
+
 import pytest
 
 from lowfly.baseline import compute_baseline
@@ -69,3 +71,33 @@ def test_e_google_typical_still_wins_when_present(run_scan, cfg):
     baseline = compute_baseline(scanner.state, cfg, NOW, "MFM")
     assert baseline.source == "google" and baseline.value == 8600
     assert scanner.summary["baseline"]["MFM"] == 8600
+
+
+def later_pairs(route_id, prices, start=30):
+    """取出發日較晚的日期組合，跨天重跑時不會因提前天數不足而被濾掉。"""
+    pairs = date_pairs(NOW.date(), 30, 2, [3, 4, 5])[start:start + len(prices)]
+    return {pair_key(route_id, o, b): price for (o, b), price in zip(pairs, prices)}
+
+
+def test_f_tp_baseline_accumulates_across_days(run_scan):
+    """每天只有 5 組 TP 價：第 1、2 天不足 15 筆無基準；第 3 天累積到 15 筆成立；同日重掃不重複計。"""
+    tp = make_tp(later_pairs("HKG", [5000, 5100, 5200, 5300, 5400]))
+    state = default_state()
+    for day in (0, 1):
+        state = run_scan(state=state, tp=tp, now=NOW + timedelta(days=day)).state
+        scanner = run_scan(state=state, tp=tp, now=NOW + timedelta(days=day, hours=6))   # 同日第二次掃描
+        state = scanner.state
+        assert scanner.summary["baseline"]["HKG"] is None
+    scanner = run_scan(state=state, tp=tp, now=NOW + timedelta(days=2))
+    assert scanner.summary["baseline"]["HKG"] == 5200
+    assert sum(1 for s in scanner.state["tp_samples"].values() if s["route"] == "HKG") == 15
+    assert scanner.summary["baseline"]["MFM"] is None   # 其他航線不混算
+
+
+def test_g_tp_samples_older_than_lookback_are_pruned(run_scan, cfg):
+    state = default_state()
+    old = NOW - timedelta(days=int(cfg["baseline"]["lookback_days"]) + 1)
+    state["tp_samples"]["HKG:old|2000-01-01"] = {"route": "HKG", "price": 1.0, "at": old.isoformat()}
+    scanner = run_scan(state=state, tp=make_tp(later_pairs("HKG", [5000])))
+    assert "HKG:old|2000-01-01" not in scanner.state["tp_samples"]
+    assert len(scanner.state["tp_samples"]) == 1

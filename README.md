@@ -76,7 +76,7 @@ git push -u origin main
 
 本機正式掃描可由自己的 shell 設定同名環境變數；本專案不會自動讀 `.env`。本機缺少任一來源金鑰會警告並跳過該來源；缺少 Telegram 設定只預覽文字與產生圖片，不把預覽標為已送達。
 
-雲端 Actions 會先檢查該模式需要的 Secrets：正式掃描／強制摘要需要三個（Travelpayouts、Telegram 兩個），Telegram 測試需要 Telegram 兩個，dry-run 需要 Travelpayouts，mock 不需金鑰。`SERPAPI_API_KEY` 為選用，缺席只寫 `::notice`：沒有 SerpApi 時，各航線以 Travelpayouts 近 `lookback_days` 天快取價的中位數（至少 15 組日期）當基準，快取價 ≤ 基準 50% 仍會即時通知，訊息明確標示「未經 Google 驗證」；單次 run 即時通知上限為 `thresholds.max_instant_per_run`（預設 5，有 SerpApi 時同樣適用）。其他必要 Secrets 缺少時只列出缺少的名稱並明確失敗，不啟動掃描、不寫入正式資料，避免把略過來源的執行誤認為成功。
+雲端 Actions 會先檢查該模式需要的 Secrets：正式掃描／強制摘要需要三個（Travelpayouts、Telegram 兩個），Telegram 測試需要 Telegram 兩個，dry-run 需要 Travelpayouts，mock 不需金鑰。`SERPAPI_API_KEY` 為選用，缺席只寫 `::notice`：沒有 SerpApi 時，各航線以 Travelpayouts 近 `lookback_days` 天累積快取價（每組日期每天記一筆）的中位數當基準，累積滿 15 筆才成立，快取價 ≤ 基準 50% 仍會即時通知，訊息明確標示「未經 Google 驗證」；單次 run 即時通知上限為 `thresholds.max_instant_per_run`（預設 5，有 SerpApi 時同樣適用）。其他必要 Secrets 缺少時只列出缺少的名稱並明確失敗，不啟動掃描、不寫入正式資料，避免把略過來源的執行誤認為成功。
 
 ## GitHub Pages 設定
 

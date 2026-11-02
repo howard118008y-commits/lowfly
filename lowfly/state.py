@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 
 def default_state() -> dict:
     return {"version": 1, "serpapi": {"month": "", "used_month": 0, "day": "", "used_day": 0},
-            "pairs": {}, "typical_ranges": [], "alerts": {}, "alert_history": [],
+            "pairs": {}, "tp_samples": {}, "typical_ranges": [], "alerts": {}, "alert_history": [],
             "digest_pool": {"items": {}}, "last_digest_date": "",
             "stats": {"alerts_sent": 0, "digests_sent": 0, "runs": 0}}
 

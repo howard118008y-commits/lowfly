@@ -28,10 +28,10 @@ MIN_TP_PAIRS = 15
 
 
 def _travelpayouts_median(state: dict, bc: dict, now: datetime, route_id: str, cutoff: datetime):
-    """該航線所有日期組合「最新 TP 價」的中位數；回看期內不足 15 組則不成立。"""
-    prices = [float(p["tp_price"]) for key, p in state.get("pairs", {}).items()
-              if key.startswith(f"{route_id}:") and number(p.get("tp_price")) and p.get("tp_at")
-              and cutoff <= parse_time(p["tp_at"]) <= now]
+    """該航線回看期內累積的 TP 樣本（每組日期每天一筆）中位數；不足 15 筆則不成立。"""
+    prices = [float(s["price"]) for s in state.get("tp_samples", {}).values()
+              if s.get("route") == route_id and number(s.get("price"))
+              and cutoff <= parse_time(s["at"]) <= now]
     return (median(prices), len(prices)) if len(prices) >= MIN_TP_PAIRS else None
 
 
