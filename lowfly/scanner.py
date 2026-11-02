@@ -12,6 +12,7 @@ from .baseline import Baseline, compute_baseline
 from .config import ROOT
 from .dates import date_pairs, fmt_date, google_url, months_covering, pair_key, parse_time, split_key
 from .models import Offer, number
+from .notices import deal_notes, good_price
 from .notifier import Telegram, esc, fmt_money, fmt_pct, fmt_range, link
 from .sources import serpapi_flights, travelpayouts
 from .state import prune_typical_ranges
@@ -261,20 +262,32 @@ class Scanner:
         self._maintain_pool(tp_best, checked, baselines)
         items = self.state["digest_pool"]["items"]
         at = self.now.isoformat(timespec="seconds")
-        def ranked(offers):   # 比例低的先處理，單 run 即時通知達上限時留下最好的
-            return sorted(((baselines[o.route_id].ratio(o.price), k, o) for k, o in offers.items()
-                           if baselines.get(o.route_id)), key=lambda item: item[:2])
+        instant = self.cfg["thresholds"]["instant"]
+        def ranked(offers):
+            # 依「離觸發線多深」排序（比例÷半價門檻、總價÷好價線取小），單 run 即時通知達上限時留下最好的。
+            # 沒有基準的航線只要有好價線也會進來（ratio 為 None）。
+            rows = []
+            for k, o in offers.items():
+                baseline, good = baselines.get(o.route_id), good_price(self.routes[o.route_id])
+                ratio = baseline.ratio(o.price) if baseline else None
+                if ratio is None and good is None:
+                    continue
+                depth = min(ratio / instant if ratio is not None else math.inf, o.price / good if good else math.inf)
+                rows.append((depth, k, ratio, o))
+            return [(ratio, k, o) for _, k, ratio, o in sorted(rows, key=lambda row: row[:2])]
         for ratio, key, offer in ranked(verified):
-            baseline = baselines[offer.route_id]
+            baseline = baselines.get(offer.route_id)
             self._maybe_instant(key, offer, baseline, ratio, True, at)
-            if ratio <= self.cfg["thresholds"]["digest"]:
+            if ratio is not None and ratio <= self.cfg["thresholds"]["digest"]:
                 items[key] = {**offer.to_dict(), "ratio": ratio, "verified": True, "at": at}
         for ratio, key, offer in ranked(tp_best):
-            baseline = baselines[offer.route_id]
+            baseline = baselines.get(offer.route_id)
             if key in checked:
                 continue
             if self.tp_only:
                 self._maybe_instant(key, offer, baseline, ratio, False, at)
+            if ratio is None:   # 沒有基準：摘要池維持原狀
+                continue
             existing = items.get(key)
             if existing and existing["verified"]:
                 continue
@@ -283,13 +296,17 @@ class Scanner:
             else:
                 items.pop(key, None)
 
-    def _maybe_instant(self, key: str, offer: Offer, baseline: Baseline, ratio: float, verified: bool, at: str) -> None:
+    def _maybe_instant(self, key: str, offer: Offer, baseline: Baseline | None, ratio: float | None, verified: bool, at: str) -> None:
         thresholds = self.cfg["thresholds"]
-        if (ratio > thresholds["instant"] or self.summary["instant_alerts"] >= int(thresholds.get("max_instant_per_run", 5))
+        good = good_price(self.routes[offer.route_id])
+        half = ratio is not None and ratio <= thresholds["instant"]
+        if (not (half or (good is not None and offer.price <= good))
+                or self.summary["instant_alerts"] >= int(thresholds.get("max_instant_per_run", 5))
                 or not self._should_alert(key, offer.price)):
             return
         if self._send_instant(offer, baseline, ratio, verified):
-            record = {"pair_key": key, "route_id": offer.route_id, "price": offer.price, "at": at, "baseline_at_alert": baseline.value,
+            record = {"pair_key": key, "route_id": offer.route_id, "price": offer.price, "at": at,
+                      "baseline_at_alert": baseline.value if baseline else None,
                       "ratio": ratio, "airline": offer.airline, "outbound": offer.outbound, "inbound": offer.inbound,
                       "url": offer.url, "latest_price": offer.price, "min_price_after": offer.price, "verified": verified}
             self.state["alerts"][key] = record
@@ -321,24 +338,41 @@ class Scanner:
                 log.warning("圖片產生失敗（%s）；改送純文字", type(exc).__name__)
         return self.tg.send_photo(path, text)
 
-    def _send_instant(self, offer: Offer, baseline: Baseline, ratio: float, verified: bool = True) -> bool:
-        cfg = self.cfg
+    def _send_instant(self, offer: Offer, baseline: Baseline | None, ratio: float | None, verified: bool = True) -> bool:
+        # 標題先講航線與含行李總價，接著比基準、班次、日期、行李、須知，最後是來源與連結。
+        cfg, route = self.cfg, self.routes[offer.route_id]
         level = self.state["pairs"].get(offer.pair_key, {}).get("price_level") or "—"
-        source = "" if baseline.source == "google" else "，Travelpayouts 中位數"
-        head = (f"✈️ <b>{esc(cfg['app_name'])}｜神票 ≤{cfg['thresholds']['instant'] * 100:.0f}%</b>\n"
-                f"{esc(self.routes[offer.route_id]['label'])} 直飛來回（{offer.nights} 晚）\n"
-                f"出發 {fmt_date(offer.outbound)} → 回程 {fmt_date(offer.inbound)}\n"
-                f"<b>{fmt_money(offer.price)}</b>（基準 {fmt_money(baseline.value)}{source}，{fmt_pct(ratio)}）\n"
-                f"航空：{esc(offer.airline or '—')}\n")
+        half = ratio is not None and ratio <= cfg["thresholds"]["instant"]
+        good = good_price(route)
+        with_bag = "含行李 " if float((cfg.get("baggage") or {}).get("checked_kg", 0) or 0) > 0 else ""
+        compare = []
+        if baseline:
+            source = "" if baseline.source == "google" else "，Travelpayouts 中位數"
+            compare.append(f"基準 {fmt_money(baseline.value)}{source}（{fmt_pct(ratio)}）")
+        else:
+            compare.append("基準累積中")
+        if good is not None:
+            compare.append(f"好價線 {fmt_money(good)}")
+        flight = " ".join(part for part in (offer.airline, offer.flight_no) if part) or "航空公司未提供"
+        if offer.depart_time and offer.arrive_time:
+            flight += f"｜{offer.depart_time} → {offer.arrive_time}"
+        head = (f"✈️ <b>{'神票' if half else '好價'}｜{esc(route['label'])} {with_bag}{fmt_money(offer.price)}</b>\n"
+                f"{'｜'.join(compare)}\n"
+                f"{esc(flight)}\n"
+                f"去 {fmt_date(offer.outbound)} → 回 {fmt_date(offer.inbound)}，{offer.nights} 晚\n")
         bag = bag_line(cfg, offer.fare, offer.bag_fee, offer.bag_estimated)
         if bag:
             head += esc(bag) + "\n"
+        notes = deal_notes(cfg, offer.airline_code, offer.destination_airport, offer.arrive_time)
+        if notes:
+            head += "⚠️ 須知\n" + "".join(f"• {esc(note)}\n" for note in notes)
         if verified:
-            text = (head + f"Google 價位：{esc(level)}｜典型區間 {fmt_range(baseline.google_low, baseline.google_high)}\n"
+            typical = f"｜典型區間 {fmt_range(baseline.google_low, baseline.google_high)}" if baseline else ""
+            text = (head + f"Google 價位：{esc(level)}{typical}\n"
                     f"🔗 {link(offer.url, 'Google Flights 查看／訂票')}")
         else:
-            route = self.routes[offer.route_id]
-            text = (head + "⚠️ Travelpayouts 快取價，未經 Google 驗證，訂票前請以實際頁面為準\n"
+            text = (head + f"⏱ {self.now.strftime('%m/%d %H:%M')} 掃描到｜Travelpayouts 快取價（航空公司報價時間不明），"
+                    "未經 Google 驗證，訂票前請以實際頁面為準\n"
                     f"🔗 {link(google_url(cfg, route, offer.outbound, offer.inbound), 'Google Flights 查看')}"
                     f"｜{link(offer.url, 'Aviasales')}")
         return self._deliver(text, "alert", offer, baseline)
@@ -372,6 +406,8 @@ class Scanner:
                 bag = bag_line(cfg, item.get("fare"), item.get("bag_fee", 0), item.get("bag_estimated"))
                 if bag:
                     lines.append(f"　{esc(bag)}")
+                for note in deal_notes(cfg, item.get("airline_code"), item.get("destination_airport"), item.get("arrive_time")):
+                    lines.append(f"　⚠️ {esc(note)}")
             extra = len(items) - cfg["digest"]["top_n"]
             if extra > 0:
                 lines.append(f"…另有 {extra} 筆")

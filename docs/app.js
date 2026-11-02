@@ -50,7 +50,7 @@
     const info = bagInfo(item);
     if (!info) return `<div class="fare-pair single">${priceBig(item.price)}</div>`;
     if (info.included) return `<div class="fare-pair single">${priceBig(item.price)}<small class="fare-note">已含 ${info.kg}kg 託運</small></div>`;
-    return `<div class="fare-pair"><div><small class="fare-note">不含行李</small>${priceBig(item.fare)}</div><div><small class="fare-note">含行李</small>${priceBig(item.price)}<small class="fare-note">${info.kg}kg 來回${info.estimated ? "，行李費估算" : ""}</small></div></div><p class="fare-helper">半價以含行李價判斷</p>`;
+    return `<div class="fare-pair"><div><small class="fare-note">不含行李</small>${priceBig(item.fare)}</div><div><small class="fare-note">含行李</small>${priceBig(item.price)}<small class="fare-note">${info.kg}kg 來回${info.estimated ? "，行李費估算" : ""}</small></div></div><p class="fare-helper">半價與好價都以含行李價判斷</p>`;
   }
   const modeText = r => r.direct_only === false ? "來回" : "直飛來回";
   const AIRPORT_ZH = {TPE: "桃園", TSA: "松山", HKG: "香港", MFM: "澳門", TYO: "東京", NRT: "東京成田", HND: "東京羽田"};
@@ -71,6 +71,13 @@
     const pct = fmtPct(item.ratio).replace(/^[-+]/, "");
     return item.ratio < 1 ? `比基準低 ${pct}` : item.ratio > 1 ? `比基準高 ${pct}` : "與基準相同";
   }
+  // 半價（比例 ≤ 即時門檻）優先；否則含行李總價 ≤ 航線好價線算「好價」。
+  function dealKind(r, item) {
+    if (!item || item.price == null) return "";
+    if (item.ratio != null && item.ratio <= (bundle.summary.thresholds?.instant ?? 0.5)) return "半價";
+    return r.good_price != null && item.price <= r.good_price ? "好價" : "";
+  }
+  const notesBlock = item => item.notes?.length ? `<div class="t-notes"><strong>須知</strong><ul>${item.notes.map(note => `<li>${e(note)}</li>`).join("")}</ul></div>` : "";
   // 近 N 天均價：舊資料沒有 average 欄位或還沒有樣本時不顯示。
   const avgLine = r => r.average?.value != null ? `<p class="t-avg">近 ${e(r.average.days)} 天含行李均價 <b>${e(fmtMoney(r.average.value))}</b>，${e(r.average.samples)} 筆</p>` : "";
   const baselineSource = r => r.baseline?.value == null ? "" : r.baseline.source === "travelpayouts" ? "基準 Travelpayouts 中位數" : "基準 Google 典型價格";
@@ -97,14 +104,14 @@
       const b = r.baseline;
       return `<article class="ticket" style="--route:${routeColor(r)}" aria-label="${e(label)}"><div class="t-body"><div class="t-head"><span class="t-name">${e(r.label)}</span><span class="t-tag">${modeText(r)}</span></div>${codes}<p class="t-empty">等待第一筆票價</p><p class="t-sub">${b.value == null ? `基準累積中 ${b.samples ?? 0}/${b.min_samples ?? 15}` : e(baselineSource(r))}</p></div><div class="t-actions"><a class="t-link" href="#calendar">查看出發日期</a></div></article>`;
     }
-    const half = item.ratio != null && item.ratio <= (bundle.summary.thresholds?.instant ?? 0.5);
+    const kind = dealKind(r, item);
     const airline = [item.airline, item.flight_no].filter(Boolean).join(" ");
     const hasTimes = item.depart_time && item.arrive_time;
     const names = `<div class="t-places"><span>${e(AIRPORT_ZH[origin] || origin)}${hasTimes ? ` <b>${e(item.depart_time)}</b>` : ""}</span><span>${e(AIRPORT_ZH[dest] || dest)}${hasTimes ? ` <b>${e(item.arrive_time)}</b>` : ""}</span></div>`;
     const back = item.return_depart_time ? ` ${e(item.return_depart_time)} 起飛` : "";
     const dates = `<p class="t-dates"><span>去 ${e(dayLabel(item.outbound))}</span><span>回 ${e(dayLabel(item.inbound))}${back}</span><span>${item.nights} 晚</span></p>`;
     const ratio = ratioText(r, item), source = baselineSource(r);
-    return `<article class="ticket${half ? " is-half" : ""}" style="--route:${routeColor(r)}" aria-label="${e(label)}"><div class="t-body"><div class="t-head"><span class="airline">${logo(item.airline_code)}<span>${e(airline || r.label)}</span></span><span class="t-tag">${modeText(r)}</span></div>${codes}${names}${dates}</div><div class="tear" aria-hidden="true"></div><div class="t-price">${half ? '<div class="stamp" role="img" aria-label="半價">半價</div>' : ""}${fareBlock(item)}<p class="t-state">${verified ? "Google 已驗證" : "Travelpayouts 快取價，未經 Google 驗證"}</p>${barcode(r, item.outbound)}<p class="t-ratio"><strong>${e(ratio)}</strong>${source ? `<span>${e(source)}</span>` : ""}</p>${avgLine(r)}<div class="t-actions">${externalLink(item.google_flights_url, "去訂票", "btn")}<a class="t-link" href="#calendar">看其他日期</a></div></div></article>`;
+    return `<article class="ticket${kind ? " is-half" : ""}" style="--route:${routeColor(r)}" aria-label="${e(label)}"><div class="t-body"><div class="t-head"><span class="airline">${logo(item.airline_code)}<span>${e(airline || r.label)}</span></span><span class="t-tag">${modeText(r)}</span></div>${codes}${names}${dates}</div><div class="tear" aria-hidden="true"></div><div class="t-price">${kind ? `<div class="stamp" role="img" aria-label="${kind}">${kind}</div>` : ""}${fareBlock(item)}${notesBlock(item)}<p class="t-state">${verified ? "Google 已驗證" : "Travelpayouts 快取價，未經 Google 驗證"}</p>${barcode(r, item.outbound)}<p class="t-ratio"><strong>${e(ratio)}</strong>${source ? `<span>${e(source)}</span>` : ""}</p>${avgLine(r)}<div class="t-actions">${externalLink(item.google_flights_url, "去訂票", "btn")}<a class="t-link" href="#calendar">看其他日期</a></div></div></article>`;
   }
   function routeCard(r) {
     const cheapest = r.cheapest_verified;
@@ -116,12 +123,12 @@
     return {featured, verified: Boolean(verified), html: ticket(r, featured, Boolean(verified))};
   }
   function leadText(routes, cards) {
-    const half = routes.map((r, i) => ({r, item: cards[i].featured})).filter(({item}) => item && item.ratio != null && item.ratio <= (bundle.summary.thresholds?.instant ?? 0.5));
+    const hits = routes.map((r, i) => ({r, item: cards[i].featured, kind: dealKind(r, cards[i].featured)})).filter(hit => hit.kind);
     const city = r => AIRPORT_ZH[r.destination] || r.label;
-    if (half.length === 1) return `${city(half[0].r)}有半價票：${md(half[0].item.outbound)} ${fmtMoney(half[0].item.price)}`;
-    if (half.length) return `${half.map(({r}) => city(r)).join("、")}有半價票`;
+    if (hits.length === 1) return `${city(hits[0].r)}有${hits[0].kind}票：${md(hits[0].item.outbound)} ${fmtMoney(hits[0].item.price)}`;
+    if (hits.length) return `${hits.map(({r}) => city(r)).join("、")}有${hits.every(hit => hit.kind === "半價") ? "半價" : "好價"}票`;
     if (!cards.some(card => card.featured)) return "還在等第一筆票價";
-    return `${["零", "一", "兩", "三", "四", "五", "六"][routes.length] || routes.length}條航線都還沒有半價票`;
+    return `${["零", "一", "兩", "三", "四", "五", "六"][routes.length] || routes.length}條航線都還沒有好價票`;
   }
 
   function renderHome() {
@@ -132,7 +139,7 @@
     const deals = s.routes.flatMap((r, i) => r.deals
       .filter(item => !cards[i].featured || item.pair_key !== cards[i].featured.pair_key)
       .map(item => ({...item, route_label: r.label, color: routeColor(r)}))).sort((a, b) => a.ratio - b.ratio);
-    const dealCard = item => `<article class="deal-row" style="--route:${e(item.color)}"><div class="deal-line"><strong>${e(item.route_label)}</strong><span>${e(md(item.outbound))}–${e(md(item.inbound))}　${item.nights} 晚</span></div><div class="deal-price"><span class="amount">${e(fmtMoney(item.price))}</span><span class="discount">${e(fmtPct(item.ratio))}</span></div>${bagLine(item) ? `<p class="muted small">${e(bagLine(item))}</p>` : ""}<div class="deal-bottom"><span class="muted small">${e(item.airline || "航空公司未提供")}　${item.verified ? "Google 已驗證" : "快取價，未經驗證"}</span>${externalLink(item.google_flights_url, "去訂票")}</div></article>`;
+    const dealCard = item => `<article class="deal-row" style="--route:${e(item.color)}"><div class="deal-line"><strong>${e(item.route_label)}</strong><span>${e(md(item.outbound))}–${e(md(item.inbound))}　${item.nights} 晚</span></div><div class="deal-price"><span class="amount">${e(fmtMoney(item.price))}</span><span class="discount">${e(fmtPct(item.ratio))}</span></div>${bagLine(item) ? `<p class="muted small">${e(bagLine(item))}</p>` : ""}${item.notes?.length ? `<p class="deal-notes">須知：${e(item.notes.join("；"))}</p>` : ""}<div class="deal-bottom"><span class="muted small">${e(item.airline || "航空公司未提供")}　${item.verified ? "Google 已驗證" : "快取價，未經驗證"}</span>${externalLink(item.google_flights_url, "去訂票")}</div></article>`;
     $("deal-section").hidden = !deals.length;
     $("deals-title").textContent = cards.some(card => card.verified) ? "其他好價" : "待確認的好價";
     $("deal-count").textContent = `${deals.length} 組日期`;
@@ -213,7 +220,7 @@
     const s = bundle.summary, q = s.budget;
     $("settings-overview").innerHTML = s.routes.map(r => `<p><strong>${e(r.label)}</strong>　${modeText(r)}　${r.adults || 1} 位成人　${r.stay_nights.join("／")} 晚</p>`).join("") + `<p class="muted small">每天自動掃描 ${s.schedule.runs_per_day} 次</p>`;
     const routeFields = s.routes.map(r => [r.label, `${r.origin} ⇄ ${r.destination}　${modeText(r)}　${r.adults || 1} 位成人　${r.stay_nights.join("／")} 晚`]);
-    const fields = [...routeFields, ["幣別", s.currency], ["行李", s.baggage?.checked_kg > 0 ? `來回各 ${s.baggage.pieces_each_way} 件 ${s.baggage.checked_kg}kg。顯示「不含行李｜含行李」，半價以含行李價判斷` : "只帶手提，總價＝票價"], ["掃描窗口", `後天起至未來 ${s.window.days_ahead} 天（最早 ${s.window.min_lead_days} 天）`], ["立即推播", `≤ 基準 ${s.thresholds.instant * 100}%，Google 驗證（SerpApi 未啟用時為 Travelpayouts 快取價），單次最多 ${s.thresholds.max_instant_per_run ?? 5} 則`], ["每日摘要", `≤ 基準 ${s.thresholds.digest * 100}%，${s.digest.hour_local}:00 後首次掃描`], ["基準回看", `${s.routes[0].baseline.lookback_days} 天`], ["SerpAPI 額度", `每日 ${q.serpapi_daily_budget}／每月 ${q.serpapi_quota}，安全額 ${q.monthly_safety}`], ["候選保留", `每次最多 ${q.reserve_for_candidates} 組；${q.reverify_hours} 小時內未降價不重驗`], ["重發條件", `再降 ≥${s.dedupe.min_drop_ratio * 100}% 或超過 ${s.dedupe.cooldown_hours} 小時`], ["排程", "台北 09:17／15:17／21:17／03:17"]];
+    const fields = [...routeFields, ["幣別", s.currency], ["行李", s.baggage?.checked_kg > 0 ? `來回各 ${s.baggage.pieces_each_way} 件 ${s.baggage.checked_kg}kg。顯示「不含行李｜含行李」，半價以含行李價判斷` : "只帶手提，總價＝票價"], ["掃描窗口", `後天起至未來 ${s.window.days_ahead} 天（最早 ${s.window.min_lead_days} 天）`], ["立即推播", `≤ 基準 ${s.thresholds.instant * 100}%，或含行李總價 ≤ 好價線（${s.routes.filter(r => r.good_price != null).map(r => `${AIRPORT_ZH[r.destination] || r.label} ${fmtMoney(r.good_price)}`).join("、") || "未設定"}），Google 驗證（SerpApi 未啟用時為 Travelpayouts 快取價），單次最多 ${s.thresholds.max_instant_per_run ?? 5} 則`], ["每日摘要", `≤ 基準 ${s.thresholds.digest * 100}%，${s.digest.hour_local}:00 後首次掃描`], ["基準回看", `${s.routes[0].baseline.lookback_days} 天`], ["SerpAPI 額度", `每日 ${q.serpapi_daily_budget}／每月 ${q.serpapi_quota}，安全額 ${q.monthly_safety}`], ["候選保留", `每次最多 ${q.reserve_for_candidates} 組；${q.reverify_hours} 小時內未降價不重驗`], ["重發條件", `再降 ≥${s.dedupe.min_drop_ratio * 100}% 或超過 ${s.dedupe.cooldown_hours} 小時`], ["排程", "台北 09:17／15:17／21:17／03:17"]];
     $("settings-values").innerHTML = `<dl class="details">${fields.map(([name, value]) => `<div><dt>${e(name)}</dt><dd>${e(value)}</dd></div>`).join("")}</dl>`;
     const config = window.LOWFLY_CONFIG;
     const owner = config.owner || (location.hostname.endsWith(".github.io") ? location.hostname.split(".")[0] : "");

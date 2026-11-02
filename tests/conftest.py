@@ -28,6 +28,8 @@ def block_network(monkeypatch):
 def cfg():
     config = load_config()
     config["baggage"]["checked_kg"] = 0   # 既有測試以票價＝總價為前提；行李另見 test_baggage.py
+    for route in config["routes"]:
+        route.pop("good_price_twd", None)   # 既有測試只驗比例門檻；好價線另見 test_deal_notices.py
     return config
 
 

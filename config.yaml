@@ -12,6 +12,7 @@ routes:
     label: "桃園 ⇄ 香港"
     direct_only: true
     adults: 1
+    good_price_twd: 4500  # 社群好價線（含稅含行李來回）：低於此價就通知，不論基準
   - id: "MFM"
     color: "#007A4D"      # 前端票根左緣色條
     origin: "TPE"
@@ -19,6 +20,7 @@ routes:
     label: "桃園 ⇄ 澳門"
     direct_only: true
     adults: 1
+    good_price_twd: 5000
   - id: "TYO"
     color: "#23468F"      # 前端票根左緣色條
     origin: "TPE"
@@ -28,6 +30,7 @@ routes:
     direct_only: true
     adults: 1
     stay_nights: [4, 5, 6]
+    good_price_twd: 9000
 window:
   days_ahead: 30
   min_lead_days: 2
@@ -50,6 +53,15 @@ baggage:
     HB: {HKG: 1520}         # 大灣區航空 HK$380（以 1:4.0 換算）
   # 樂桃 MM、台灣虎航 IT、ZIPAIR ZG、香港航空 HX 查不到可靠數字：走下方估算並標示「行李費估算」
   unknown_fee_twd: 1500     # 不在 included 也不在 fees_twd 的航空：用此值估算並標示「行李費估算」
+# 優惠須知：推播與票根都會先列出。2026-11-02 依 PTT／Threads／新聞整理，可信度中，以航空公司官網為準。
+notices:
+  airlines:
+    IT: ["手提 10kg、54×38×23cm，立體量架連輪子都算，超標每件罰 2,000", "促銷票限買來回：去程沒搭，回程會被取消"]
+    UO: ["手提＋隨身物品合計 7kg，腰包也算一件"]
+    MM: ["手提 10kg、三邊合計 115cm，腳輪和握把也算"]
+  late_arrival:             # 當地抵達時間晚於 after（或 05:00 前）時提醒
+    NRT: {after: "21:30", text: "深夜抵達成田：電車與巴士可能已收班，計程車到新宿約 ¥24,000"}
+    HND: {after: "23:30", text: "深夜抵達羽田：計程車有深夜加成，到新宿約 ¥9,800"}
 baseline:
   google_stat: "mid"
   lookback_days: 45

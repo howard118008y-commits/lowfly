@@ -8,6 +8,7 @@ from .baseline import MIN_TP_PAIRS, compute_baseline, tp_average, tp_sample_coun
 from .config import ROOT
 from .dates import date_pairs, google_url, pair_key, parse_time, split_key
 from .models import FLIGHT_FIELDS, number
+from .notices import deal_notes, good_price
 from .sources.travelpayouts import AIRLINE_ZH
 from .state import write_json
 
@@ -44,6 +45,7 @@ def build_pairs(cfg: dict, state: dict, now: datetime) -> dict:
                            "bag_estimated": bool(p.get(f"{prefix}_bag_estimated")) if price is not None else False,
                            "ratio": baseline.ratio(price) if baseline and price is not None else None,
                            "airline": airline, **flight,
+                           "notes": deal_notes(cfg, flight["airline_code"], flight["destination_airport"], flight["arrive_time"]) if price is not None else [],
                            "verified": verified, "checked_at": p.get("last_serpapi" if verified else "tp_at"),
                            "price_level": p.get("price_level"), "tp_price": p.get("tp_price"), "tp_at": p.get("tp_at"),
                            "url": p.get("last_url" if verified else "tp_url") or "",
@@ -64,14 +66,14 @@ def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_coun
             for key, item in state["digest_pool"]["items"].items():
                 if key not in indexed or split_key(key)[0] != route["id"] or baseline.ratio(item["price"]) > cfg["thresholds"]["digest"]:
                     continue
-                deals.append({**item, "ratio": baseline.ratio(item["price"]),
+                deals.append({**item, "ratio": baseline.ratio(item["price"]), "notes": indexed[key]["notes"],
                               "google_flights_url": indexed[key]["google_flights_url"]})
         mine = [p for p in pairs if p["route_id"] == route["id"]]
         verified = [p for p in mine if p["verified"]]
         cached = [p for p in mine if p["source"] == "travelpayouts"]
         routes.append({"id": route["id"], "label": route["label"], "origin": route["origin"],
                        "destination": route["destination"], "direct_only": route["direct_only"], "adults": route["adults"],
-                       "stay_nights": route["stay_nights"], "color": route.get("color"),
+                       "stay_nights": route["stay_nights"], "color": route.get("color"), "good_price": good_price(route),
                        "baseline": {"value": baseline.value if baseline else None,
                                     "google_low": baseline.google_low if baseline else None, "google_high": baseline.google_high if baseline else None,
                                     "n_ranges": baseline.n_ranges if baseline else 0, "lookback_days": cfg["baseline"]["lookback_days"],

@@ -159,7 +159,7 @@ test('有班次資料時畫時間軸、航空公司與價格條碼；沒有半�
   assert.doesNotMatch(html,/去訂票[^<]*[→↗]|看其他日期[^<]*[→↗]/);
   assert.doesNotMatch(html,/undefined|null|\(\)|（）/);
   assert.doesNotMatch(html,/class="stamp"/);
-  assert.match(nodes['home-title'].textContent,/三條航線都還沒有半價票/);
+  assert.match(nodes['home-title'].textContent,/三條航線都還沒有好價票/);
 });
 
 test('舊資料缺航班欄位時不畫時間軸，也不出現 undefined', async () => {
@@ -247,7 +247,7 @@ test('票根兩欄並列不含行李／含行李；含託運單欄；舊資料�
   assert.match(html,/不含行李<\/small><div class="fare-price"><small>NT\$<\/small>3,000/);
   assert.match(html,/含行李<\/small><div class="fare-price"><small>NT\$<\/small>5,000/);
   assert.match(html,/20kg 來回</);
-  assert.match(html,/半價以含行李價判斷/);
+  assert.match(html,/半價與好價都以含行李價判斷/);
   assert.doesNotMatch(html,/行李費估算/);
   html=(await run(fare(3000,true),20))['route-cards'].innerHTML;
   assert.match(html,/20kg 來回，行李費估算/);
@@ -267,4 +267,16 @@ test('票根顯示近 30 天含行李均價與筆數；舊資料沒有均價時�
   assert.match(nodes['route-cards'].innerHTML,/近 30 天含行李均價 <b>NT\$ 7,100<\/b>，5 筆/);
   nodes=await withItem(ticketItem());
   assert.doesNotMatch(nodes['route-cards'].innerHTML,/均價/);
+});
+
+test('含行李總價 ≤ 好價線蓋「好價」章並成為開頭；優惠須知列在價格下方', async () => {
+  const item=ticketItem({price:4200,total:4200,fare:4200,bag_fee:0,ratio:null,notes:['手提＋隨身物品合計 7kg，腰包也算一件','23:25 深夜抵達']});
+  const nodes=await appHarness({routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:item,good_price:4500}})});
+  const html=nodes['route-cards'].innerHTML;
+  assert.match(html,/class="stamp"[^>]*>好價</);
+  assert.match(nodes['home-title'].textContent,/^香港有好價票：11\/27 NT\$ 4,200$/);
+  assert.match(html,/<div class="t-notes"><strong>須知<\/strong><ul><li>手提＋隨身物品合計 7kg，腰包也算一件<\/li><li>23:25 深夜抵達<\/li><\/ul><\/div>/);
+  assert.ok(html.indexOf('t-notes')<html.indexOf('去訂票'));
+  const plain=(await appHarness({routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:{...item,price:4600,total:4600,fare:4600,notes:[]},good_price:4500}})}))['route-cards'].innerHTML;
+  assert.doesNotMatch(plain,/class="stamp"|t-notes/);
 });

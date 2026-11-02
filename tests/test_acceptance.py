@@ -118,9 +118,8 @@ def test_13_alert_image_and_caption(run_scan, tmp_path):
         image.verify()
     caption = scanner.tg.sent[0]
     assert len(caption) <= 1024
-    expected = ("✈️ <b>低飛 LowFly｜神票 ≤50%</b>\n桃園 ⇄ 澳門 直飛來回（3 晚）\n"
-                "出發 11/14（六） → 回程 11/17（二）\n<b>NT$ 3,980</b>（基準 NT$ 8,600，-54%）\n"
-                "航空：長榮航空\nGoogle 價位：low｜典型區間 NT$ 7,200～10,000\n"
+    expected = ("✈️ <b>神票｜桃園 ⇄ 澳門 NT$ 3,980</b>\n基準 NT$ 8,600（-54%）\n長榮航空\n"
+                "去 11/14（六） → 回 11/17（二），3 晚\nGoogle 價位：low｜典型區間 NT$ 7,200～10,000\n"
                 '🔗 <a href="https://www.google.com/travel/flights?q=x">Google Flights 查看／訂票</a>')
     assert caption == expected
 

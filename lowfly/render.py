@@ -70,18 +70,20 @@ def sparkline(draw, points: list, box: tuple[int, int, int, int]):
 
 
 def render_alert(offer, baseline, cfg: dict, state: dict, output_dir: Path) -> Path:
+    ratio = baseline.ratio(offer.price) if baseline else None
     image = Image.new("RGB", SIZE, "#F5F8F3")
     draw = ImageDraw.Draw(image)
     draw.rounded_rectangle((28, 28, 1172, 647), 28, fill="white", outline="#DFE8DF", width=2)
     draw_text(draw, (65, 56), cfg["app_name"], 36, bold=True, width=850)
     draw.rounded_rectangle((1003, 58, 1127, 110), 16, fill=GREEN)
-    draw_text(draw, (1030, 61), "神票", 30, "white", width=100)
+    draw_text(draw, (1030, 61), "神票" if ratio is not None and ratio <= cfg["thresholds"]["instant"] else "好價", 30, "white", width=100)
     draw_text(draw, (65, 148), f"{get_route(cfg, offer.route_id)['label']} 直飛來回 · {offer.nights} 晚", 36)
     draw_text(draw, (65, 207), f"{fmt_date(offer.outbound)} → {fmt_date(offer.inbound)}", 36)
     draw_text(draw, (60, 282), fmt_money(offer.price), 120, width=810, bold=True)
-    draw_text(draw, (875, 325), fmt_pct(baseline.ratio(offer.price)), 72, GREEN, width=270, bold=True)
+    if ratio is not None:
+        draw_text(draw, (875, 325), fmt_pct(ratio), 72, GREEN, width=270, bold=True)
     note = " · 快取價・未經 Google 驗證" if offer.source == "travelpayouts" else ""
-    draw_text(draw, (65, 447), f"基準 {fmt_money(baseline.value)} · {offer.airline}{note}", 32, MUTED)
+    draw_text(draw, (65, 447), f"{f'基準 {fmt_money(baseline.value)}' if baseline else '基準累積中'} · {offer.airline}{note}", 32, MUTED)
     bag = bag_line(cfg, offer.fare, offer.bag_fee, offer.bag_estimated)
     if bag:
         draw_text(draw, (65, 487), bag, 26, MUTED)

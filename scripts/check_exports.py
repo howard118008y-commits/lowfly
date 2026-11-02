@@ -37,6 +37,7 @@ def validate(folder: Path) -> None:
         assert isinstance(route["baseline"]["samples"], int) and route["baseline"]["min_samples"] > 0
         assert route.get("color") is None or re.fullmatch(r"#[0-9A-Fa-f]{6}", route["color"])
         assert route["baseline"].get("source") in (None, "google", "travelpayouts")
+        assert route.get("good_price") is None or (isinstance(route["good_price"], (int, float)) and route["good_price"] > 0)
         avg = route["average"]
         assert avg["days"] > 0 and isinstance(avg["samples"], int) and (avg["value"] is None) == (avg["samples"] == 0)
         assert (route["baseline"]["value"] is None) == (route["baseline"]["source"] is None)
@@ -57,12 +58,13 @@ def validate(folder: Path) -> None:
     for pair in pairs:
         for field in ("pair_key", "route_id", "outbound", "inbound", "nights", "price", "source", "ratio", "airline", "verified", "checked_at", "price_level", "tp_price", "url",
                       "total", "fare", "bag_fee", "bag_estimated", "airline_code", "flight_no", "depart_time", "arrive_time",
-                      "return_depart_time", "origin_airport", "destination_airport", "duration_to", "duration_back"):
+                      "return_depart_time", "origin_airport", "destination_airport", "duration_to", "duration_back", "notes"):
             assert field in pair, f"pair 缺少 {field}"
         assert pair["route_id"] in baselines
         assert pair["price"] is None or (isinstance(pair["price"], (float, int)) and pair["price"] > 0)
         assert pair["source"] in (None, "serpapi", "travelpayouts")
         assert pair["total"] == pair["price"]
+        assert isinstance(pair["notes"], list) and all(isinstance(note, str) and note for note in pair["notes"])
         for clock in ("depart_time", "arrive_time", "return_depart_time"):
             assert pair[clock] is None or re.fullmatch(r"\d{2}:\d{2}", pair[clock]), f"{clock} 須為 HH:MM 或 None"
         for minutes in ("duration_to", "duration_back"):
