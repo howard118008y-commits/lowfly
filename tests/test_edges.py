@@ -284,7 +284,7 @@ def test_export_prefers_google_then_tp_then_null(cfg):
     pairs = {p["pair_key"]:p for p in build_pairs(cfg,state,NOW)["pairs"]}
     assert pairs[KEY]["price"] == 6000 and pairs[KEY]["verified"]
     assert pairs[KEY2]["price"] == 5000 and not pairs[KEY2]["verified"]
-    assert sum(p["price"] is None for p in pairs.values()) == 87 * 3 - 2
+    assert sum(p["price"] is None for p in pairs.values()) == 29 * 5 * 3 - 2
 
 
 def test_dry_run_writes_no_files(tmp_path, monkeypatch):

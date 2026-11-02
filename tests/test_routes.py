@@ -20,7 +20,7 @@ SAME_DATES = "2026-11-14_2026-11-17"
 
 def test_a_config_loads_three_routes_in_priority_order(cfg):
     assert [r["id"] for r in cfg["routes"]] == ["HKG", "MFM", "TYO"]
-    assert {r["id"]: r["stay_nights"] for r in cfg["routes"]} == {"HKG": [3, 4, 5], "TYO": [4, 5, 6], "MFM": [3, 4, 5]}
+    assert {r["id"]: r["stay_nights"] for r in cfg["routes"]} == {"HKG": [1, 2, 3, 4, 5], "TYO": [1, 2, 4, 5, 6], "MFM": [1, 2, 3, 4, 5]}
     tyo = cfg["routes"][2]
     assert (tyo["destination"], tyo["serpapi_arrival"]) == ("TYO", "NRT,HND")
     assert all(r["direct_only"] and r["adults"] == 1 and r["origin"] == "TPE" for r in cfg["routes"])
@@ -149,7 +149,7 @@ def test_e_summary_routes_in_priority_order(cfg):
     summary = build_summary(cfg, state_with_baseline(), NOW)
     assert [r["id"] for r in summary["routes"]] == ["HKG", "MFM", "TYO"]
     assert not {"route", "baseline", "deals", "cheapest_verified"} & set(summary)
-    assert summary["routes"][2]["stay_nights"] == [4, 5, 6]
+    assert summary["routes"][2]["stay_nights"] == [1, 2, 4, 5, 6]
     assert summary["routes"][1]["baseline"]["value"] == 8600
 
 

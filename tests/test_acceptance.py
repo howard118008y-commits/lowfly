@@ -131,7 +131,7 @@ def test_14_sparse_heatmap(cfg, tmp_path):
         state["pairs"][pair_key("HKG", out, back)] = {"last_price": 3980} if index < 10 else {"tp_price": 5812}
     path = render_digest(cfg, state, NOW, compute_baseline(state, cfg, NOW, "HKG"), 20, tmp_path)
     with Image.open(path) as image:
-        assert image.size == (1200, 675)
+        assert image.size == (1200, 855)   # 5 種晚數一段：169 + 54 + 90×5 + 182
         image.verify()
 
 
@@ -141,7 +141,7 @@ def test_15_all_json_contracts(cfg, run_scan, tmp_path):
     payloads = export_all(cfg, scanner.state, NOW, scanner.history_rows, target)
     assert {p.name for p in target.iterdir()} == {f"{name}.json" for name in ("summary", "pairs", "history", "alerts")}
     assert all(value["generated_at"] == NOW.isoformat(timespec="seconds") for value in payloads.values())
-    assert len(payloads["pairs"]["pairs"]) == 87 * 3
+    assert len(payloads["pairs"]["pairs"]) == 29 * 5 * 3   # 29 個出發日 × 5 種晚數 × 3 條航線
     validate(target)
 
 

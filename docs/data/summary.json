@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T22:43:07+08:00",
+  "generated_at": "2026-11-02T23:08:03+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -10,6 +10,8 @@
       "direct_only": true,
       "adults": 1,
       "stay_nights": [
+        1,
+        2,
         3,
         4,
         5
@@ -76,6 +78,8 @@
       "direct_only": true,
       "adults": 1,
       "stay_nights": [
+        1,
+        2,
         3,
         4,
         5
@@ -140,6 +144,8 @@
       "direct_only": true,
       "adults": 1,
       "stay_nights": [
+        1,
+        2,
         4,
         5,
         6
@@ -207,6 +213,8 @@
     "days_ahead": 60,
     "min_lead_days": 2,
     "stay_nights": [
+      1,
+      2,
       3,
       4,
       5

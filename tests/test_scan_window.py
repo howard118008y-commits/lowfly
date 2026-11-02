@@ -36,7 +36,7 @@ def test_promo_month_spreads_serpapi_budget_over_more_runs(run_scan, cfg):
 def test_60_day_digest_image_splits_into_two_bands(cfg, tmp_path):
     cfg["window"]["days_ahead"] = 60
     path = render_digest(cfg, state_with_baseline(), NOW, None, 0, tmp_path)
-    assert Image.open(path).size == (1200, 819)   # 30 天仍是 1200×675（test_14）
+    assert Image.open(path).size == (1200, 1059)  # 每段 54 + 60×5；30 天一段見 test_14
 
 
 def test_alert_lists_other_departure_days_at_same_price(run_scan, cfg):
