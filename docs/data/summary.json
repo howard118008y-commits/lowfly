@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T15:42:52+08:00",
+  "generated_at": "2026-11-02T15:50:04+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -32,6 +32,10 @@
         "nights": 4,
         "price": 4496.0,
         "source": "travelpayouts",
+        "total": 4496.0,
+        "fare": null,
+        "bag_fee": null,
+        "bag_estimated": false,
         "ratio": null,
         "airline": "UO",
         "verified": false,
@@ -73,6 +77,10 @@
         "nights": 4,
         "price": 7829.0,
         "source": "travelpayouts",
+        "total": 7829.0,
+        "fare": null,
+        "bag_fee": null,
+        "bag_estimated": false,
         "ratio": null,
         "airline": "TR",
         "verified": false,
@@ -114,6 +122,10 @@
         "nights": 4,
         "price": 6389.0,
         "source": "travelpayouts",
+        "total": 6389.0,
+        "fare": null,
+        "bag_fee": null,
+        "bag_estimated": false,
         "ratio": null,
         "airline": "澳門航空",
         "verified": false,
@@ -127,6 +139,10 @@
     }
   ],
   "currency": "TWD",
+  "baggage": {
+    "checked_kg": 20,
+    "pieces_each_way": 1
+  },
   "timezone": "Asia/Taipei",
   "window": {
     "days_ahead": 30,

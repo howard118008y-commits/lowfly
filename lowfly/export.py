@@ -27,8 +27,14 @@ def build_pairs(cfg: dict, state: dict, now: datetime) -> dict:
             verified = number(p.get("last_price")) is not None
             price = p.get("last_price") if verified else p.get("tp_price")
             source = "serpapi" if verified else ("travelpayouts" if price is not None else None)
+            prefix = "last" if verified else "tp"
             result.append({"pair_key": key, "route_id": route["id"], "outbound": out.isoformat(), "inbound": back.isoformat(),
                            "nights": (back - out).days, "price": price, "source": source,
+                           # price 與 total 都是含行李總價；fare 為原票價。舊狀態沒有行李拆分時 fare/bag_fee 留空，
+                           # 前端就不顯示「票價＋行李」，避免把未知行李費誤標成「已含」。
+                           "total": price, "fare": p.get(f"{prefix}_fare") if price is not None else None,
+                           "bag_fee": p.get(f"{prefix}_bag_fee") if price is not None and p.get(f"{prefix}_fare") is not None else None,
+                           "bag_estimated": bool(p.get(f"{prefix}_bag_estimated")) if price is not None else False,
                            "ratio": baseline.ratio(price) if baseline and price is not None else None,
                            "airline": p.get("last_airline" if verified else "tp_airline") if price is not None else None,
                            "verified": verified, "checked_at": p.get("last_serpapi" if verified else "tp_at"),
@@ -68,7 +74,9 @@ def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_coun
                        "cheapest_cached": min(cached, key=lambda p: p["price"]) if cached else None})
     sc = cfg["sources"]["serpapi"]
     return {"generated_at": now.isoformat(timespec="seconds"), "app": cfg["app_name"], "routes": routes,
-            "currency": cfg["currency"], "timezone": cfg["timezone"], "window": cfg["window"], "thresholds": cfg["thresholds"],
+            "currency": cfg["currency"], "baggage": {"checked_kg": (cfg.get("baggage") or {}).get("checked_kg", 0),
+                                                      "pieces_each_way": (cfg.get("baggage") or {}).get("pieces_each_way", 1)},
+            "timezone": cfg["timezone"], "window": cfg["window"], "thresholds": cfg["thresholds"],
             "budget": {"serpapi_used_month": state["serpapi"]["used_month"], "serpapi_quota": sc["monthly_quota"],
                        "serpapi_used_day": state["serpapi"]["used_day"], "serpapi_daily_budget": sc["daily_budget"],
                        "monthly_safety": sc["monthly_safety"], "reserve_for_candidates": sc["reserve_for_candidates"],

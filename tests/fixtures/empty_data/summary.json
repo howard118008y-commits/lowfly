@@ -76,6 +76,10 @@
     }
   ],
   "currency": "TWD",
+  "baggage": {
+    "checked_kg": 20,
+    "pieces_each_way": 1
+  },
   "timezone": "Asia/Taipei",
   "window": {
     "days_ahead": 30,

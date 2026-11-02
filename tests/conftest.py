@@ -26,7 +26,9 @@ def block_network(monkeypatch):
 
 @pytest.fixture
 def cfg():
-    return load_config()
+    config = load_config()
+    config["baggage"]["checked_kg"] = 0   # 既有測試以票價＝總價為前提；行李另見 test_baggage.py
+    return config
 
 
 @pytest.fixture

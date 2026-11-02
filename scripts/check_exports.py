@@ -17,7 +17,7 @@ def validate(folder: Path) -> None:
     for timestamp in timestamps:
         assert datetime.fromisoformat(timestamp).tzinfo is not None, "時間必須含時區"
     summary, pairs = docs["summary"], docs["pairs"]["pairs"]
-    for field in ("app", "routes", "window", "thresholds", "budget", "stats"):
+    for field in ("app", "routes", "window", "thresholds", "budget", "stats", "baggage"):
         assert field in summary, f"summary 缺少 {field}"
     for removed in ("route", "baseline", "deals", "cheapest_verified"):
         assert removed not in summary, f"summary 不應再有頂層 {removed}"
@@ -50,11 +50,16 @@ def validate(folder: Path) -> None:
     assert len({p["pair_key"] for p in pairs}) == len(pairs), "日期組合重複"
     baselines = {r["id"]: r["baseline"]["value"] for r in routes}
     for pair in pairs:
-        for field in ("pair_key", "route_id", "outbound", "inbound", "nights", "price", "source", "ratio", "airline", "verified", "checked_at", "price_level", "tp_price", "url"):
+        for field in ("pair_key", "route_id", "outbound", "inbound", "nights", "price", "source", "ratio", "airline", "verified", "checked_at", "price_level", "tp_price", "url",
+                      "total", "fare", "bag_fee", "bag_estimated"):
             assert field in pair, f"pair 缺少 {field}"
         assert pair["route_id"] in baselines
         assert pair["price"] is None or (isinstance(pair["price"], (float, int)) and pair["price"] > 0)
         assert pair["source"] in (None, "serpapi", "travelpayouts")
+        assert pair["total"] == pair["price"]
+        if pair["price"] is not None and pair["fare"] is not None:   # 舊狀態沒有行李拆分時兩者皆為 None
+            assert pair["bag_fee"] >= 0 and abs(pair["fare"] + pair["bag_fee"] - pair["total"]) < 1e-6
+        assert (pair["fare"] is None) == (pair["bag_fee"] is None)
         assert pair["verified"] == (pair["source"] == "serpapi")
         if pair["ratio"] is not None:
             value = baselines[pair["route_id"]]

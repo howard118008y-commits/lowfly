@@ -7,6 +7,7 @@ from dataclasses import replace
 from datetime import datetime, timedelta
 from pathlib import Path
 
+from .baggage import bag_fee, bag_line
 from .baseline import Baseline, compute_baseline
 from .config import ROOT
 from .dates import date_pairs, fmt_date, google_url, months_covering, pair_key, parse_time, split_key
@@ -52,7 +53,7 @@ class Scanner:
                     try:
                         offers = self.tp_fn(route["origin"], route["destination"], month,
                                             self.secrets.travelpayouts_token, cfg["currency"], route["direct_only"])
-                        for offer in (replace(o, route_id=rid) for o in offers):
+                        for offer in (self._stamp(o, rid) for o in offers):
                             if self._valid_offer(offer) and offer.pair_key in keys:
                                 if offer.pair_key not in tp_best or offer.price < tp_best[offer.pair_key].price:
                                     tp_best[offer.pair_key] = offer
@@ -69,7 +70,7 @@ class Scanner:
             if result is None:
                 break
             checked.add(key)
-            result.offers = [o for o in (replace(o, route_id=split_key(key)[0]) for o in result.offers)
+            result.offers = [o for o in (self._stamp(o, split_key(key)[0]) for o in result.offers)
                              if self._valid_offer(o) and o.pair_key == key]
             self._record_serpapi(key, result)
             if result.offers:
@@ -83,6 +84,11 @@ class Scanner:
         st["last_run_at"] = self.now.isoformat(timespec="seconds")
         st["last_tp_count"] = len(tp_best)
         return self.summary
+
+    def _stamp(self, offer: Offer, route_id: str) -> Offer:
+        """蓋上航線並加計行李：price 變成總價（之後所有判斷都用它），原票價留在 fare。"""
+        fee, estimated = bag_fee(self.cfg, route_id, offer.airline_code)
+        return replace(offer, route_id=route_id, fare=offer.price, price=offer.price + fee, bag_fee=fee, bag_estimated=estimated)
 
     def _baselines(self) -> dict[str, Baseline | None]:
         return {rid: compute_baseline(self.state, self.cfg, self.now, rid) for rid in self.routes}
@@ -181,18 +187,19 @@ class Scanner:
     def _record_tp(self, best: dict[str, Offer]) -> None:
         for key, p in self.state["pairs"].items():
             if key not in best:
-                for field in ("tp_price", "tp_airline", "tp_url", "tp_at"):
+                for field in ("tp_price", "tp_airline", "tp_url", "tp_at", "tp_fare", "tp_bag_fee", "tp_bag_estimated"):
                     p.pop(field, None)
         for key, offer in best.items():
             p = self.state["pairs"].setdefault(key, {})
             if p.get("tp_price") != offer.price:
                 self.history_rows.append({**offer.to_dict(), "observed_at": self.now.isoformat(timespec="seconds")})
-            p.update(tp_price=offer.price, tp_airline=offer.airline, tp_url=offer.url, tp_at=self.now.isoformat(timespec="seconds"))
+            p.update(tp_price=offer.price, tp_airline=offer.airline, tp_url=offer.url, tp_at=self.now.isoformat(timespec="seconds"),
+                     tp_fare=offer.fare, tp_bag_fee=offer.bag_fee, tp_bag_estimated=offer.bag_estimated)
         # TP 基準用的累積樣本：每組日期每天一筆（同日多次掃描只留最新），保留 lookback_days 天。
         samples = self.state.setdefault("tp_samples", {})
         for key, offer in best.items():
             samples[f"{key}|{self.now.date().isoformat()}"] = {
-                "route": offer.route_id, "price": offer.price, "at": self.now.isoformat(timespec="seconds")}
+                "route": offer.route_id, "price": offer.price, "basis": "total", "at": self.now.isoformat(timespec="seconds")}
         cutoff = self.now - timedelta(days=int(self.cfg["baseline"]["lookback_days"]))
         for k in [k for k, s in samples.items() if parse_time(s["at"]) < cutoff]:
             del samples[k]
@@ -203,7 +210,8 @@ class Scanner:
         p["last_serpapi"] = at
         if result.offers:
             best = min(result.offers, key=lambda o: o.price)
-            p.update(last_price=best.price, last_airline=best.airline, last_url=best.url, last_source="serpapi")
+            p.update(last_price=best.price, last_airline=best.airline, last_url=best.url, last_source="serpapi",
+                     last_fare=best.fare, last_bag_fee=best.bag_fee, last_bag_estimated=best.bag_estimated)
             if p.get("min_price") is None or best.price < p["min_price"]:
                 p.update(min_price=best.price, min_at=at)
             for offer in result.offers:
@@ -214,7 +222,7 @@ class Scanner:
                     alert["min_price_after"] = min(alert.get("min_price_after", alert["price"]), best.price)
         else:
             p["last_empty"] = at
-            for field in ("last_price", "last_airline", "last_url", "last_source"):
+            for field in ("last_price", "last_airline", "last_url", "last_source", "last_fare", "last_bag_fee", "last_bag_estimated"):
                 p.pop(field, None)
         insight = result.insights
         if insight:
@@ -320,6 +328,9 @@ class Scanner:
                 f"出發 {fmt_date(offer.outbound)} → 回程 {fmt_date(offer.inbound)}\n"
                 f"<b>{fmt_money(offer.price)}</b>（基準 {fmt_money(baseline.value)}{source}，{fmt_pct(ratio)}）\n"
                 f"航空：{esc(offer.airline or '—')}\n")
+        bag = bag_line(cfg, offer.fare, offer.bag_fee, offer.bag_estimated)
+        if bag:
+            head += esc(bag) + "\n"
         if verified:
             text = (head + f"Google 價位：{esc(level)}｜典型區間 {fmt_range(baseline.google_low, baseline.google_high)}\n"
                     f"🔗 {link(offer.url, 'Google Flights 查看／訂票')}")
@@ -356,6 +367,9 @@ class Scanner:
             for item in items[:cfg["digest"]["top_n"]]:
                 tag = "✓ 已驗證" if item["verified"] else "⌛ 待驗證（Aviasales 快取）"
                 lines.append(f"• {esc(self.routes[item['route_id']]['label'])} {fmt_date(item['outbound'])}→{fmt_date(item['inbound'])} <b>{fmt_money(item['price'])}</b>（{fmt_pct(item['ratio'])}）{esc(item['airline'])} {tag} {link(item['url'])}")
+                bag = bag_line(cfg, item.get("fare"), item.get("bag_fee", 0), item.get("bag_estimated"))
+                if bag:
+                    lines.append(f"　{esc(bag)}")
             extra = len(items) - cfg["digest"]["top_n"]
             if extra > 0:
                 lines.append(f"…另有 {extra} 筆")

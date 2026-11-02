@@ -72,6 +72,12 @@ def validate_config(cfg: dict) -> None:
         raise ValueError("通知門檻須為 0 < instant ≤ digest ≤ 1")
     if int(thr.get("max_instant_per_run", 5)) < 1:
         raise ValueError("max_instant_per_run 須大於零")
+    bag = cfg.get("baggage") or {}
+    if float(bag.get("checked_kg", 0)) < 0 or int(bag.get("pieces_each_way", 1)) < 0 or float(bag.get("unknown_fee_twd", 0)) < 0:
+        raise ValueError("baggage 設定不得為負數")
+    for fees in (bag.get("fees_twd") or {}).values():
+        if any(float(v) < 0 for v in fees.values()):
+            raise ValueError("行李費不得為負數")
     for name in ("monthly_quota", "monthly_safety", "daily_budget", "reserve_for_candidates"):
         if int(sc[name]) < 0:
             raise ValueError(f"{name} 不得為負數")

@@ -33,6 +33,20 @@ thresholds:
   instant: 0.50
   digest: 0.70
   max_instant_per_run: 5   # 單次 run 的即時通知上限，超過的只進摘要池（防第一次跑洗版）
+# 以「含託運行李的總價」判斷半價。廉航票價不含託運要加費；傳統航空已含者不加。
+# 所有數字都在這裡，程式不寫死。Google typical 基準視為已含行李的總價近似（傳統航空為主），直接與 total 比較。
+baggage:
+  checked_kg: 20            # 0 = 只帶手提，總價＝票價
+  pieces_each_way: 1
+  # 2026-11-02 查證（多為搜尋摘要與比價站彙整，可信度中；換季或改價請以訂位頁實測為準）
+  included: [CI, BR, JX, CX, NX, JL, NH]   # 最低經濟艙已含託運（NX 32kg，其餘 23kg）
+  fees_twd:                 # 單程一件 20kg 線上預購價，依航線 id
+    UO: {HKG: 1400}         # HK Express，機場購買約 2,600
+    TR: {TYO: 940}          # 酷航，開票後加購約 1,190
+    GK: {TYO: 900}          # 捷星日本
+    HB: {HKG: 1520}         # 大灣區航空 HK$380（以 1:4.0 換算）
+  # 樂桃 MM、台灣虎航 IT、ZIPAIR ZG、香港航空 HX 查不到可靠數字：走下方估算並標示「行李費估算」
+  unknown_fee_twd: 1500     # 不在 included 也不在 fees_twd 的航空：用此值估算並標示「行李費估算」
 baseline:
   google_stat: "mid"
   lookback_days: 45

@@ -78,6 +78,8 @@ git push -u origin main
 
 雲端 Actions 會先檢查該模式需要的 Secrets：正式掃描／強制摘要需要三個（Travelpayouts、Telegram 兩個），Telegram 測試需要 Telegram 兩個，dry-run 需要 Travelpayouts，mock 不需金鑰。`SERPAPI_API_KEY` 為選用，缺席只寫 `::notice`：沒有 SerpApi 時，各航線以 Travelpayouts 近 `lookback_days` 天累積快取價（每組日期每天記一筆）的中位數當基準，累積滿 15 筆才成立，快取價 ≤ 基準 50% 仍會即時通知，訊息明確標示「未經 Google 驗證」；單次 run 即時通知上限為 `thresholds.max_instant_per_run`（預設 5，有 SerpApi 時同樣適用）。其他必要 Secrets 缺少時只列出缺少的名稱並明確失敗，不啟動掃描、不寫入正式資料，避免把略過來源的執行誤認為成功。
 
+**含託運行李的總價**：判斷半價一律用「票價＋行李費」的總價（`config.yaml` 的 `baggage`：`checked_kg`、`pieces_each_way`、`included`、`fees_twd`、`unknown_fee_twd`，費用全部在設定檔，程式不寫死）。航空代碼在 `included` 的視為已含託運（行李費 0）；在 `fees_twd` 該航線有值就用它；其餘用 `unknown_fee_twd` 估算並標示「行李費估算」；`checked_kg: 0` 代表只帶手提，總價＝票價。App 大字顯示總價，下方列出「票價＋行李」。**近似說明**：Google 典型區間視為已含行李的總價（以傳統航空為主），直接與 total 比較；Travelpayouts 基準樣本則存 total（`basis: "total"`），舊的只含票價樣本會被忽略並重新累積。
+
 ## GitHub Pages 設定
 
 1. 開啟 repo 的 **Settings → Pages**。

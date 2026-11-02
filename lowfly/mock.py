@@ -35,9 +35,10 @@ def make_sources(now: datetime, cfg: dict):
         value = price(route["id"], outbound, inbound)
         url = google_url(cfg, route, outbound, inbound)
         airlines = ["台灣虎航", "長榮航空", "澳門航空", "星宇航空"]
-        airline = airlines[date.fromisoformat(outbound).day % 4]
-        offers = [Offer("serpapi", outbound, inbound, value, currency, airline, True, url, at),
-                  Offer("serpapi", outbound, inbound, value + 1800, currency, "長榮航空", True, url, at)]
+        codes = ["IT", "BR", "NX", "JX"]
+        index = date.fromisoformat(outbound).day % 4
+        offers = [Offer("serpapi", outbound, inbound, value, currency, airlines[index], True, url, at, airline_code=codes[index]),
+                  Offer("serpapi", outbound, inbound, value + 1800, currency, "長榮航空", True, url, at, airline_code="BR")]
         history = [[int((now - timedelta(days=10 - i)).timestamp()), value + (10 - i) * 180] for i in range(11)]
         scale = SCALE.get(route["id"], 1)
         return SearchResult(offers, Insights(value, "low" if value < 7200 * scale else "typical", 7200 * scale, 10000 * scale, history), url, 2)
@@ -53,6 +54,6 @@ def make_sources(now: datetime, cfg: dict):
                 if (day + nights) % 4 == 0:
                     continue
                 offers.append(Offer("travelpayouts", out.isoformat(), back.isoformat(), price(route["id"], out.isoformat(), back.isoformat()),
-                                    currency, "台灣虎航", True, "https://www.aviasales.com", at))
+                                    currency, "台灣虎航", True, "https://www.aviasales.com", at, airline_code="IT"))
         return offers
     return serp, tp

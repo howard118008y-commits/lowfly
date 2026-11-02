@@ -184,3 +184,18 @@ test('首次離線無資料時在主要票價卡顯示可恢復的錯誤', async
   assert.match(nodes['route-cards'].innerHTML,/重新整理/);
   assert.equal(nodes.refresh.disabled,false);
 });
+
+test('卡片大字為總價，下方列出票價＋行李與估算標示；不帶託運時不顯示行李行', async () => {
+  const fare=(bag,est)=>({pair_key:'HKG:2026-11-10_2026-11-13',outbound:'2026-11-10',inbound:'2026-11-13',nights:3,price:3000+bag,total:3000+bag,fare:3000,bag_fee:bag,bag_estimated:est,ratio:.5,verified:true,airline:'酷航',google_flights_url:'https://www.google.com/travel/flights'});
+  const run=(bag,est,kg)=>appHarness({baggage:{checked_kg:kg,pieces_each_way:1},routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:fare(bag,est)}})});
+  let html=(await run(2000,false,20))['route-cards'].innerHTML;
+  assert.match(html,/<small>NT\$<\/small>5,000/);
+  assert.match(html,/票價 NT\$ 3,000＋行李 NT\$ 2,000（20kg 來回）/);
+  assert.doesNotMatch(html,/行李費估算/);
+  html=(await run(3000,true,20))['route-cards'].innerHTML;
+  assert.match(html,/行李 NT\$ 3,000（20kg 來回，行李費估算）/);
+  html=(await run(0,false,20))['route-cards'].innerHTML;
+  assert.match(html,/票價 NT\$ 3,000＋行李已含/);
+  html=(await run(0,false,0))['route-cards'].innerHTML;
+  assert.doesNotMatch(html,/行李/);
+});

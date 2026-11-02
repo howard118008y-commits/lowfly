@@ -7,6 +7,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+from .baggage import bag_line
 from .config import get_route
 from .dates import date_pairs, fmt_date, pair_key
 from .notifier import fmt_money, fmt_pct
@@ -81,6 +82,9 @@ def render_alert(offer, baseline, cfg: dict, state: dict, output_dir: Path) -> P
     draw_text(draw, (875, 325), fmt_pct(baseline.ratio(offer.price)), 72, GREEN, width=270, bold=True)
     note = " · 快取價・未經 Google 驗證" if offer.source == "travelpayouts" else ""
     draw_text(draw, (65, 447), f"基準 {fmt_money(baseline.value)} · {offer.airline}{note}", 32, MUTED)
+    bag = bag_line(cfg, offer.fare, offer.bag_fee, offer.bag_estimated)
+    if bag:
+        draw_text(draw, (65, 487), bag, 26, MUTED)
     history = state.get("pairs", {}).get(offer.pair_key, {}).get("price_history", [])
     sparkline(draw, history, (68, 525, 1128, 600))
     output_dir.mkdir(parents=True, exist_ok=True)

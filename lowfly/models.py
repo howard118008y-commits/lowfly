@@ -27,6 +27,15 @@ class Offer:
     url: str = ""
     observed_at: str = ""
     route_id: str = ""
+    airline_code: str | None = None
+    # 判斷用的 price 是「總價」（票價＋行李費）；來源回傳的原票價由 scanner 蓋章時存進 fare。
+    fare: float | None = None
+    bag_fee: float = 0.0
+    bag_estimated: bool = False
+
+    @property
+    def total(self) -> float:
+        return self.price
 
     @property
     def pair_key(self) -> str:

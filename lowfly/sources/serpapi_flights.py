@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 
@@ -37,6 +38,12 @@ class SerpApiError(RuntimeError):
     pass
 
 
+def _airline_code(leg: dict) -> str | None:
+    """由航班號（如 "BR 198"）取 IATA 代碼；取不到回 None（行李費走 unknown）。"""
+    match = re.match(r"^([A-Z0-9]{2})\s*\d", str(leg.get("flight_number") or "").strip().upper())
+    return match.group(1) if match else None
+
+
 def search_round_trip(origin: str, destination: str, outbound: str, inbound: str, api_key: str,
                       currency: str = "TWD", direct_only: bool = True, adults: int = 1,
                       timeout: int = 60) -> SearchResult:
@@ -63,7 +70,8 @@ def search_round_trip(origin: str, destination: str, outbound: str, inbound: str
         if price is None or (direct_only and not direct):
             continue
         offers.append(Offer("serpapi", outbound, inbound, price, currency,
-                            legs[0].get("airline", "") if legs else "", direct, url, at))
+                            legs[0].get("airline", "") if legs else "", direct, url, at,
+                            airline_code=_airline_code(legs[0]) if legs else None))
     pi = data.get("price_insights")
     insights = None
     if isinstance(pi, dict):

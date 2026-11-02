@@ -45,5 +45,6 @@ def fetch_month(origin: str, destination: str, month: str, token: str, currency:
         if urlparse(link).scheme != "https" or urlparse(link).hostname != "www.aviasales.com":
             link = "https://www.aviasales.com"
         code = str(row.get("airline") or "").upper()
-        offers.append(Offer("travelpayouts", out, back, price, currency, AIRLINE_ZH.get(code, code), direct, link, at))
+        offers.append(Offer("travelpayouts", out, back, price, currency, AIRLINE_ZH.get(code, code), direct, link, at,
+                            airline_code=code or None))
     return offers

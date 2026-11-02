@@ -21,6 +21,7 @@ class Baseline:
     source: str = "google"   # google：Google 典型區間；travelpayouts：該航線 TP 價格中位數
 
     def ratio(self, price: float) -> float:
+        # price 一律是含行李的總價。Google typical 視為已含行李的總價近似（傳統航空為主）。
         return price / self.value
 
 
@@ -28,9 +29,10 @@ MIN_TP_PAIRS = 15
 
 
 def _travelpayouts_median(state: dict, bc: dict, now: datetime, route_id: str, cutoff: datetime):
-    """該航線回看期內累積的 TP 樣本（每組日期每天一筆）中位數；不足 15 筆則不成立。"""
+    """該航線回看期內累積的 TP 樣本（含行李總價，每組日期每天一筆）中位數；不足 15 筆則不成立。
+    沒有 basis="total" 的舊樣本（只含票價）不可與總價混算，直接忽略。"""
     prices = [float(s["price"]) for s in state.get("tp_samples", {}).values()
-              if s.get("route") == route_id and number(s.get("price"))
+              if s.get("route") == route_id and s.get("basis") == "total" and number(s.get("price"))
               and cutoff <= parse_time(s["at"]) <= now]
     return (median(prices), len(prices)) if len(prices) >= MIN_TP_PAIRS else None
 
