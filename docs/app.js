@@ -30,12 +30,24 @@
     $("scan-time").textContent = `資料時間：${localTime(at)}`;
   }
 
-  // price 是含行李的總價；有設定託運時，在總價下方補「票價＋行李」。
-  function bagLine(item) {
+  // price 是含行李的總價（半價以此判斷）；fare 是不含行李的票價。checked_kg=0 或 fare 為空（舊資料）時只顯示一個價格。
+  function bagInfo(item) {
     const kg = bundle?.summary.baggage?.checked_kg;
-    if (!kg || item.fare == null) return "";
-    const fee = item.bag_fee || 0;
-    return `票價 ${fmtMoney(item.fare)}＋${fee ? `行李 ${fmtMoney(fee)}` : "行李已含"}（${kg}kg 來回${item.bag_estimated ? "，行李費估算" : ""}）`;
+    if (!kg || item.fare == null || item.bag_fee == null) return null;
+    return {kg, included: !item.bag_fee, estimated: Boolean(item.bag_estimated)};
+  }
+  function bagLine(item) {
+    const info = bagInfo(item);
+    if (!info) return "";
+    if (info.included) return `${fmtMoney(item.fare)}（已含 ${info.kg}kg 託運）`;
+    return `不含行李 ${fmtMoney(item.fare)}｜含行李 ${fmtMoney(item.price)}（${info.kg}kg 來回${info.estimated ? "，行李費估算" : ""}）`;
+  }
+  const priceBig = value => `<div class="fare-price"><small>NT$</small>${e(Math.round(value).toLocaleString("en-US"))}</div>`;
+  function fareBlock(item) {
+    const info = bagInfo(item);
+    if (!info) return priceBig(item.price);
+    if (info.included) return `${priceBig(item.price)}<small class="fare-note">已含 ${info.kg}kg 託運</small>`;
+    return `<div class="fare-pair"><div><small class="fare-note">不含行李</small>${priceBig(item.fare)}</div><div><small class="fare-note">含行李</small>${priceBig(item.price)}<small class="fare-note">${info.kg}kg 來回${info.estimated ? " · 行李費估算" : ""}</small></div></div><p class="fare-helper">半價以含行李價判斷</p>`;
   }
   const modeText = r => r.direct_only === false ? "來回" : "直飛來回";
   function routeCard(r) {
@@ -49,7 +61,7 @@
     const source = r.baseline?.source ? `<p class="fare-helper baseline-source">基準：${r.baseline.source === "travelpayouts" ? "Travelpayouts 中位數" : "Google"}</p>` : "";
     const adults = r.adults || 1;
     const band = `<div class="route-band"><div><span>出發</span><strong>${e(r.origin)}</strong></div><div class="route-journey"><span>${modeText(r)}</span><svg viewBox="0 0 120 24" aria-hidden="true"><path d="M2 12h40m36 0h40"/><path d="m48 12 23-8-7 8 7 8-23-8Z"/></svg><small>${adults} 位成人</small></div><div><span>目的地</span><strong>${e(r.destination)}</strong></div></div>`;
-    const body = featured ? `<div class="fare-kicker"><span>${verified ? "目前已驗證最低價" : "目前最低快取價"}</span>${badge}</div><div class="fare-price"><small>NT$</small>${e(Math.round(featured.price).toLocaleString("en-US"))}</div>${featured.ratio != null && featured.ratio < 1 ? `<p class="fare-savings">比參考價低 ${e(fmtPct(featured.ratio).replace("-", ""))}</p>` : `<p class="fare-helper">${bagLine(featured) ? "每人來回總價" : "每人來回票價"}</p>`}${bagLine(featured) ? `<p class="fare-helper bag-line">${e(bagLine(featured))}</p>` : ""}<p class="fare-date">${e(fmtDate(featured.outbound))} → ${e(fmtDate(featured.inbound))}</p><p class="fare-airline">${featured.nights} 晚 · ${e(featured.airline || "航空公司未提供")}</p>${externalLink(featured.google_flights_url, "查看航班 ↗")}<a class="fare-secondary" href="#calendar">看看其他日期 →</a>${source}` : `<div class="fare-kicker"><span>你的下一趟旅程</span></div><h2 class="fare-empty-title">等待第一筆票價</h2><p class="fare-helper">完成掃描後，好價會自動出現。</p><a class="primary-button" href="#calendar">查看出發日期 →</a>${source}`;
+    const body = featured ? `<div class="fare-kicker"><span>${verified ? "目前已驗證最低價" : "目前最低快取價"}</span>${badge}</div>${fareBlock(featured)}${featured.ratio != null && featured.ratio < 1 ? `<p class="fare-savings">比參考價低 ${e(fmtPct(featured.ratio).replace("-", ""))}</p>` : '<p class="fare-helper">每人來回票價</p>'}<p class="fare-date">${e(fmtDate(featured.outbound))} → ${e(fmtDate(featured.inbound))}</p><p class="fare-airline">${featured.nights} 晚 · ${e(featured.airline || "航空公司未提供")}</p>${externalLink(featured.google_flights_url, "查看航班 ↗")}<a class="fare-secondary" href="#calendar">看看其他日期 →</a>${source}` : `<div class="fare-kicker"><span>你的下一趟旅程</span></div><h2 class="fare-empty-title">等待第一筆票價</h2><p class="fare-helper">完成掃描後，好價會自動出現。</p><a class="primary-button" href="#calendar">查看出發日期 →</a>${source}`;
     return {featured, verified: Boolean(verified), html: `<article class="fare-card" aria-label="${e(r.label)}，${modeText(r)}，${adults} 位成人，最低票價"><h2 class="route-title">${e(r.label)}</h2>${band}<div class="fare-body">${body}</div></article>`};
   }
 
@@ -139,7 +151,7 @@
     const s = bundle.summary, q = s.budget;
     $("settings-overview").innerHTML = s.routes.map(r => `<strong>${e(r.label)} · ${modeText(r)}</strong><p>${r.adults || 1} 位成人 · ${r.stay_nights.join("／")} 晚</p>`).join("") + `<p>每天自動掃描 ${s.schedule.runs_per_day} 次</p>`;
     const routeFields = s.routes.map(r => [r.label, `${r.origin} ⇄ ${r.destination} · ${modeText(r)} · ${r.adults || 1} 位成人 · ${r.stay_nights.join("／")} 晚`]);
-    const fields = [...routeFields, ["幣別", s.currency], ["行李", s.baggage?.checked_kg > 0 ? `來回各 ${s.baggage.pieces_each_way} 件 ${s.baggage.checked_kg}kg · 以含行李總價判斷` : "只帶手提 · 總價＝票價"], ["掃描窗口", `後天起至未來 ${s.window.days_ahead} 天（最早 ${s.window.min_lead_days} 天）`], ["立即推播", `≤ 基準 ${s.thresholds.instant * 100}% · Google 驗證（SerpApi 未啟用時為 Travelpayouts 快取價）· 單次最多 ${s.thresholds.max_instant_per_run ?? 5} 則`], ["每日摘要", `≤ 基準 ${s.thresholds.digest * 100}% · ${s.digest.hour_local}:00 後首次掃描`], ["基準回看", `${s.routes[0].baseline.lookback_days} 天`], ["SerpAPI 額度", `每日 ${q.serpapi_daily_budget}／每月 ${q.serpapi_quota}，安全額 ${q.monthly_safety}`], ["候選保留", `每次最多 ${q.reserve_for_candidates} 組；${q.reverify_hours} 小時內未降價不重驗`], ["重發條件", `再降 ≥${s.dedupe.min_drop_ratio * 100}% 或超過 ${s.dedupe.cooldown_hours} 小時`], ["排程", `台北 09:17／15:17／21:17／03:17`]];
+    const fields = [...routeFields, ["幣別", s.currency], ["行李", s.baggage?.checked_kg > 0 ? `來回各 ${s.baggage.pieces_each_way} 件 ${s.baggage.checked_kg}kg · 顯示「不含行李｜含行李」，半價以含行李價判斷` : "只帶手提 · 總價＝票價"], ["掃描窗口", `後天起至未來 ${s.window.days_ahead} 天（最早 ${s.window.min_lead_days} 天）`], ["立即推播", `≤ 基準 ${s.thresholds.instant * 100}% · Google 驗證（SerpApi 未啟用時為 Travelpayouts 快取價）· 單次最多 ${s.thresholds.max_instant_per_run ?? 5} 則`], ["每日摘要", `≤ 基準 ${s.thresholds.digest * 100}% · ${s.digest.hour_local}:00 後首次掃描`], ["基準回看", `${s.routes[0].baseline.lookback_days} 天`], ["SerpAPI 額度", `每日 ${q.serpapi_daily_budget}／每月 ${q.serpapi_quota}，安全額 ${q.monthly_safety}`], ["候選保留", `每次最多 ${q.reserve_for_candidates} 組；${q.reverify_hours} 小時內未降價不重驗`], ["重發條件", `再降 ≥${s.dedupe.min_drop_ratio * 100}% 或超過 ${s.dedupe.cooldown_hours} 小時`], ["排程", `台北 09:17／15:17／21:17／03:17`]];
     $("settings-values").innerHTML = `<dl class="details">${fields.map(([name, value]) => `<div><dt>${e(name)}</dt><dd>${e(value)}</dd></div>`).join("")}</dl>`;
     const config = window.LOWFLY_CONFIG;
     const owner = config.owner || (location.hostname.endsWith(".github.io") ? location.hostname.split(".")[0] : "");

@@ -48,14 +48,14 @@ def test_a_scan_stamps_fare_bag_total(run_scan, cfg):
 
 def test_b_included_airline_has_no_bag_fee(cfg):
     assert bag_fee(cfg, "TYO", "BR") == (0.0, False)
-    assert bag_line(cfg, 6000, 0, False) == "票價 NT$ 6,000＋行李已含（20kg 來回）"
+    assert bag_line(cfg, 6000, 0, False) == "NT$ 6,000（已含 20kg 託運）"
 
 
 def test_c_unknown_airline_uses_estimate(cfg):
     assert bag_fee(cfg, "MFM", "ZZ") == (3000.0, True)
     assert bag_fee(cfg, "MFM", None) == (3000.0, True)
     assert bag_fee(cfg, "MFM", "UO") == (3000.0, True)   # UO 只列了 HKG，其他航線仍是估算
-    assert bag_line(cfg, 4000, 3000, True) == "票價 NT$ 4,000＋行李 NT$ 3,000（20kg 來回，行李費估算）"
+    assert bag_line(cfg, 4000, 3000, True) == "不含行李 NT$ 4,000｜含行李 NT$ 7,000（20kg 來回，行李費估算）"
 
 
 def test_d_zero_kg_means_total_equals_fare(cfg):
@@ -71,7 +71,7 @@ def test_e_ratio_uses_total_not_fare(run_scan, cfg):
     assert scanner.summary["instant_alerts"] == 0 and not any("神票" in text for text in scanner.tg.sent)
     item = state["digest_pool"]["items"][KEY]
     assert item["price"] == 5160 and item["fare"] == 3870 and abs(item["ratio"] - 0.6) < 1e-9
-    assert any("票價 NT$ 3,870＋行李 NT$ 1,290" in text for text in scanner.tg.sent)   # 摘要列出票價＋行李
+    assert any("不含行李 NT$ 3,870｜含行李 NT$ 5,160" in text for text in scanner.tg.sent)   # 摘要列出票價＋行李
     # 對照：不計行李時同一張票就是半價
     cfg["baggage"]["checked_kg"] = 0
     control = run_scan(state_with_baseline(), tp=tp_offer("IT", 3870))
@@ -82,7 +82,7 @@ def test_e_instant_message_shows_fare_plus_bag(run_scan, cfg):
     cfg["baggage"]["fees_twd"]["IT"]["MFM"] = 100
     scanner = run_scan(state_with_baseline(), tp=tp_offer("IT", 3500))
     alert = scanner.tg.sent[0]
-    assert "神票" in alert and "NT$ 3,700" in alert and "票價 NT$ 3,500＋行李 NT$ 200（20kg 來回）" in alert
+    assert "神票" in alert and "NT$ 3,700" in alert and "不含行李 NT$ 3,500｜含行李 NT$ 3,700（20kg 來回）" in alert
 
 
 def test_f_samples_without_basis_are_ignored(cfg):

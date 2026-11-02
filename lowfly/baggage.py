@@ -20,10 +20,11 @@ def bag_fee(cfg: dict, route_id: str, airline_code: str | None) -> tuple[float, 
 
 
 def bag_line(cfg: dict, fare, fee, estimated) -> str:
-    """「票價 NT$x＋行李 NT$y（20kg 來回）」；checked_kg=0 或沒有票價時回傳空字串。"""
+    """「不含行李 NT$x｜含行李 NT$y（20kg 來回）」；含託運航空為「NT$x（已含 20kg 託運）」；checked_kg=0 或沒有票價時回傳空字串。"""
     bag = cfg.get("baggage") or {}
     if float(bag.get("checked_kg", 0) or 0) <= 0 or fare is None:
         return ""
-    kg = f"{bag['checked_kg']:g}kg 來回" + ("，行李費估算" if estimated else "")
-    cost = f"行李 {fmt_money(fee)}" if fee else "行李已含"
-    return f"票價 {fmt_money(fare)}＋{cost}（{kg}）"
+    kg = f"{bag['checked_kg']:g}kg"
+    if not fee:
+        return f"{fmt_money(fare)}（已含 {kg} 託運）"
+    return f"不含行李 {fmt_money(fare)}｜含行李 {fmt_money(fare + fee)}（{kg} 來回{'，行李費估算' if estimated else ''}）"

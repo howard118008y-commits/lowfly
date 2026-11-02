@@ -185,17 +185,24 @@ test('首次離線無資料時在主要票價卡顯示可恢復的錯誤', async
   assert.equal(nodes.refresh.disabled,false);
 });
 
-test('卡片大字為總價，下方列出票價＋行李與估算標示；不帶託運時不顯示行李行', async () => {
-  const fare=(bag,est)=>({pair_key:'HKG:2026-11-10_2026-11-13',outbound:'2026-11-10',inbound:'2026-11-13',nights:3,price:3000+bag,total:3000+bag,fare:3000,bag_fee:bag,bag_estimated:est,ratio:.5,verified:true,airline:'酷航',google_flights_url:'https://www.google.com/travel/flights'});
-  const run=(bag,est,kg)=>appHarness({baggage:{checked_kg:kg,pieces_each_way:1},routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:fare(bag,est)}})});
-  let html=(await run(2000,false,20))['route-cards'].innerHTML;
-  assert.match(html,/<small>NT\$<\/small>5,000/);
-  assert.match(html,/票價 NT\$ 3,000＋行李 NT\$ 2,000（20kg 來回）/);
+test('卡片兩欄並列不含行李／含行李；含託運單欄；舊資料或不帶託運只顯示一個價格', async () => {
+  const fare=(bag,est,fareValue=3000)=>({pair_key:'HKG:2026-11-10_2026-11-13',outbound:'2026-11-10',inbound:'2026-11-13',nights:3,price:3000+bag,total:3000+bag,fare:fareValue,bag_fee:fareValue==null?null:bag,bag_estimated:est,ratio:.5,verified:true,airline:'酷航',google_flights_url:'https://www.google.com/travel/flights'});
+  const run=(item,kg)=>appHarness({baggage:{checked_kg:kg,pieces_each_way:1},routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:item}})});
+  let html=(await run(fare(2000,false),20))['route-cards'].innerHTML;   // UO：票價 3,000＋行李 2,000
+  assert.match(html,/不含行李<\/small><div class="fare-price"><small>NT\$<\/small>3,000/);
+  assert.match(html,/含行李<\/small><div class="fare-price"><small>NT\$<\/small>5,000/);
+  assert.match(html,/20kg 來回</);
+  assert.match(html,/半價以含行李價判斷/);
   assert.doesNotMatch(html,/行李費估算/);
-  html=(await run(3000,true,20))['route-cards'].innerHTML;
-  assert.match(html,/行李 NT\$ 3,000（20kg 來回，行李費估算）/);
-  html=(await run(0,false,20))['route-cards'].innerHTML;
-  assert.match(html,/票價 NT\$ 3,000＋行李已含/);
-  html=(await run(0,false,0))['route-cards'].innerHTML;
-  assert.doesNotMatch(html,/行李/);
+  html=(await run(fare(3000,true),20))['route-cards'].innerHTML;
+  assert.match(html,/20kg 來回 · 行李費估算/);
+  html=(await run(fare(0,false),20))['route-cards'].innerHTML;   // 傳統航空含託運：單欄
+  assert.match(html,/<small>NT\$<\/small>3,000/);
+  assert.match(html,/已含 20kg 託運/);
+  assert.doesNotMatch(html,/不含行李|含行李</);
+  html=(await run(fare(0,false,null),20))['route-cards'].innerHTML;   // 舊資料 fare 為 null
+  assert.match(html,/<small>NT\$<\/small>3,000/);
+  assert.doesNotMatch(html,/行李|託運/);
+  html=(await run(fare(0,false),0))['route-cards'].innerHTML;   // 不帶託運
+  assert.doesNotMatch(html,/行李|託運/);
 });
