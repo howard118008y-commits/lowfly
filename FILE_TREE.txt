@@ -47,3 +47,4 @@ lowfly/
   tests/frontend.test.cjs
   tests/test_acceptance.py
   tests/test_edges.py
+  tests/test_routes.py

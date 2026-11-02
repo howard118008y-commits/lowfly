@@ -38,7 +38,7 @@
     if (!bundle || !["summary", "pairs", "history", "alerts"].every(k => bundle[k] && bundle[k].generated_at)) return false;
     return new Set(Object.values(bundle).map(d => d.generated_at)).size === 1 &&
       Array.isArray(bundle.pairs.pairs) && Array.isArray(bundle.alerts.alerts) &&
-      Array.isArray(bundle.summary.deals) && typeof bundle.history.series === "object";
+      Array.isArray(bundle.summary.routes) && typeof bundle.history.series === "object";
   }
   const api = {fmtDate, fmtMoney, fmtPct, ratioClass, escapeHTML, safeURL, relativeTime, coherent};
   root.LowFly = api;

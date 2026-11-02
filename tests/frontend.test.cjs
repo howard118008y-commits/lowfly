@@ -28,7 +28,7 @@ test("時間顯示", () => {
   assert.equal(U.relativeTime("2026-11-02T00:18:00+08:00", now), "9 小時前");
 });
 test("混合批次 JSON 不得覆寫一致快取", () => {
-  const bundle = {summary:{generated_at:"a",deals:[]},pairs:{generated_at:"a",pairs:[]},history:{generated_at:"a",series:{}},alerts:{generated_at:"a",alerts:[]}};
+  const bundle = {summary:{generated_at:"a",routes:[]},pairs:{generated_at:"a",pairs:[]},history:{generated_at:"a",series:{}},alerts:{generated_at:"a",alerts:[]}};
   assert.equal(U.coherent(bundle), true);
   bundle.alerts.generated_at = "b";
   assert.equal(U.coherent(bundle), false);
@@ -102,7 +102,7 @@ test("Service Worker 首次離線沒有資料時回 503", async () => {
   assert.equal((await h.request("https://example.test/repo/data/pairs.json")).status,503);
 });
 
-async function appHarness(overrides = {}, offline = false) {
+async function appHarness(overrides = {}, offline = false, extra = {}) {
   const html = fs.readFileSync(path.join(__dirname, '../docs/index.html'), 'utf8');
   const makeElement = () => ({innerHTML:'', textContent:'', hidden:false, checked:false, dataset:{}, attributes:{},
     classList:{add(){},remove(){},toggle(){}}, setAttribute(k,v){this.attributes[k]=v;}, removeAttribute(k){delete this.attributes[k];},
@@ -110,6 +110,8 @@ async function appHarness(overrides = {}, offline = false) {
   const nodes = Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(m=>[m[1],makeElement()]));
   const payload = Object.fromEntries(['summary','pairs','history','alerts'].map(name=>[name,JSON.parse(fs.readFileSync(path.join(__dirname,`../docs/data/${name}.json`)))]));
   Object.assign(payload.summary, overrides);
+  Object.assign(payload, extra);
+  if (extra.alerts) payload.alerts.generated_at = payload.summary.generated_at;
   const document = {getElementById(id){assert.ok(nodes[id],`缺少頁面元素 ${id}`);return nodes[id];},
     querySelectorAll(selector){return selector === '.view' ? ['home','calendar','records','settings'].map(id=>Object.assign(nodes[id],{id})) : [];}};
   const context = {document,window:{LowFly:U,LOWFLY_CONFIG:{owner:'',repo:'',branch:'main'},addEventListener(){}},
@@ -121,30 +123,58 @@ async function appHarness(overrides = {}, offline = false) {
   return nodes;
 }
 
+const patchRoutes = (routes, patch) => routes.map(r => ({...r, ...(patch[r.id] || {})}));
+const baseRoutes = () => JSON.parse(fs.readFileSync(path.join(__dirname,'../docs/data/summary.json'))).routes;
+
+test('首頁依優先序疊出每條航線一張卡', async () => {
+  const nodes=await appHarness();
+  const html=nodes['route-cards'].innerHTML;
+  assert.equal((html.match(/<article class="fare-card"/g)||[]).length,3);
+  const order=['桃園 ⇄ 香港','桃園 ⇄ 東京','桃園 ⇄ 澳門'].map(label=>html.indexOf(label));
+  assert.ok(order.every(i=>i>=0)&&order[0]<order[1]&&order[1]<order[2]);
+  const codes=[...html.matchAll(/<strong>([A-Z]{3})<\/strong>/g)].map(m=>m[1]);
+  assert.deepEqual(codes,['TPE','HKG','TPE','TYO','TPE','MFM']);
+  assert.equal((html.match(/等待第一筆票價/g)||[]).length,3);
+});
+
 test('未驗證快取不會成為首頁已驗證最低價', async () => {
-  const cache={pair_key:'2026-11-02_2026-11-05',outbound:'2026-11-02',inbound:'2026-11-05',nights:3,price:999,ratio:.2,verified:false,airline:'測試航空'};
-  const nodes=await appHarness({cheapest_verified:null,deals:[cache]});
-  assert.match(nodes.cheapest.innerHTML,/等待第一筆票價/);
-  assert.doesNotMatch(nodes.cheapest.innerHTML,/999|Google 已驗證/);
+  const cache={pair_key:'HKG:2026-11-02_2026-11-05',outbound:'2026-11-02',inbound:'2026-11-05',nights:3,price:999,ratio:.2,verified:false,airline:'測試航空'};
+  const nodes=await appHarness({routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:null,deals:[cache]}})});
+  assert.match(nodes['route-cards'].innerHTML,/等待第一筆票價/);
+  assert.doesNotMatch(nodes['route-cards'].innerHTML,/999|Google 已驗證/);
   assert.match(nodes.deals.innerHTML,/快取 · 待確認/);
+  assert.match(nodes.deals.innerHTML,/桃園 ⇄ 香港/);
   assert.equal(nodes['deal-section'].hidden,false);
 });
 
-test('最低價不重複，其他好價分批展開且完整 87 組日曆可用', async () => {
-  const fare=i=>({pair_key:`2026-11-${10+i}_2026-11-${13+i}`,outbound:`2026-11-${10+i}`,inbound:`2026-11-${13+i}`,nights:3,price:3980+i,ratio:.46,verified:true,airline:'測試航空',google_flights_url:'https://www.google.com/travel/flights'});
-  const nodes=await appHarness({cheapest_verified:fare(0),deals:[0,1,2,3,4].map(fare)});
-  assert.match(nodes.cheapest.innerHTML,/3,980/);
+test('各航線最低價不重複，其他好價合併分批展開且三條航線日曆各自完整', async () => {
+  const fare=(r,i)=>({pair_key:`${r}:2026-11-${10+i}_2026-11-${13+i}`,outbound:`2026-11-${10+i}`,inbound:`2026-11-${13+i}`,nights:3,price:3980+i,ratio:.46,verified:true,airline:'測試航空',google_flights_url:'https://www.google.com/travel/flights'});
+  const routes=patchRoutes(baseRoutes(),{MFM:{cheapest_verified:fare('MFM',0),deals:[0,1,2,3,4].map(i=>fare('MFM',i))}});
+  const nodes=await appHarness({routes});
+  assert.match(nodes['route-cards'].innerHTML,/3,980/);
   assert.equal((nodes.deals.innerHTML.match(/<article/g)||[]).length,2);
   assert.equal((nodes['remaining-deals'].innerHTML.match(/<article/g)||[]).length,2);
   assert.doesNotMatch(nodes.deals.innerHTML,/3,980/);
   assert.equal(nodes['more-deals'].hidden,false);
-  assert.equal((nodes.heatmap.innerHTML.match(/data-pair=/g)||[]).length,87);
-  assert.match(nodes.heatmap.innerHTML,/<th scope="col">出發日<\/th><th scope="col">3 晚/);
+  assert.equal((nodes.heatmap.innerHTML.match(/data-pair=/g)||[]).length,87*3);
+  assert.equal((nodes.heatmap.innerHTML.match(/<section class="route-block">/g)||[]).length,3);
+  const h=nodes.heatmap.innerHTML;
+  assert.ok(h.indexOf('桃園 ⇄ 香港')<h.indexOf('桃園 ⇄ 東京')&&h.indexOf('桃園 ⇄ 東京')<h.indexOf('桃園 ⇄ 澳門'));
+  assert.match(h,/<th scope="col">出發日<\/th><th scope="col">3 晚/);
+  assert.match(h,/<th scope="col">出發日<\/th><th scope="col">4 晚<\/th><th scope="col">5 晚<\/th><th scope="col">6 晚/);
+});
+
+test('通知頁顯示航線，設定頁列出所有航線與停留晚數', async () => {
+  const alert={pair_key:'MFM:2026-11-14_2026-11-17',route_id:'MFM',route_label:'桃園 ⇄ 澳門',alerted_at:'2026-11-02T09:30:00+08:00',price_at_alert:3980,ratio_at_alert:.46,airline:'長榮航空',latest_price:3980,min_price_after:3980,outbound:'2026-11-14',inbound:'2026-11-17',verdict:'持平'};
+  const nodes=await appHarness({},false,{alerts:{alerts:[alert]}});
+  assert.match(nodes['alert-list'].innerHTML,/桃園 ⇄ 澳門 · 長榮航空/);
+  const s=nodes['settings-overview'].innerHTML;
+  assert.match(s,/桃園 ⇄ 香港[\s\S]*3／4／5 晚[\s\S]*桃園 ⇄ 東京[\s\S]*4／5／6 晚[\s\S]*桃園 ⇄ 澳門[\s\S]*3／4／5 晚/);
 });
 
 test('首次離線無資料時在主要票價卡顯示可恢復的錯誤', async () => {
   const nodes=await appHarness({},true);
-  assert.match(nodes.cheapest.innerHTML,/暫時無法讀取票價/);
-  assert.match(nodes.cheapest.innerHTML,/重新整理/);
+  assert.match(nodes['route-cards'].innerHTML,/暫時無法讀取票價/);
+  assert.match(nodes['route-cards'].innerHTML,/重新整理/);
   assert.equal(nodes.refresh.disabled,false);
 });

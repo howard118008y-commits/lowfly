@@ -65,4 +65,12 @@ def read_history(path: Path = HISTORY_PATH) -> list[dict]:
 
 
 def prune_typical_ranges(st: dict, keep: int = 400) -> None:
-    st["typical_ranges"] = st.get("typical_ranges", [])[-keep:]
+    """每條航線各保留最近 keep 筆。"""
+    counts: dict[str, int] = {}
+    kept = []
+    for item in reversed(st.get("typical_ranges", [])):
+        route = item.get("route", "")
+        counts[route] = counts.get(route, 0) + 1
+        if counts[route] <= keep:
+            kept.append(item)
+    st["typical_ranges"] = kept[::-1]

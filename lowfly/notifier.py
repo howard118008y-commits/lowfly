@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import html
+import json
 import logging
 import re
+from contextlib import ExitStack
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 from urllib.parse import urlparse
@@ -100,3 +102,33 @@ class Telegram:
             return self.send(caption_html)
         self.sent.append(caption_html)
         return True
+
+    def send_album(self, paths: list, labels: list[str], caption_html: str) -> bool:
+        """多張圖以 sendMediaGroup 一次送出；失敗時逐張 send_photo。"""
+        items = [(Path(p), label) for p, label in zip(paths, labels) if p and Path(p).is_file()]
+        if not items:
+            return self.send(caption_html)
+        if self.preview:
+            for path, _ in items:
+                print(f"圖片預覽：{path}")
+            return self.send(caption_html)
+        long_text = len(caption_html) > 1024
+        if long_text and not self.send(caption_html):
+            return False
+        captions = [label if long_text or i else caption_html for i, (_, label) in enumerate(items)]
+        ok = False
+        if len(items) > 1:
+            try:
+                with ExitStack() as stack:
+                    files = {f"p{i}": (path.name, stack.enter_context(path.open("rb")), "image/png") for i, (path, _) in enumerate(items)}
+                    media = [{"type": "photo", "media": f"attach://p{i}", "caption": caption, "parse_mode": "HTML"}
+                             for i, caption in enumerate(captions)]
+                    ok = self._post("sendMediaGroup", data={"chat_id": self.chat_id, "media": json.dumps(media, ensure_ascii=False)},
+                                    files=files)
+            except OSError:
+                ok = False
+        if not ok:
+            ok = all([self.send_photo(path, caption) for (path, _), caption in zip(items, captions)])
+        elif not long_text:
+            self.sent.append(caption_html)
+        return ok

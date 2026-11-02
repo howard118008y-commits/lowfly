@@ -11,8 +11,10 @@ from lowfly.sources.serpapi_flights import Insights, SearchResult
 from lowfly.state import default_state
 
 NOW = datetime(2026, 11, 2, 9, 30, tzinfo=ZoneInfo("Asia/Taipei"))
-KEY = "2026-11-14_2026-11-17"
-KEY2 = "2026-11-20_2026-11-24"
+KEY_DATES = ("2026-11-14", "2026-11-17")
+KEY = "MFM:2026-11-14_2026-11-17"
+KEY2 = "MFM:2026-11-20_2026-11-24"
+ARRIVAL_TO_ROUTE = {"NRT,HND": "TYO"}
 
 
 @pytest.fixture(autouse=True)
@@ -32,27 +34,33 @@ def secrets():
     return Secrets("fake-serp", "fake-tp")
 
 
-def state_with_baseline():
+def state_with_baseline(routes=("HKG", "TYO", "MFM")):
     state = default_state()
-    state["typical_ranges"] = [{"at": NOW.isoformat(), "low": 7200, "high": 10000}]
+    state["typical_ranges"] = [{"at": NOW.isoformat(), "route": rid, "low": 7200, "high": 10000} for rid in routes]
     return state
 
 
 def make_tp(prices):
     def fetch(origin, destination, month, token, currency="TWD", direct_only=True):
-        return [Offer("travelpayouts", *key.split("_"), price, currency, "台灣虎航", True, "https://www.aviasales.com/x", NOW.isoformat())
-                for key, price in prices.items() if key.startswith(month)]
+        out = []
+        for key, price in prices.items():
+            route_id, dates = key.split(":")
+            if route_id == destination and dates.startswith(month):
+                out.append(Offer("travelpayouts", *dates.split("_"), price, currency, "台灣虎航", True,
+                                 "https://www.aviasales.com/x", NOW.isoformat(), route_id))
+        return out
     return fetch
 
 
 def make_serp(prices, calls=None, typical=(7200, 10000)):
     def fetch(origin, destination, outbound, inbound, api_key, currency="TWD", direct_only=True, adults=1):
-        key = f"{outbound}_{inbound}"
+        route_id = ARRIVAL_TO_ROUTE.get(destination, destination)
+        key = f"{route_id}:{outbound}_{inbound}"
         if calls is not None:
             calls.append(key)
         price = prices.get(key, 8700)
         offers = [Offer("serpapi", outbound, inbound, price, currency, "長榮航空", True,
-                        "https://www.google.com/travel/flights?q=x", NOW.isoformat())]
+                        "https://www.google.com/travel/flights?q=x", NOW.isoformat(), route_id)]
         return SearchResult(offers, Insights(price, "low", *typical, [[1, 6000], [2, price]]), offers[0].url, 1)
     return fetch
 

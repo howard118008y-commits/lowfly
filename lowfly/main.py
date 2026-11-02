@@ -39,7 +39,7 @@ def main(argv: list[str] | None = None) -> int:
     secrets = Secrets.from_env()
     tg = Telegram(secrets.telegram_token, secrets.telegram_chat_id, dry_run=args.dry_run or args.mock)
     if args.test_telegram:
-        text = (f"✈️ <b>{esc(cfg['app_name'])}</b> 測試訊息\n{esc(cfg['route']['label'])}｜{now:%Y-%m-%d %H:%M}\n"
+        text = (f"✈️ <b>{esc(cfg['app_name'])}</b> 測試訊息\n{esc('、'.join(r['label'] for r in cfg['routes']))}｜{now:%Y-%m-%d %H:%M}\n"
                 "bot 設定正確，之後的通知會出現在這裡。")
         return 0 if tg.send(text) else 1
     target = args.output_root or (ROOT / "out/mock" if args.mock else ROOT)

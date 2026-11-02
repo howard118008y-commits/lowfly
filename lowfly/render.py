@@ -7,6 +7,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+from .config import get_route
 from .dates import date_pairs, fmt_date, pair_key
 from .notifier import fmt_money, fmt_pct
 
@@ -74,7 +75,7 @@ def render_alert(offer, baseline, cfg: dict, state: dict, output_dir: Path) -> P
     draw_text(draw, (65, 56), cfg["app_name"], 36, bold=True, width=850)
     draw.rounded_rectangle((1003, 58, 1127, 110), 16, fill=GREEN)
     draw_text(draw, (1030, 61), "神票", 30, "white", width=100)
-    draw_text(draw, (65, 148), f"{cfg['route']['label']} 直飛來回 · {offer.nights} 晚", 36)
+    draw_text(draw, (65, 148), f"{get_route(cfg, offer.route_id)['label']} 直飛來回 · {offer.nights} 晚", 36)
     draw_text(draw, (65, 207), f"{fmt_date(offer.outbound)} → {fmt_date(offer.inbound)}", 36)
     draw_text(draw, (60, 282), fmt_money(offer.price), 120, width=810, bold=True)
     draw_text(draw, (875, 325), fmt_pct(baseline.ratio(offer.price)), 72, GREEN, width=270, bold=True)
@@ -82,7 +83,7 @@ def render_alert(offer, baseline, cfg: dict, state: dict, output_dir: Path) -> P
     history = state.get("pairs", {}).get(offer.pair_key, {}).get("price_history", [])
     sparkline(draw, history, (68, 525, 1128, 600))
     output_dir.mkdir(parents=True, exist_ok=True)
-    path = output_dir / f"alert_{offer.pair_key}.png"
+    path = output_dir / f"alert_{offer.pair_key.replace(':', '_')}.png"
     image.save(path, "PNG")
     return path
 
@@ -97,16 +98,18 @@ def dashed_box(draw, box, color="#C7D2CA"):
         draw.line((x1, y, x1, min(y + 4, y1)), fill=color)
 
 
-def render_digest(cfg: dict, state: dict, now: datetime, baseline, tp_count: int, output_dir: Path) -> Path:
+def render_digest(cfg: dict, state: dict, now: datetime, baseline, tp_count: int, output_dir: Path, route: dict | None = None) -> Path:
+    # 一張圖畫一條航線的日曆；未指定時取優先序第一條。
+    route = route or cfg["routes"][0]
     image = Image.new("RGB", SIZE, "#FAFCF8")
     draw = ImageDraw.Draw(image)
-    draw_text(draw, (40, 26), f"{cfg['app_name']} · 每日摘要 {fmt_date(now.date())}", 34, bold=True)
+    draw_text(draw, (40, 26), f"{cfg['app_name']} · {route['label']} · 每日摘要 {fmt_date(now.date())}", 34, bold=True)
     draw_text(draw, (40, 85), f"基準 {fmt_money(baseline.value)}" if baseline else "基準：尚未取得 Google 典型區間", 28, MUTED)
     win = cfg["window"]
-    pairs = date_pairs(now.date(), win["days_ahead"], win["min_lead_days"], win["stay_nights"])
+    nights = route["stay_nights"]
+    pairs = date_pairs(now.date(), win["days_ahead"], win["min_lead_days"], nights)
     dates = list(dict.fromkeys(out for out, _ in pairs))
     cw, ch, left, top = 1080 / len(dates), 90, 76, 223
-    nights = win["stay_nights"]
     for column, out in enumerate(dates):
         x = left + column * cw
         if out.weekday() >= 5:
@@ -115,7 +118,7 @@ def render_digest(cfg: dict, state: dict, now: datetime, baseline, tp_count: int
         draw_text(draw, (x + 1, 185), label, 14, MUTED, width=int(cw - 2))
         for row, stay in enumerate(nights):
             back = next(b for o, b in pairs if o == out and (b - o).days == stay)
-            p = state.get("pairs", {}).get(pair_key(out, back), {})
+            p = state.get("pairs", {}).get(pair_key(route["id"], out, back), {})
             verified = p.get("last_price") is not None
             price = p.get("last_price") if verified else p.get("tp_price")
             ratio = baseline.ratio(price) if baseline and price is not None else None
@@ -139,6 +142,6 @@ def render_digest(cfg: dict, state: dict, now: datetime, baseline, tp_count: int
     footer = f"SerpAPI 本月 {state['serpapi']['used_month']}/{quota} · Travelpayouts {tp_count} 組 · 更新 {now.month}/{now.day} {now:%H:%M}"
     draw_text(draw, (40, 610), footer, 22, MUTED)
     output_dir.mkdir(parents=True, exist_ok=True)
-    path = output_dir / f"digest_{now.date().isoformat()}.png"
+    path = output_dir / f"digest_{now.date().isoformat()}_{route['id']}.png"
     image.save(path, "PNG")
     return path

@@ -26,10 +26,11 @@ class Offer:
     direct: bool = True
     url: str = ""
     observed_at: str = ""
+    route_id: str = ""
 
     @property
     def pair_key(self) -> str:
-        return f"{self.outbound}_{self.inbound}"
+        return f"{self.route_id}:{self.outbound}_{self.inbound}"
 
     @property
     def nights(self) -> int:

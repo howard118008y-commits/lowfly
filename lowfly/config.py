@@ -24,8 +24,26 @@ def load_config(path: str | Path | None = None, overrides_path: str | Path | Non
     # 僅供本機相容附錄 A；PWA 不提供覆寫或 PAT 寫入功能。
     if overrides_path and Path(overrides_path).exists():
         cfg = deep_merge(cfg, json.loads(Path(overrides_path).read_text(encoding="utf-8")))
+    normalize_routes(cfg)
     validate_config(cfg)
     return cfg
+
+
+def normalize_routes(cfg: dict) -> None:
+    """補上航線預設值：停留晚數取全域 window、SerpApi 抵達機場取 destination。"""
+    for route in cfg.get("routes") or []:
+        if isinstance(route, dict):
+            route.setdefault("stay_nights", cfg["window"]["stay_nights"])
+            route.setdefault("serpapi_arrival", route.get("destination"))
+            route.setdefault("direct_only", True)
+            route.setdefault("adults", 1)
+
+
+def get_route(cfg: dict, route_id: str) -> dict:
+    for route in cfg["routes"]:
+        if route["id"] == route_id:
+            return route
+    raise KeyError(route_id)
 
 
 def validate_config(cfg: dict) -> None:
@@ -36,6 +54,20 @@ def validate_config(cfg: dict) -> None:
         raise ValueError("住宿晚數必須大於零")
     if len(set(win["stay_nights"])) != len(win["stay_nights"]):
         raise ValueError("住宿晚數不可重複")
+    routes = cfg.get("routes")
+    if not isinstance(routes, list) or not routes:
+        raise ValueError("routes 必須是非空清單")
+    for route in routes:
+        for field in ("id", "origin", "destination", "label"):
+            if not isinstance(route, dict) or not str(route.get(field) or "").strip():
+                raise ValueError(f"航線缺少必要欄位 {field}")
+        nights = route["stay_nights"]
+        if not nights or any(int(n) < 1 for n in nights) or len(set(nights)) != len(nights):
+            raise ValueError(f"航線 {route['id']} 的住宿晚數無效")
+        if int(route["adults"]) < 1:
+            raise ValueError(f"航線 {route['id']} 的成人數須大於零")
+    if len({route["id"] for route in routes}) != len(routes):
+        raise ValueError("航線 id 不可重複")
     if not 0 < float(thr["instant"]) <= float(thr["digest"]) <= 1:
         raise ValueError("通知門檻須為 0 < instant ≤ digest ≤ 1")
     for name in ("monthly_quota", "monthly_safety", "daily_budget", "reserve_for_candidates"):

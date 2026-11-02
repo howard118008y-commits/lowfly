@@ -1,12 +1,30 @@
 app_name: "低飛 LowFly"
 timezone: "Asia/Taipei"
 currency: "TWD"
-route:
-  origin: "TPE"
-  destination: "MFM"
-  label: "桃園 ⇄ 澳門"
-  direct_only: true
-  adults: 1
+# 清單順序＝優先序（首頁卡片順序、同分輪流時的決勝）。
+# 每條航線可覆寫 stay_nights（預設取 window.stay_nights）；
+# serpapi_arrival 供 SerpApi arrival_id 使用（可逗號分隔多機場，預設同 destination）。
+routes:
+  - id: "HKG"
+    origin: "TPE"
+    destination: "HKG"
+    label: "桃園 ⇄ 香港"
+    direct_only: true
+    adults: 1
+  - id: "TYO"
+    origin: "TPE"
+    destination: "TYO"
+    serpapi_arrival: "NRT,HND"
+    label: "桃園 ⇄ 東京"
+    direct_only: true
+    adults: 1
+    stay_nights: [4, 5, 6]
+  - id: "MFM"
+    origin: "TPE"
+    destination: "MFM"
+    label: "桃園 ⇄ 澳門"
+    direct_only: true
+    adults: 1
 window:
   days_ahead: 30
   min_lead_days: 2

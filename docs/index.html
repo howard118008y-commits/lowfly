@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#56463b">
-  <meta name="description" content="桃園⇄澳門直飛來回機票雷達：好價格，低飛就看見。">
+  <meta name="description" content="桃園出發直飛來回機票雷達：好價格，低飛就看見。">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="低飛">
@@ -27,14 +27,7 @@
     <main id="main" tabindex="-1">
       <section id="home" class="view" aria-labelledby="home-title">
         <div class="page-heading home-heading"><h1 id="home-title">好價，輕鬆出發。</h1></div>
-        <article class="fare-card" aria-label="航線與最低票價">
-          <div id="route-label" class="route-band" aria-label="桃園 TPE 往返澳門 MFM，直飛來回，1 位成人">
-            <div><span>桃園</span><strong>TPE</strong></div>
-            <div class="route-journey"><span>直飛來回</span><svg viewBox="0 0 120 24" aria-hidden="true"><path d="M2 12h40m36 0h40"/><path d="m48 12 23-8-7 8 7 8-23-8Z"/></svg><small>1 位成人</small></div>
-            <div><span>澳門</span><strong>MFM</strong></div>
-          </div>
-          <div id="cheapest" class="fare-body skeleton" aria-live="polite">正在查看票價…</div>
-        </article>
+        <div id="route-cards" class="route-cards" aria-live="polite"><article class="fare-card" aria-label="各航線最低票價"><div class="fare-body skeleton">正在查看票價…</div></article></div>
         <p id="updated" class="updated" aria-live="polite"></p>
         <section id="deal-section" aria-labelledby="deals-title" hidden>
           <div class="section-heading"><h2 id="deals-title">其他好價</h2><span id="deal-count" class="subtle-label"></span></div>

@@ -1,6 +1,6 @@
 # 低飛 LowFly
 
-桃園 TPE ⇄ 澳門 MFM，直飛來回、1 位成人、TWD。GitHub Actions 每天掃描四次；≤基準 50% 且經 Google Flights 驗證即以 Telegram 圖文通知，≤70% 收進每日摘要。PWA 放在 GitHub Pages 的 `main /docs`，免登入、免後端。
+桃園 TPE ⇄ 香港 HKG／東京 TYO／澳門 MFM 三條航線（依 `config.yaml` 的 `routes:` 清單順序即優先序），直飛來回、1 位成人、TWD。航線可覆寫 `stay_nights`，東京另以 `serpapi_arrival: "NRT,HND"` 同時查成田與羽田；SerpAPI 額度三條航線共用：半價候選優先，其餘在航線間輪流。GitHub Actions 每天掃描四次；≤基準 50% 且經 Google Flights 驗證即以 Telegram 圖文通知，≤70% 收進每日摘要。PWA 放在 GitHub Pages 的 `main /docs`，免登入、免後端。
 
 ## 專案內容
 

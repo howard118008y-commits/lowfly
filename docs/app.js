@@ -30,44 +30,56 @@
     $("scan-time").textContent = `資料時間：${localTime(at)}`;
   }
 
-  function renderHome() {
-    const s = bundle.summary, b = s.baseline;
-    const route = $("route-label");
-    route.setAttribute("aria-label", `${s.route.label}，直飛來回，${s.route.adults} 位成人`);
-    route.innerHTML = `<div><span>${e(s.route.label.split("⇄")[0].trim())}</span><strong>${e(s.route.origin)}</strong></div><div class="route-journey"><span>直飛來回</span><svg viewBox="0 0 120 24" aria-hidden="true"><path d="M2 12h40m36 0h40"/><path d="m48 12 23-8-7 8 7 8-23-8Z"/></svg><small>${s.route.adults} 位成人</small></div><div><span>${e(s.route.label.split("⇄")[1]?.trim() || s.route.destination)}</span><strong>${e(s.route.destination)}</strong></div>`;
-    $("baseline-card").innerHTML = `<span>Google 典型價格基準</span><strong>${b.value == null ? "等待價格資料" : e(fmtMoney(b.value))}</strong><p>${b.google_low == null ? "取得 Google 典型區間後建立參考。" : `典型區間 ${e(fmtMoney(b.google_low))}～${e(Math.round(b.google_high).toLocaleString("en-US"))}`} · 近 ${b.lookback_days} 天 · ${b.n_ranges} 筆觀測</p>`;
-    const cheapest = s.cheapest_verified;
+  const modeText = r => r.direct_only === false ? "來回" : "直飛來回";
+  function routeCard(r) {
+    const cheapest = r.cheapest_verified;
     const featured = cheapest?.verified && Number.isFinite(cheapest.price) && cheapest.price > 0 ? cheapest : null;
-    $("cheapest").classList.remove("skeleton");
-    $("cheapest").innerHTML = featured ? `<div class="fare-kicker"><span>目前已驗證最低價</span><span class="tag verified">Google 已驗證</span></div><div class="fare-price"><small>NT$</small>${e(Math.round(featured.price).toLocaleString("en-US"))}</div>${featured.ratio != null && featured.ratio < 1 ? `<p class="fare-savings">比參考價低 ${e(fmtPct(featured.ratio).replace("-", ""))}</p>` : '<p class="fare-helper">每人來回票價</p>'}<p class="fare-date">${e(fmtDate(featured.outbound))} → ${e(fmtDate(featured.inbound))}</p><p class="fare-airline">${featured.nights} 晚 · ${e(featured.airline || "航空公司未提供")}</p>${externalLink(featured.google_flights_url, "查看航班 ↗")}<a class="fare-secondary" href="#calendar">看看其他日期 →</a>` : `<div class="fare-kicker"><span>你的下一趟旅程</span></div><h2 class="fare-empty-title">等待第一筆票價</h2><p class="fare-helper">完成掃描後，好價會自動出現。</p><a class="primary-button" href="#calendar">查看出發日期 →</a>`;
-    const deals = s.deals.filter(item => !featured || item.pair_key !== featured.pair_key);
-    const dealCard = item => `<article class="deal-card"><div class="deal-top"><span class="tag ${item.verified ? "verified" : "pending"}">${item.verified ? "Google 已驗證" : "快取 · 待確認"}</span><span class="nights">${item.nights} 晚</span></div><h3>${e(fmtDate(item.outbound))} → ${e(fmtDate(item.inbound))}</h3><div class="price-row"><strong>${e(fmtMoney(item.price))}</strong><span class="discount">${e(fmtPct(item.ratio))}</span></div><div class="deal-bottom"><span class="muted">${e(item.airline || "航空公司未提供")}</span>${externalLink(item.google_flights_url, "查看航班 ↗")}</div></article>`;
+    const adults = r.adults || 1;
+    const band = `<div class="route-band"><div><span>出發</span><strong>${e(r.origin)}</strong></div><div class="route-journey"><span>${modeText(r)}</span><svg viewBox="0 0 120 24" aria-hidden="true"><path d="M2 12h40m36 0h40"/><path d="m48 12 23-8-7 8 7 8-23-8Z"/></svg><small>${adults} 位成人</small></div><div><span>目的地</span><strong>${e(r.destination)}</strong></div></div>`;
+    const body = featured ? `<div class="fare-kicker"><span>目前已驗證最低價</span><span class="tag verified">Google 已驗證</span></div><div class="fare-price"><small>NT$</small>${e(Math.round(featured.price).toLocaleString("en-US"))}</div>${featured.ratio != null && featured.ratio < 1 ? `<p class="fare-savings">比參考價低 ${e(fmtPct(featured.ratio).replace("-", ""))}</p>` : '<p class="fare-helper">每人來回票價</p>'}<p class="fare-date">${e(fmtDate(featured.outbound))} → ${e(fmtDate(featured.inbound))}</p><p class="fare-airline">${featured.nights} 晚 · ${e(featured.airline || "航空公司未提供")}</p>${externalLink(featured.google_flights_url, "查看航班 ↗")}<a class="fare-secondary" href="#calendar">看看其他日期 →</a>` : `<div class="fare-kicker"><span>你的下一趟旅程</span></div><h2 class="fare-empty-title">等待第一筆票價</h2><p class="fare-helper">完成掃描後，好價會自動出現。</p><a class="primary-button" href="#calendar">查看出發日期 →</a>`;
+    return {featured, html: `<article class="fare-card" aria-label="${e(r.label)}，${modeText(r)}，${adults} 位成人，最低票價"><h2 class="route-title">${e(r.label)}</h2>${band}<div class="fare-body">${body}</div></article>`};
+  }
+
+  function renderHome() {
+    const s = bundle.summary;
+    const cards = s.routes.map(routeCard);
+    $("route-cards").innerHTML = cards.map(card => card.html).join("");
+    const deals = s.routes.flatMap((r, i) => r.deals
+      .filter(item => !cards[i].featured || item.pair_key !== cards[i].featured.pair_key)
+      .map(item => ({...item, route_label: r.label}))).sort((a, b) => a.ratio - b.ratio);
+    const dealCard = item => `<article class="deal-card"><div class="deal-top"><span class="tag ${item.verified ? "verified" : "pending"}">${item.verified ? "Google 已驗證" : "快取 · 待確認"}</span><span class="nights">${e(item.route_label)} · ${item.nights} 晚</span></div><h3>${e(fmtDate(item.outbound))} → ${e(fmtDate(item.inbound))}</h3><div class="price-row"><strong>${e(fmtMoney(item.price))}</strong><span class="discount">${e(fmtPct(item.ratio))}</span></div><div class="deal-bottom"><span class="muted">${e(item.airline || "航空公司未提供")}</span>${externalLink(item.google_flights_url, "查看航班 ↗")}</div></article>`;
     $("deal-section").hidden = !deals.length;
-    $("deals-title").textContent = featured ? "其他好價" : "待確認的好價";
+    $("deals-title").textContent = cards.some(card => card.featured) ? "其他好價" : "待確認的好價";
     $("deal-count").textContent = `${deals.length} 組日期`;
     $("deals").innerHTML = deals.slice(0, 2).map(dealCard).join("");
     $("remaining-deals").innerHTML = deals.slice(2).map(dealCard).join("");
     $("more-deals").hidden = deals.length <= 2;
     $("more-deals-label").textContent = `再看 ${Math.max(0, deals.length - 2)} 組日期`;
+    $("baseline-card").innerHTML = s.routes.map(r => { const b = r.baseline; return `<span>${e(r.label)} · Google 典型價格基準</span><strong>${b.value == null ? "等待價格資料" : e(fmtMoney(b.value))}</strong><p>${b.google_low == null ? "取得 Google 典型區間後建立參考。" : `典型區間 ${e(fmtMoney(b.google_low))}～${e(Math.round(b.google_high).toLocaleString("en-US"))}`} · 近 ${b.lookback_days} 天 · ${b.n_ranges} 筆觀測</p>`; }).join("");
     const q = s.budget;
     $("budget").innerHTML = `<div><span>SerpAPI 本月用量</span><strong>${q.serpapi_used_month}<small> / ${q.serpapi_quota}</small></strong><progress max="${q.serpapi_quota}" value="${q.serpapi_used_month}" aria-label="本月 SerpAPI 用量"></progress></div><div class="budget-bottom"><span>今日 <b>${q.serpapi_used_day} / ${q.serpapi_daily_budget}</b></span><span>快取資料 <b>${q.tp_pairs} 組</b></span></div>`;
   }
 
-  function renderCalendar() {
-    const pairs = bundle.pairs.pairs;
+  function routeHeatmap(r, only) {
+    const pairs = bundle.pairs.pairs.filter(p => p.route_id === r.id);
     const dates = [...new Set(pairs.map(p => p.outbound))];
-    const nights = bundle.summary.window.stay_nights;
-    const only = $("deals-only").checked;
+    const nights = r.stay_nights;
     const visibleDates = only ? dates.filter(date => pairs.some(p => p.outbound === date && p.price != null && p.ratio != null && p.ratio <= bundle.summary.thresholds.digest)) : dates;
-    if (!visibleDates.length) { $("heatmap").innerHTML = '<div class="empty"><h3>目前沒有符合的好價</h3><p>取消篩選，可查看全部出發日。</p></div>'; return; }
-    $("heatmap").innerHTML = `<table class="heatmap"><caption class="sr-only">依出發日與住宿晚數排列的來回票價，單位新台幣</caption><thead><tr><th scope="col">出發日</th>${nights.map(n => `<th scope="col">${n} 晚</th>`).join("")}</tr></thead><tbody>${visibleDates.map(date => `<tr><th scope="row" class="${[0, 6].includes(new Date(date + "T12:00:00+08:00").getUTCDay()) ? "weekend" : ""}">${e(fmtDate(date))}</th>${nights.map(n => {
+    const heading = `<h2 class="route-title">${e(r.label)}</h2>`;
+    if (!visibleDates.length) return `<section class="route-block">${heading}<div class="empty"><h3>目前沒有符合的好價</h3><p>取消篩選，可查看全部出發日。</p></div></section>`;
+    return `<section class="route-block">${heading}<table class="heatmap"><caption class="sr-only">${e(r.label)}，依出發日與住宿晚數排列的來回票價，單位新台幣</caption><thead><tr><th scope="col">出發日</th>${nights.map(n => `<th scope="col">${n} 晚</th>`).join("")}</tr></thead><tbody>${visibleDates.map(date => `<tr><th scope="row" class="${[0, 6].includes(new Date(date + "T12:00:00+08:00").getUTCDay()) ? "weekend" : ""}">${e(fmtDate(date))}</th>${nights.map(n => {
       const p = pairs.find(pair => pair.outbound === date && pair.nights === n);
       if (!p) return "<td>—</td>";
       const filtered = only && (p.ratio == null || p.ratio > bundle.summary.thresholds.digest);
       if (filtered) return '<td class="muted" aria-label="此組日期未達好價門檻" style="text-align:center">—</td>';
-      const label = `${fmtDate(date)}，${n} 晚，${fmtMoney(p.price)}，${p.verified ? "已驗證" : "待驗證"}`;
+      const label = `${r.label}，${fmtDate(date)}，${n} 晚，${fmtMoney(p.price)}，${p.verified ? "已驗證" : "待驗證"}`;
       return `<td><button data-pair="${e(p.pair_key)}" class="heat-cell ${ratioClass(p.ratio, p.price)} ${filtered ? "filtered" : ""}" aria-label="${e(label)}">${p.price == null ? "—" : e(Math.round(p.price).toLocaleString("en-US"))}<small>${p.verified ? "✓" : p.price == null ? "" : "快取"}</small></button></td>`;
-    }).join("")}</tr>`).join("")}</tbody></table>`;
+    }).join("")}</tr>`).join("")}</tbody></table></section>`;
+  }
+
+  function renderCalendar() {
+    const only = $("deals-only").checked;
+    $("heatmap").innerHTML = bundle.summary.routes.map(r => routeHeatmap(r, only)).join("");
     $("heatmap").querySelectorAll("[data-pair]").forEach(button => button.addEventListener("click", () => showPair(button.dataset.pair)));
   }
 
@@ -95,8 +107,9 @@
     const p = bundle.pairs.pairs.find(pair => pair.pair_key === key);
     if (!p) return;
     previousFocus = document.activeElement;
-    const series = bundle.history.series[key] || [];
-    $("pair-detail").innerHTML = `<p class="eyebrow">${p.nights} 晚 · 直飛來回</p><h2 id="pair-title">${e(fmtDate(p.outbound))} → ${e(fmtDate(p.inbound))}</h2><span class="tag ${p.verified ? "verified" : "pending"}">${p.verified ? "Google 已驗證" : p.price != null ? "快取 · 待確認" : "尚無報價"}</span><div class="price-row"><strong>${e(fmtMoney(p.price))}</strong><span class="discount">${e(fmtPct(p.ratio))}</span></div><p class="muted small">${e(p.airline || "航空公司尚未提供")}</p>${externalLink(p.google_flights_url, "查看 Google Flights 航班 ↗")}<details class="disclosure record-detail"><summary>價格紀錄與來源</summary><dl class="details"><div><dt>來源</dt><dd>${p.verified ? "Google Flights（SerpAPI）" : p.price != null ? "Aviasales 快取，尚未驗證" : "尚無報價"}</dd></div><div><dt>查詢時間</dt><dd>${e(localTime(p.checked_at))}</dd></div><div><dt>Google 價位</dt><dd>${e(p.price_level || "—")}</dd></div></dl>${chart(series)}<p class="muted small">實心點為 Google，空心點為快取。</p></details>`;
+    const route = bundle.summary.routes.find(r => r.id === p.route_id);
+    const series = (bundle.history.series[p.route_id] || {})[key] || [];
+    $("pair-detail").innerHTML = `<p class="eyebrow">${e(route?.label || p.route_id)} · ${p.nights} 晚 · ${route ? modeText(route) : "直飛來回"}</p><h2 id="pair-title">${e(fmtDate(p.outbound))} → ${e(fmtDate(p.inbound))}</h2><span class="tag ${p.verified ? "verified" : "pending"}">${p.verified ? "Google 已驗證" : p.price != null ? "快取 · 待確認" : "尚無報價"}</span><div class="price-row"><strong>${e(fmtMoney(p.price))}</strong><span class="discount">${e(fmtPct(p.ratio))}</span></div><p class="muted small">${e(p.airline || "航空公司尚未提供")}</p>${externalLink(p.google_flights_url, "查看 Google Flights 航班 ↗")}<details class="disclosure record-detail"><summary>價格紀錄與來源</summary><dl class="details"><div><dt>來源</dt><dd>${p.verified ? "Google Flights（SerpAPI）" : p.price != null ? "Aviasales 快取，尚未驗證" : "尚無報價"}</dd></div><div><dt>查詢時間</dt><dd>${e(localTime(p.checked_at))}</dd></div><div><dt>Google 價位</dt><dd>${e(p.price_level || "—")}</dd></div></dl>${chart(series)}<p class="muted small">實心點為 Google，空心點為快取。</p></details>`;
     $("pair-dialog").showModal();
   }
 
@@ -106,13 +119,14 @@
     $("record-stats").hidden = !records.length;
     $("record-help").hidden = !records.length;
     $("record-stats").innerHTML = `已提醒 <strong>${bundle.summary.stats.alerts_sent}</strong> 次 · 低點比例 <strong>${records.length ? Math.round(hits / records.length * 100) + "%" : "—"}</strong>`;
-    $("alert-list").innerHTML = records.length ? records.map(item => `<article class="deal-card"><div class="deal-top"><span class="tag ${item.verdict === "低點" ? "verified" : "pending"}">${e(item.verdict)}</span><span class="muted small">${e(fmtDate(item.alerted_at))}</span></div><h3>${e(fmtDate(item.outbound))} → ${e(fmtDate(item.inbound))}</h3><div class="price-row"><strong>${e(fmtMoney(item.price_at_alert))}</strong><span class="discount">${e(fmtPct(item.ratio_at_alert))}</span></div><p class="muted small">${e(item.airline)}</p><details class="disclosure record-detail"><summary>提醒後的價格</summary><p>現在 ${e(fmtMoney(item.latest_price))} · 提醒後最低 ${e(fmtMoney(item.min_price_after))}</p><p>${e(localTime(item.alerted_at))}</p></details></article>`).join("") : '<div class="empty"><h3>好價出現，就會提醒你。</h3><p>目前還沒有提醒紀錄。</p></div>';
+    $("alert-list").innerHTML = records.length ? records.map(item => `<article class="deal-card"><div class="deal-top"><span class="tag ${item.verdict === "低點" ? "verified" : "pending"}">${e(item.verdict)}</span><span class="muted small">${e(fmtDate(item.alerted_at))}</span></div><h3>${e(fmtDate(item.outbound))} → ${e(fmtDate(item.inbound))}</h3><div class="price-row"><strong>${e(fmtMoney(item.price_at_alert))}</strong><span class="discount">${e(fmtPct(item.ratio_at_alert))}</span></div><p class="muted small">${e(item.route_label)} · ${e(item.airline)}</p><details class="disclosure record-detail"><summary>提醒後的價格</summary><p>現在 ${e(fmtMoney(item.latest_price))} · 提醒後最低 ${e(fmtMoney(item.min_price_after))}</p><p>${e(localTime(item.alerted_at))}</p></details></article>`).join("") : '<div class="empty"><h3>好價出現，就會提醒你。</h3><p>目前還沒有提醒紀錄。</p></div>';
   }
 
   function renderSettings() {
     const s = bundle.summary, q = s.budget;
-    $("settings-overview").innerHTML = `<strong>${e(s.route.label)} · 直飛來回</strong><p>${s.route.adults} 位成人 · ${s.window.stay_nights.join("／")} 晚 · 每天自動掃描 ${s.schedule.runs_per_day} 次</p>`;
-    const fields = [["航線", `${s.route.label}（${s.route.origin} ⇄ ${s.route.destination}）`], ["形式", `直飛來回 · ${s.route.adults} 位成人 · TWD`], ["掃描窗口", `後天起至未來 ${s.window.days_ahead} 天（最早 ${s.window.min_lead_days} 天）`], ["住宿", s.window.stay_nights.join("／") + " 晚"], ["立即推播", `≤ 基準 ${s.thresholds.instant * 100}% · Google 驗證`], ["每日摘要", `≤ 基準 ${s.thresholds.digest * 100}% · ${s.digest.hour_local}:00 後首次掃描`], ["基準回看", `${s.baseline.lookback_days} 天`], ["SerpAPI 額度", `每日 ${q.serpapi_daily_budget}／每月 ${q.serpapi_quota}，安全額 ${q.monthly_safety}`], ["候選保留", `每次最多 ${q.reserve_for_candidates} 組；${q.reverify_hours} 小時內未降價不重驗`], ["重發條件", `再降 ≥${s.dedupe.min_drop_ratio * 100}% 或超過 ${s.dedupe.cooldown_hours} 小時`], ["排程", `台北 09:17／15:17／21:17／03:17`]];
+    $("settings-overview").innerHTML = s.routes.map(r => `<strong>${e(r.label)} · ${modeText(r)}</strong><p>${r.adults || 1} 位成人 · ${r.stay_nights.join("／")} 晚</p>`).join("") + `<p>每天自動掃描 ${s.schedule.runs_per_day} 次</p>`;
+    const routeFields = s.routes.map(r => [r.label, `${r.origin} ⇄ ${r.destination} · ${modeText(r)} · ${r.adults || 1} 位成人 · ${r.stay_nights.join("／")} 晚`]);
+    const fields = [...routeFields, ["幣別", s.currency], ["掃描窗口", `後天起至未來 ${s.window.days_ahead} 天（最早 ${s.window.min_lead_days} 天）`], ["立即推播", `≤ 基準 ${s.thresholds.instant * 100}% · Google 驗證`], ["每日摘要", `≤ 基準 ${s.thresholds.digest * 100}% · ${s.digest.hour_local}:00 後首次掃描`], ["基準回看", `${s.routes[0].baseline.lookback_days} 天`], ["SerpAPI 額度", `每日 ${q.serpapi_daily_budget}／每月 ${q.serpapi_quota}，安全額 ${q.monthly_safety}`], ["候選保留", `每次最多 ${q.reserve_for_candidates} 組；${q.reverify_hours} 小時內未降價不重驗`], ["重發條件", `再降 ≥${s.dedupe.min_drop_ratio * 100}% 或超過 ${s.dedupe.cooldown_hours} 小時`], ["排程", `台北 09:17／15:17／21:17／03:17`]];
     $("settings-values").innerHTML = `<dl class="details">${fields.map(([name, value]) => `<div><dt>${e(name)}</dt><dd>${e(value)}</dd></div>`).join("")}</dl>`;
     const config = window.LOWFLY_CONFIG;
     const owner = config.owner || (location.hostname.endsWith(".github.io") ? location.hostname.split(".")[0] : "");
@@ -160,8 +174,7 @@
       else {
         $("connection").textContent = "目前無法讀取資料";
         $("connection").classList.add("offline");
-        $("cheapest").innerHTML = '<h2 class="fare-empty-title">暫時無法讀取票價</h2><p class="fare-helper">連線後，點右上角重新整理。</p>';
-        $("cheapest").classList.remove("skeleton");
+        $("route-cards").innerHTML = '<article class="fare-card"><div class="fare-body"><h2 class="fare-empty-title">暫時無法讀取票價</h2><p class="fare-helper">連線後，點右上角重新整理。</p></div></article>';
       }
     } finally { busy = false; $("refresh").disabled = false; }
   }

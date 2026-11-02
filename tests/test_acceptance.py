@@ -6,7 +6,7 @@ import pytest
 from PIL import Image
 
 from lowfly.baseline import compute_baseline
-from lowfly.dates import date_pairs, fmt_date, months_covering
+from lowfly.dates import date_pairs, fmt_date, months_covering, pair_key
 from lowfly.export import export_all
 from lowfly.models import Offer
 from lowfly.notifier import Telegram, fmt_money, fmt_pct
@@ -14,7 +14,7 @@ from lowfly.render import render_alert, render_digest
 from lowfly.state import default_state
 from scripts.check_exports import validate
 
-from conftest import KEY, KEY2, NOW, make_serp, make_tp, state_with_baseline
+from conftest import KEY, KEY2, KEY_DATES, NOW, make_serp, make_tp, state_with_baseline
 
 
 def test_01_date_window():
@@ -32,36 +32,37 @@ def test_02_formatting():
 
 
 def test_03_no_baseline(cfg):
-    assert compute_baseline(default_state(), cfg, NOW) is None
+    assert compute_baseline(default_state(), cfg, NOW, "MFM") is None
 
 
 def test_04_median_range(cfg):
     state = default_state()
-    state["typical_ranges"] = [{"at": NOW.isoformat(), "low": n, "high": 10000} for n in (7000, 7400)]
-    baseline = compute_baseline(state, cfg, NOW)
+    state["typical_ranges"] = [{"at": NOW.isoformat(), "route": "MFM", "low": n, "high": 10000} for n in (7000, 7400)]
+    baseline = compute_baseline(state, cfg, NOW, "MFM")
     assert (baseline.google_low, baseline.google_high, baseline.value) == (7200, 10000, 8600)
 
 
 def test_05_old_range_excluded(cfg):
     state = default_state()
-    state["typical_ranges"] = [{"at": (NOW - timedelta(days=60)).isoformat(), "low": 7200, "high": 10000}]
-    assert compute_baseline(state, cfg, NOW) is None
+    state["typical_ranges"] = [{"at": (NOW - timedelta(days=60)).isoformat(), "route": "MFM", "low": 7200, "high": 10000}]
+    assert compute_baseline(state, cfg, NOW, "MFM") is None
 
 
 def test_06_mixed_weights(cfg):
     state = state_with_baseline()
     cfg["baseline"]["weights"] = {"google_typical": .5, "own_history": .5, "social": 0}
-    state["pairs"] = {str(n): {"last_price": n, "last_source": "serpapi", "last_serpapi": NOW.isoformat()} for n in (7000, 9000)}
-    assert compute_baseline(state, cfg, NOW).value == 8300
+    state["pairs"] = {f"MFM:{n}": {"last_price": n, "last_source": "serpapi", "last_serpapi": NOW.isoformat()} for n in (7000, 9000)}
+    assert compute_baseline(state, cfg, NOW, "MFM").value == 8300
 
 
 def test_07_bootstrap(run_scan):
     calls = []
-    third = "2026-11-10_2026-11-13"
+    third = "MFM:2026-11-10_2026-11-13"
     scanner = run_scan(tp=make_tp({KEY: 5200, KEY2: 6100, third: 8900}), serp=make_serp({}, calls))
-    assert calls[:2] == [KEY, KEY2]
+    # 全無基準：MFM 只取 TP 最低的 1 組，其餘額度輪流給尚未驗證的香港、東京。
+    assert [c.split(":")[0] for c in calls] == ["MFM", "HKG", "TYO"] and calls[0] == KEY
     assert scanner.summary["serpapi_calls"] == 3
-    assert scanner.summary["baseline"] == 8600
+    assert scanner.summary["baseline"]["MFM"] == 8600
     assert scanner.summary["digest_sent"] is True
     assert scanner.state["serpapi"]["used_day"] == 3
 
@@ -111,7 +112,7 @@ def test_12_serp_error_does_not_consume_quota(run_scan):
 
 def test_13_alert_image_and_caption(run_scan, tmp_path):
     scanner = run_scan(state_with_baseline(), make_tp({KEY: 3900}), make_serp({KEY: 3980}))
-    path = tmp_path / "out" / f"alert_{KEY}.png"
+    path = tmp_path / "out" / f"alert_{KEY.replace(':', '_')}.png"
     with Image.open(path) as image:
         assert image.size == (1200, 675) and image.format == "PNG"
         image.verify()
@@ -128,8 +129,8 @@ def test_14_sparse_heatmap(cfg, tmp_path):
     state = state_with_baseline()
     pairs = date_pairs(NOW.date(), 30, 2, [3, 4, 5])
     for index, (out, back) in enumerate(pairs[:30]):
-        state["pairs"][f"{out}_{back}"] = {"last_price": 3980} if index < 10 else {"tp_price": 5812}
-    path = render_digest(cfg, state, NOW, compute_baseline(state, cfg, NOW), 20, tmp_path)
+        state["pairs"][pair_key("HKG", out, back)] = {"last_price": 3980} if index < 10 else {"tp_price": 5812}
+    path = render_digest(cfg, state, NOW, compute_baseline(state, cfg, NOW, "HKG"), 20, tmp_path)
     with Image.open(path) as image:
         assert image.size == (1200, 675)
         image.verify()
@@ -141,7 +142,7 @@ def test_15_all_json_contracts(cfg, run_scan, tmp_path):
     payloads = export_all(cfg, scanner.state, NOW, scanner.history_rows, target)
     assert {p.name for p in target.iterdir()} == {f"{name}.json" for name in ("summary", "pairs", "history", "alerts")}
     assert all(value["generated_at"] == NOW.isoformat(timespec="seconds") for value in payloads.values())
-    assert len(payloads["pairs"]["pairs"]) == 87
+    assert len(payloads["pairs"]["pairs"]) == 87 * 3
     validate(target)
 
 
@@ -149,8 +150,8 @@ def test_16_missing_font_and_render_failure(cfg, run_scan, tmp_path, monkeypatch
     monkeypatch.setattr("lowfly.render.FONT_PATH", tmp_path / "missing.ttf")
     monkeypatch.setattr("lowfly.render.BOLD_PATH", tmp_path / "missing-bold.ttf")
     state = state_with_baseline()
-    offer = Offer("serpapi", *KEY.split("_"), 3980, "TWD", "長榮航空")
-    path = render_alert(offer, compute_baseline(state, cfg, NOW), cfg, state, tmp_path)
+    offer = Offer("serpapi", *KEY_DATES, 3980, "TWD", "長榮航空", route_id="MFM")
+    path = render_alert(offer, compute_baseline(state, cfg, NOW, "MFM"), cfg, state, tmp_path)
     assert path.is_file() and "退回 DejaVu" in caplog.text
     monkeypatch.setattr("lowfly.render.render_alert", Mock(side_effect=OSError("drawing failed")))
     monkeypatch.setattr("lowfly.render.render_digest", Mock(side_effect=OSError("drawing failed")))

@@ -23,19 +23,20 @@ class Baseline:
         return price / self.value
 
 
-def compute_baseline(state: dict, cfg: dict, now: datetime, social_value: float | None = None) -> Baseline | None:
+def compute_baseline(state: dict, cfg: dict, now: datetime, route_id: str,
+                     social_value: float | None = None) -> Baseline | None:
     bc = cfg["baseline"]
     cutoff = now - timedelta(days=int(bc["lookback_days"]))
     ranges = [r for r in state.get("typical_ranges", [])
-              if number(r.get("low")) and number(r.get("high")) and r["low"] <= r["high"]
+              if r.get("route") == route_id and number(r.get("low")) and number(r.get("high")) and r["low"] <= r["high"]
               and cutoff <= parse_time(r["at"]) <= now]
     if len(ranges) < int(bc.get("min_observations", 1)):
         ranges = []
     low = median(float(r["low"]) for r in ranges) if ranges else None
     high = median(float(r["high"]) for r in ranges) if ranges else None
     google = {"low": low, "high": high, "mid": (low + high) / 2 if ranges else None}[bc["google_stat"]]
-    own_prices = [float(p["last_price"]) for p in state.get("pairs", {}).values()
-                  if number(p.get("last_price")) and p.get("last_source") == "serpapi"
+    own_prices = [float(p["last_price"]) for key, p in state.get("pairs", {}).items()
+                  if key.startswith(f"{route_id}:") and number(p.get("last_price")) and p.get("last_source") == "serpapi"
                   and p.get("last_serpapi") and cutoff <= parse_time(p["last_serpapi"]) <= now]
     own = median(own_prices) if own_prices else None
     components = {"google_typical": google, "own_history": own, "social": number(social_value)}

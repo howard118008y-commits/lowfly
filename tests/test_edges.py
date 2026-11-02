@@ -20,7 +20,7 @@ from lowfly.sources.serpapi_flights import Insights, SearchResult, SerpApiError,
 from lowfly.sources.travelpayouts import fetch_month
 from lowfly.state import default_state, load_state, save_state
 
-from conftest import KEY, KEY2, NOW, make_serp, make_tp, state_with_baseline
+from conftest import KEY, KEY2, KEY_DATES, NOW, make_serp, make_tp, state_with_baseline
 
 
 @pytest.mark.parametrize("mode,provided,missing", [
@@ -204,7 +204,7 @@ def test_serp_200_error_body_is_failure(monkeypatch, body):
     response = Mock(status_code=200, json=lambda:body)
     monkeypatch.setattr("lowfly.sources.serpapi_flights.requests.get", Mock(return_value=response))
     with pytest.raises(SerpApiError):
-        search_round_trip("TPE", "MFM", *KEY.split("_"), "fake")
+        search_round_trip("TPE", "MFM", *KEY_DATES, "fake")
 
 
 def test_serp_contract_and_history(monkeypatch):
@@ -214,7 +214,7 @@ def test_serp_contract_and_history(monkeypatch):
             "price_insights":{"typical_price_range":[7200,10000],"price_history":[[1,5000],[2,3980]]}}
     get = Mock(return_value=Mock(json=lambda:body))
     monkeypatch.setattr("lowfly.sources.serpapi_flights.requests.get", get)
-    result = search_round_trip("TPE", "MFM", *KEY.split("_"), "fake")
+    result = search_round_trip("TPE", "MFM", *KEY_DATES, "fake")
     assert len(result.offers) == 1 and result.offers[0].price == 3980
     assert result.insights.price_history == [[1,5000],[2,3980]]
     params = get.call_args.kwargs["params"]
@@ -240,29 +240,29 @@ def test_tp_bad_body_returns_empty(monkeypatch, body):
 
 
 @pytest.mark.parametrize("latest,verdict", [(4200,"低點"),(3700,"還有更低"),(3980,"持平")])
-def test_retrospective_uses_best_in_latest_search(latest, verdict):
+def test_retrospective_uses_best_in_latest_search(cfg, latest, verdict):
     state = state_with_baseline()
     state["alerts"][KEY] = {"price":3980,"at":NOW.isoformat(),"ratio":3980/8600}
     at = (NOW + timedelta(hours=1)).isoformat()
     rows = [{"pair_key":KEY,"observed_at":at,"price":p,"source":"serpapi"} for p in (latest, latest+1800)]
-    alert = build_alerts(state, rows, NOW + timedelta(hours=2))["alerts"][0]
+    alert = build_alerts(cfg, state, rows, NOW + timedelta(hours=2))["alerts"][0]
     assert alert["latest_price"] == latest and alert["verdict"] == verdict
     assert alert["min_price_after"] == min(3980, latest)
 
 
-def test_alerts_retained_after_departure_90_days(run_scan):
+def test_alerts_retained_after_departure_90_days(cfg, run_scan):
     state = default_state()
-    old = "2026-10-01_2026-10-04"
-    ancient = "2026-07-01_2026-07-04"
+    old = "MFM:2026-10-01_2026-10-04"
+    ancient = "MFM:2026-07-01_2026-07-04"
     state["alerts"] = {key:{"price":3980,"at":NOW.isoformat()} for key in (old, ancient)}
     run_scan(state)
     assert set(state["alerts"]) == {old}
-    assert build_alerts(state, [], NOW)["alerts"][0]["verdict"] == "已結束"
+    assert build_alerts(cfg, state, [], NOW)["alerts"][0]["verdict"] == "已結束"
 
 
 def test_history_last_60_keeps_source():
     rows = [{"pair_key":KEY,"observed_at":(NOW+timedelta(minutes=i)).isoformat(),"price":4000+i,"source":"serpapi"} for i in range(75)]
-    series = build_history(rows, NOW)["series"][KEY]
+    series = build_history(rows, NOW)["series"]["MFM"][KEY]
     assert len(series) == 60 and series[0][1] == 4015 and series[-1][2] == "serpapi"
 
 
@@ -273,7 +273,7 @@ def test_export_prefers_google_then_tp_then_null(cfg):
     pairs = {p["pair_key"]:p for p in build_pairs(cfg,state,NOW)["pairs"]}
     assert pairs[KEY]["price"] == 6000 and pairs[KEY]["verified"]
     assert pairs[KEY2]["price"] == 5000 and not pairs[KEY2]["verified"]
-    assert sum(p["price"] is None for p in pairs.values()) == 85
+    assert sum(p["price"] is None for p in pairs.values()) == 87 * 3 - 2
 
 
 def test_dry_run_writes_no_files(tmp_path, monkeypatch):
@@ -290,7 +290,7 @@ def test_mock_isolation_and_export(tmp_path, monkeypatch):
     assert (output / "docs/index.html").exists()
     summary = json.loads((output / "docs/data/summary.json").read_text())
     assert summary["demo"] is True
-    assert (output / "out/digest_2026-11-02.png").exists()
+    assert (output / "out/digest_2026-11-02_HKG.png").exists()
 
 
 def test_corrupted_state_never_resets_quota(tmp_path):
