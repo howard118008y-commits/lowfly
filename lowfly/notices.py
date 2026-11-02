@@ -2,9 +2,13 @@
 from __future__ import annotations
 
 
-def deal_notes(cfg: dict, airline_code: str | None, destination_airport: str | None, arrive_time: str | None) -> list[str]:
+def deal_notes(cfg: dict, airline_code: str | None, destination_airport: str | None, arrive_time: str | None,
+               ratio: float | None = None) -> list[str]:
     notices = cfg.get("notices") or {}
-    notes = [str(text) for text in (notices.get("airlines") or {}).get((airline_code or "").upper(), [])]
+    suspect = notices.get("suspect_error")
+    # 疑似錯價放第一行：比行李規則更影響「現在要不要訂飯店」。
+    notes = [str(suspect["text"])] if suspect and ratio is not None and ratio <= float(suspect["ratio"]) else []
+    notes += [str(text) for text in (notices.get("airlines") or {}).get((airline_code or "").upper(), [])]
     late = (notices.get("late_arrival") or {}).get((destination_airport or "").upper())
     # 時間皆為當地 "HH:MM"，字串比較即時間比較；05:00 前抵達也算深夜。
     if late and arrive_time and (arrive_time >= str(late["after"]) or arrive_time < "05:00"):

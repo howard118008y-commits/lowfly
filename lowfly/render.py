@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import math
 from datetime import datetime
 from pathlib import Path
 
@@ -108,21 +109,28 @@ def dashed_box(draw, box, color="#C7D2CA"):
 def render_digest(cfg: dict, state: dict, now: datetime, baseline, tp_count: int, output_dir: Path, route: dict | None = None) -> Path:
     # 一張圖畫一條航線的日曆；未指定時取優先序第一條。
     route = route or cfg["routes"][0]
-    image = Image.new("RGB", SIZE, "#FAFCF8")
-    draw = ImageDraw.Draw(image)
-    draw_text(draw, (40, 26), f"{cfg['app_name']} · {route['label']} · 每日摘要 {fmt_date(now.date())}", 34, bold=True)
-    draw_text(draw, (40, 85), f"基準 {fmt_money(baseline.value)}" if baseline else "基準：尚未取得 Google 典型區間", 28, MUTED)
     win = cfg["window"]
     nights = route["stay_nights"]
     pairs = date_pairs(now.date(), win["days_ahead"], win["min_lead_days"], nights)
     dates = list(dict.fromkeys(out for out, _ in pairs))
-    cw, ch, left, top = 1080 / len(dates), 90, 76, 223
-    for column, out in enumerate(dates):
-        x = left + column * cw
+    # 窗口超過 31 天時分段上下排，每格寬度維持約 36px 才放得下價格；30 天窗口仍是原本一段 1200×675。
+    bands = math.ceil(len(dates) / 31)
+    per = math.ceil(len(dates) / bands)
+    cw, ch, left = 1080 / per, 90 if bands == 1 else 60, 76
+    band_h = 54 + ch * len(nights)
+    bottom = 169 + band_h * bands
+    image = Image.new("RGB", (SIZE[0], bottom + 182), "#FAFCF8")
+    draw = ImageDraw.Draw(image)
+    draw_text(draw, (40, 26), f"{cfg['app_name']} · {route['label']} · 每日摘要 {fmt_date(now.date())}", 34, bold=True)
+    draw_text(draw, (40, 85), f"基準 {fmt_money(baseline.value)}" if baseline else "基準：尚未取得 Google 典型區間", 28, MUTED)
+    for index, out in enumerate(dates):
+        band, column = divmod(index, per)
+        x, y0 = left + column * cw, 169 + band * band_h
+        top = y0 + 54
         if out.weekday() >= 5:
-            draw.rectangle((int(x), 169, int(x + cw), int(top + ch * len(nights))), fill="#FFF3CB")
+            draw.rectangle((int(x), y0, int(x + cw), int(top + ch * len(nights))), fill="#FFF3CB")
         label = f"{out.month}/{out.day}"
-        draw_text(draw, (x + 1, 185), label, 14, MUTED, width=int(cw - 2))
+        draw_text(draw, (x + 1, y0 + 16), label, 14, MUTED, width=int(cw - 2))
         for row, stay in enumerate(nights):
             back = next(b for o, b in pairs if o == out and (b - o).days == stay)
             p = state.get("pairs", {}).get(pair_key(route["id"], out, back), {})
@@ -135,19 +143,20 @@ def render_digest(cfg: dict, state: dict, now: datetime, baseline, tp_count: int
                 dashed_box(draw, box)
             else:
                 color = "white" if ratio is not None and ratio <= 0.5 else INK
-                draw_text(draw, (x + 4, top + row * ch + 25), f"{price / 1000:.1f}k", 14, color, width=int(cw - 6), bold=True)
+                draw_text(draw, (x + 4, top + row * ch + ch * .28), f"{price / 1000:.1f}k", 14, color, width=int(cw - 6), bold=True)
                 if verified:
-                    draw_text(draw, (x + cw / 2 - 5, top + row * ch + 50), "✓", 14, color, width=20)
-    for row, stay in enumerate(nights):
-        draw_text(draw, (16, top + row * ch + 28), f"{stay}晚", 20, MUTED, width=52)
+                    draw_text(draw, (x + cw / 2 - 5, top + row * ch + ch * .56), "✓", 14, color, width=20)
+    for band in range(bands):
+        for row, stay in enumerate(nights):
+            draw_text(draw, (16, 169 + band * band_h + 54 + row * ch + ch * .31), f"{stay}晚", 20, MUTED, width=52)
     labels = [("≤50%", .5), ("≤70%", .7), ("≤85%", .85), ("≤100%", 1), (">100%", 1.1), ("無資料", None)]
     for i, (label, ratio) in enumerate(labels):
         x = 70 + i * 179
-        draw.rectangle((x, 542, x + 24, 566), fill=ratio_color(ratio), outline="#C7D2CA")
-        draw_text(draw, (x + 33, 540), label, 19, MUTED, width=140)
+        draw.rectangle((x, bottom + 49, x + 24, bottom + 73), fill=ratio_color(ratio), outline="#C7D2CA")
+        draw_text(draw, (x + 33, bottom + 47), label, 19, MUTED, width=140)
     quota = cfg["sources"]["serpapi"]["monthly_quota"]
     footer = f"SerpAPI 本月 {state['serpapi']['used_month']}/{quota} · Travelpayouts {tp_count} 組 · 更新 {now.month}/{now.day} {now:%H:%M}"
-    draw_text(draw, (40, 610), footer, 22, MUTED)
+    draw_text(draw, (40, bottom + 117), footer, 22, MUTED)
     output_dir.mkdir(parents=True, exist_ok=True)
     path = output_dir / f"digest_{now.date().isoformat()}_{route['id']}.png"
     image.save(path, "PNG")

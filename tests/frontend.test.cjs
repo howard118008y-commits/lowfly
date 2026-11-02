@@ -231,6 +231,10 @@ test('通知頁寫成「桃園→香港 日期 降到 價格（基準）」，�
   assert.match(nodes['alert-list'].innerHTML,/桃園 → 澳門 11\/14–11\/17 降到 NT\$ 3,980（基準 NT\$ 7,500）/);
   const s=nodes['settings-overview'].innerHTML;
   assert.match(s,/桃園 ⇄ 香港[\s\S]*3／4／5 晚[\s\S]*桃園 ⇄ 東京[\s\S]*4／5／6 晚[\s\S]*桃園 ⇄ 澳門[\s\S]*3／4／5 晚/);
+  assert.match(s,/每天自動掃描 4 次<\/p>/);
+  const promo=await appHarness({schedule:{runs_per_day:4,promo_months:[5,6,11,12],promo_runs_per_day:8}});
+  assert.match(promo['settings-overview'].innerHTML,/每天自動掃描 4 次，促銷月（5、6、11、12 月）8 次/);
+  assert.match(promo['settings-values'].innerHTML,/03:17；促銷月加跑 00:17／06:17／12:17／18:17/);
 });
 
 test('首次離線無資料時在主要票價卡顯示可恢復的錯誤', async () => {

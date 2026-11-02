@@ -28,6 +28,7 @@ def build_pairs(cfg: dict, state: dict, now: datetime) -> dict:
             p = state["pairs"].get(key, {})
             verified = number(p.get("last_price")) is not None
             price = p.get("last_price") if verified else p.get("tp_price")
+            ratio = baseline.ratio(price) if baseline and price is not None else None
             source = "serpapi" if verified else ("travelpayouts" if price is not None else None)
             prefix = "last" if verified else "tp"
             flight = {name: None for name in (*FLIGHT_FIELDS, "airline_code")} | (p.get(f"{prefix}_flight") or {})
@@ -43,9 +44,9 @@ def build_pairs(cfg: dict, state: dict, now: datetime) -> dict:
                            "total": price, "fare": p.get(f"{prefix}_fare") if price is not None else None,
                            "bag_fee": p.get(f"{prefix}_bag_fee") if price is not None and p.get(f"{prefix}_fare") is not None else None,
                            "bag_estimated": bool(p.get(f"{prefix}_bag_estimated")) if price is not None else False,
-                           "ratio": baseline.ratio(price) if baseline and price is not None else None,
+                           "ratio": ratio,
                            "airline": airline, **flight,
-                           "notes": deal_notes(cfg, flight["airline_code"], flight["destination_airport"], flight["arrive_time"]) if price is not None else [],
+                           "notes": deal_notes(cfg, flight["airline_code"], flight["destination_airport"], flight["arrive_time"], ratio) if price is not None else [],
                            "verified": verified, "checked_at": p.get("last_serpapi" if verified else "tp_at"),
                            "price_level": p.get("price_level"), "tp_price": p.get("tp_price"), "tp_at": p.get("tp_at"),
                            "url": p.get("last_url" if verified else "tp_url") or "",

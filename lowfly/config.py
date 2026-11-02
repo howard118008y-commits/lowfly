@@ -47,6 +47,14 @@ def get_route(cfg: dict, route_id: str) -> dict:
     raise KeyError(route_id)
 
 
+def runs_per_day(cfg: dict, month: int) -> int:
+    """促銷月份（schedule.promo_months）scan.yml 會加跑，當天執行次數改用 promo_runs_per_day。"""
+    schedule = cfg["schedule"]
+    if month in [int(m) for m in schedule.get("promo_months", [])]:
+        return int(schedule.get("promo_runs_per_day", schedule["runs_per_day"]))
+    return int(schedule["runs_per_day"])
+
+
 def validate_config(cfg: dict) -> None:
     win, thr, sc = cfg["window"], cfg["thresholds"], cfg["sources"]["serpapi"]
     if not 1 <= int(win["min_lead_days"]) <= int(win["days_ahead"]):
@@ -75,6 +83,11 @@ def validate_config(cfg: dict) -> None:
         raise ValueError("通知門檻須為 0 < instant ≤ digest ≤ 1")
     if int(thr.get("max_instant_per_run", 5)) < 1:
         raise ValueError("max_instant_per_run 須大於零")
+    if float(thr.get("same_price_within", 0)) < 0:
+        raise ValueError("same_price_within 不得為負數")
+    suspect = (cfg.get("notices") or {}).get("suspect_error")
+    if suspect and not 0 < float(suspect["ratio"]) <= 1:
+        raise ValueError("suspect_error.ratio 須介於 0～1")
     bag = cfg.get("baggage") or {}
     if float(bag.get("checked_kg", 0)) < 0 or int(bag.get("pieces_each_way", 1)) < 0 or float(bag.get("unknown_fee_twd", 0)) < 0:
         raise ValueError("baggage 設定不得為負數")
@@ -86,6 +99,11 @@ def validate_config(cfg: dict) -> None:
             raise ValueError(f"{name} 不得為負數")
     if not 1 <= int(cfg["schedule"]["runs_per_day"]):
         raise ValueError("每日執行次數須大於零")
+    schedule = cfg["schedule"]
+    if any(not 1 <= int(m) <= 12 for m in schedule.get("promo_months", [])):
+        raise ValueError("promo_months 須為 1～12 月")
+    if int(schedule.get("promo_runs_per_day", schedule["runs_per_day"])) < int(schedule["runs_per_day"]):
+        raise ValueError("promo_runs_per_day 不得少於 runs_per_day")
     if not 0 <= int(cfg["digest"]["hour_local"]) <= 23:
         raise ValueError("摘要時間須介於 0～23")
     if int(cfg["digest"]["top_n"]) < 1:

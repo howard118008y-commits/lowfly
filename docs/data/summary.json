@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T22:29:45+08:00",
+  "generated_at": "2026-11-02T22:41:46+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -204,7 +204,7 @@
   },
   "timezone": "Asia/Taipei",
   "window": {
-    "days_ahead": 30,
+    "days_ahead": 60,
     "min_lead_days": 2,
     "stay_nights": [
       3,
@@ -215,7 +215,8 @@
   "thresholds": {
     "instant": 0.5,
     "digest": 0.7,
-    "max_instant_per_run": 5
+    "max_instant_per_run": 5,
+    "same_price_within": 0.05
   },
   "budget": {
     "serpapi_used_month": 0,
@@ -233,7 +234,14 @@
     "runs": 7
   },
   "schedule": {
-    "runs_per_day": 4
+    "runs_per_day": 4,
+    "promo_months": [
+      5,
+      6,
+      11,
+      12
+    ],
+    "promo_runs_per_day": 8
   },
   "dedupe": {
     "min_drop_ratio": 0.03,

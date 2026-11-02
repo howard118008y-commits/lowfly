@@ -5,6 +5,8 @@ on:
     types: [opened, reopened]
   schedule:
     - cron: "17 1,7,13,19 * * *"
+    # 促銷月（config.yaml schedule.promo_months）加跑，合計每 3 小時一次；台北 00:17／06:17／12:17／18:17。
+    - cron: "17 4,10,16,22 * 5,6,11,12 *"
   workflow_dispatch:
     inputs:
       mode:

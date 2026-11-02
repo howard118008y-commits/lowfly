@@ -12,7 +12,7 @@ import requests
 import yaml
 
 from lowfly.baseline import compute_baseline
-from lowfly.config import Secrets
+from lowfly.config import Secrets, load_config
 from lowfly.export import build_alerts, build_history, build_pairs
 from lowfly.main import main
 from lowfly.notifier import Telegram, esc, fmt_pct
@@ -325,6 +325,10 @@ def test_workflow_contract(cfg):
     workflow = yaml.load(text, Loader=yaml.BaseLoader)
     assert workflow["on"]["schedule"][0]["cron"] == "17 1,7,13,19 * * *"
     assert cfg["schedule"]["runs_per_day"] == 4
+    schedule = load_config()["schedule"]   # cfg fixture 拿掉了促銷月，這裡要比對正式設定
+    promo = workflow["on"]["schedule"][1]["cron"].split()
+    assert promo[3] == ",".join(str(m) for m in schedule["promo_months"])
+    assert len(promo[1].split(",")) + schedule["runs_per_day"] == schedule["promo_runs_per_day"]
     assert workflow["permissions"] == {"contents":"write", "pages":"write"}
     assert workflow["concurrency"]["group"] == "lowfly-scan"
     options = workflow["on"]["workflow_dispatch"]["inputs"]["mode"]["options"]

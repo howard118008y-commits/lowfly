@@ -30,6 +30,9 @@ def cfg():
     config["baggage"]["checked_kg"] = 0   # 既有測試以票價＝總價為前提；行李另見 test_baggage.py
     for route in config["routes"]:
         route.pop("good_price_twd", None)   # 既有測試只驗比例門檻；好價線另見 test_deal_notices.py
+    # 既有測試以 30 天窗口、每天 4 次（NOW 在 11 月＝促銷月）為前提；60 天與促銷月另見 test_scan_window.py
+    config["window"]["days_ahead"] = 30
+    config["schedule"].pop("promo_months", None)
     return config
 
 

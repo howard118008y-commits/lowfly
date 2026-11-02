@@ -32,13 +32,14 @@ routes:
     stay_nights: [4, 5, 6]
     good_price_twd: 9000
 window:
-  days_ahead: 30
+  days_ahead: 60            # 社群好價貼文多在出發前 1～2 個月；Travelpayouts 依月份抓，60 天約跨 3 個月
   min_lead_days: 2
   stay_nights: [3, 4, 5]
 thresholds:
   instant: 0.50
   digest: 0.70
   max_instant_per_run: 5   # 單次 run 的即時通知上限，超過的只進摘要池（防第一次跑洗版）
+  same_price_within: 0.05  # 推播附「同價位還有 N 個出發日」：同航線總價不超過本票 +5% 的其他出發日
 # 以「含託運行李的總價」判斷半價。廉航票價不含託運要加費；傳統航空已含者不加。
 # 所有數字都在這裡，程式不寫死。Google typical 基準視為已含行李的總價近似（傳統航空為主），直接與 total 比較。
 baggage:
@@ -51,7 +52,10 @@ baggage:
     TR: {TYO: 940}          # 酷航，開票後加購約 1,190
     GK: {TYO: 900}          # 捷星日本
     HB: {HKG: 1520}         # 大灣區航空 HK$380（以 1:4.0 換算）
-  # 樂桃 MM、台灣虎航 IT、ZIPAIR ZG、香港航空 HX 查不到可靠數字：走下方估算並標示「行李費估算」
+    MM: {TYO: 930}          # 樂桃 Zone B（台灣—東京）網路加購，機場櫃台 1,300（2026-11-02 比價站，官網未讀到）
+    IT: {HKG: 950, MFM: 950, TYO: 950}   # 台灣虎航 tigerlight 加購 20kg；tigersmart／tigerpro 已含（2026-09-30 比價站）
+    ZG: {TYO: 1200}         # ZIPAIR 台北—東京官網費率表（一件上限 30kg，線上預購免手續費）
+  # 香港航空 HX 官網擋爬蟲、最低票種含不含託運未證實：走下方估算並標示「行李費估算」
   unknown_fee_twd: 1500     # 不在 included 也不在 fees_twd 的航空：用此值估算並標示「行李費估算」
 # 優惠須知：推播與票根都會先列出。2026-11-02 依 PTT／Threads／新聞整理，可信度中，以航空公司官網為準。
 notices:
@@ -62,6 +66,9 @@ notices:
   late_arrival:             # 當地抵達時間晚於 after（或 05:00 前）時提醒
     NRT: {after: "21:30", text: "深夜抵達成田：電車與巴士可能已收班，計程車到新宿約 ¥24,000"}
     HND: {after: "23:30", text: "深夜抵達羽田：計程車有深夜加成，到新宿約 ¥9,800"}
+  suspect_error:            # 疑似錯價：總價 ≤ 基準的 ratio（打 2 折以下）時置頂提醒；錯價票被取消通常只退票款
+    ratio: 0.20
+    text: "疑似錯價：可能被航空公司取消（只退票款），先別訂飯店與不可退的行程"
 baseline:
   google_stat: "mid"
   lookback_days: 45
@@ -83,6 +90,9 @@ sources:
     reverify_hours: 12
 schedule:
   runs_per_day: 4
+  # 航空促銷旺季：scan.yml 第二條 cron 只在這些月份加跑，改這裡要同步改 cron 的月份欄。
+  promo_months: [5, 6, 11, 12]
+  promo_runs_per_day: 8
 digest:
   hour_local: 9
   top_n: 5

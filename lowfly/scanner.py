@@ -9,7 +9,7 @@ from pathlib import Path
 
 from .baggage import bag_fee, bag_line
 from .baseline import Baseline, compute_baseline
-from .config import ROOT
+from .config import ROOT, runs_per_day
 from .dates import date_pairs, fmt_date, google_url, months_covering, pair_key, parse_time, split_key
 from .models import Offer, number
 from .notices import deal_notes, good_price
@@ -116,7 +116,7 @@ class Scanner:
             return 0
         used = self.state["serpapi"]
         daily = int(sc["daily_budget"])
-        cap = math.ceil(daily / int(self.cfg["schedule"]["runs_per_day"])) + 1
+        cap = math.ceil(daily / runs_per_day(self.cfg, self.now.month)) + 1
         return max(0, min(cap, daily - used["used_day"],
                           int(sc["monthly_quota"]) - int(sc["monthly_safety"]) - used["used_month"]))
 
@@ -360,10 +360,14 @@ class Scanner:
                 f"{'｜'.join(compare)}\n"
                 f"{esc(flight)}\n"
                 f"去 {fmt_date(offer.outbound)} → 回 {fmt_date(offer.inbound)}，{offer.nights} 晚\n")
+        same, limit = self._same_price_dates(offer)
+        if same:
+            shown = "、".join(fmt_date(day) for day in same[:4]) + ("…" if len(same) > 4 else "")
+            head += f"📅 同價位（≤{fmt_money(limit)}）還有 {len(same)} 個出發日：{shown}\n"
         bag = bag_line(cfg, offer.fare, offer.bag_fee, offer.bag_estimated)
         if bag:
             head += esc(bag) + "\n"
-        notes = deal_notes(cfg, offer.airline_code, offer.destination_airport, offer.arrive_time)
+        notes = deal_notes(cfg, offer.airline_code, offer.destination_airport, offer.arrive_time, ratio)
         if notes:
             head += "⚠️ 須知\n" + "".join(f"• {esc(note)}\n" for note in notes)
         if verified:
@@ -376,6 +380,21 @@ class Scanner:
                     f"🔗 {link(google_url(cfg, route, offer.outbound, offer.inbound), 'Google Flights 查看')}"
                     f"｜{link(offer.url, 'Aviasales')}")
         return self._deliver(text, "alert", offer, baseline)
+
+    def _same_price_dates(self, offer: Offer) -> tuple[list[str], float]:
+        """同航線、本次窗口內總價不超過本票 +same_price_within 的其他出發日（同一天多種晚數只算一次）。"""
+        within = self.cfg["thresholds"].get("same_price_within")
+        limit = offer.price * (1 + float(within or 0))
+        if within is None:
+            return [], limit
+        days = set()
+        for key in self.summary.get("pair_keys", []):
+            rid, out, _ = split_key(key)
+            p = self.state["pairs"].get(key, {})
+            price = p.get("last_price") or p.get("tp_price")
+            if rid == offer.route_id and out != offer.outbound and price is not None and price <= limit:
+                days.add(out)
+        return sorted(days), limit
 
     def _maybe_digest(self, baselines: dict[str, Baseline | None], tp_best: dict) -> None:
         cfg, st, today = self.cfg, self.state, self.now.date()
@@ -406,7 +425,7 @@ class Scanner:
                 bag = bag_line(cfg, item.get("fare"), item.get("bag_fee", 0), item.get("bag_estimated"))
                 if bag:
                     lines.append(f"　{esc(bag)}")
-                for note in deal_notes(cfg, item.get("airline_code"), item.get("destination_airport"), item.get("arrive_time")):
+                for note in deal_notes(cfg, item.get("airline_code"), item.get("destination_airport"), item.get("arrive_time"), item["ratio"]):
                     lines.append(f"　⚠️ {esc(note)}")
             extra = len(items) - cfg["digest"]["top_n"]
             if extra > 0:
