@@ -4,10 +4,11 @@ from __future__ import annotations
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from .baseline import compute_baseline
+from .baseline import MIN_TP_PAIRS, compute_baseline, tp_sample_count
 from .config import ROOT
 from .dates import date_pairs, google_url, pair_key, parse_time, split_key
-from .models import number
+from .models import FLIGHT_FIELDS, number
+from .sources.travelpayouts import AIRLINE_ZH
 from .state import write_json
 
 
@@ -28,6 +29,12 @@ def build_pairs(cfg: dict, state: dict, now: datetime) -> dict:
             price = p.get("last_price") if verified else p.get("tp_price")
             source = "serpapi" if verified else ("travelpayouts" if price is not None else None)
             prefix = "last" if verified else "tp"
+            flight = {name: None for name in (*FLIGHT_FIELDS, "airline_code")} | (p.get(f"{prefix}_flight") or {})
+            airline = p.get("last_airline" if verified else "tp_airline") if price is not None else None
+            if flight["airline_code"] is None and isinstance(airline, str) and len(airline) == 2 and airline.isupper():
+                flight["airline_code"] = airline   # 舊資料 airline 欄位存的就是 IATA 代碼
+            if airline and airline == flight["airline_code"]:
+                airline = AIRLINE_ZH.get(airline, airline)   # 代碼換成中文名，畫面不出現「UO」這種裸代碼
             result.append({"pair_key": key, "route_id": route["id"], "outbound": out.isoformat(), "inbound": back.isoformat(),
                            "nights": (back - out).days, "price": price, "source": source,
                            # price 與 total 都是含行李總價；fare 為原票價。舊狀態沒有行李拆分時 fare/bag_fee 留空，
@@ -36,7 +43,7 @@ def build_pairs(cfg: dict, state: dict, now: datetime) -> dict:
                            "bag_fee": p.get(f"{prefix}_bag_fee") if price is not None and p.get(f"{prefix}_fare") is not None else None,
                            "bag_estimated": bool(p.get(f"{prefix}_bag_estimated")) if price is not None else False,
                            "ratio": baseline.ratio(price) if baseline and price is not None else None,
-                           "airline": p.get("last_airline" if verified else "tp_airline") if price is not None else None,
+                           "airline": airline, **flight,
                            "verified": verified, "checked_at": p.get("last_serpapi" if verified else "tp_at"),
                            "price_level": p.get("price_level"), "tp_price": p.get("tp_price"), "tp_at": p.get("tp_at"),
                            "url": p.get("last_url" if verified else "tp_url") or "",
@@ -64,11 +71,12 @@ def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_coun
         cached = [p for p in mine if p["source"] == "travelpayouts"]
         routes.append({"id": route["id"], "label": route["label"], "origin": route["origin"],
                        "destination": route["destination"], "direct_only": route["direct_only"], "adults": route["adults"],
-                       "stay_nights": route["stay_nights"],
+                       "stay_nights": route["stay_nights"], "color": route.get("color"),
                        "baseline": {"value": baseline.value if baseline else None,
                                     "google_low": baseline.google_low if baseline else None, "google_high": baseline.google_high if baseline else None,
                                     "n_ranges": baseline.n_ranges if baseline else 0, "lookback_days": cfg["baseline"]["lookback_days"],
-                                    "source": baseline.source if baseline else None},
+                                    "source": baseline.source if baseline else None,
+                                    "samples": tp_sample_count(state, cfg, now, route["id"]), "min_samples": MIN_TP_PAIRS},
                        "deals": sorted(deals, key=lambda item: (item["ratio"], item["pair_key"])),
                        "cheapest_verified": min(verified, key=lambda p: p["price"]) if verified else None,
                        "cheapest_cached": min(cached, key=lambda p: p["price"]) if cached else None})

@@ -6,12 +6,14 @@ currency: "TWD"
 # serpapi_arrival 供 SerpApi arrival_id 使用（可逗號分隔多機場，預設同 destination）。
 routes:
   - id: "HKG"
+    color: "#B0124F"      # 前端票根左緣色條
     origin: "TPE"
     destination: "HKG"
     label: "桃園 ⇄ 香港"
     direct_only: true
     adults: 1
   - id: "TYO"
+    color: "#23468F"      # 前端票根左緣色條
     origin: "TPE"
     destination: "TYO"
     serpapi_arrival: "NRT,HND"
@@ -20,6 +22,7 @@ routes:
     adults: 1
     stay_nights: [4, 5, 6]
   - id: "MFM"
+    color: "#007A4D"      # 前端票根左緣色條
     origin: "TPE"
     destination: "MFM"
     label: "桃園 ⇄ 澳門"

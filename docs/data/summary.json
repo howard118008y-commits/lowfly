@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T15:50:58+08:00",
+  "generated_at": "2026-11-02T17:29:34+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -14,13 +14,16 @@
         4,
         5
       ],
+      "color": "#B0124F",
       "baseline": {
         "value": null,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
         "lookback_days": 45,
-        "source": null
+        "source": null,
+        "samples": 5,
+        "min_samples": 15
       },
       "deals": [],
       "cheapest_verified": null,
@@ -37,7 +40,16 @@
         "bag_fee": 2800.0,
         "bag_estimated": false,
         "ratio": null,
-        "airline": "UO",
+        "airline": "香港快運",
+        "flight_no": null,
+        "depart_time": null,
+        "arrive_time": null,
+        "return_depart_time": null,
+        "origin_airport": null,
+        "destination_airport": null,
+        "duration_to": null,
+        "duration_back": null,
+        "airline_code": "UO",
         "verified": false,
         "checked_at": "2026-11-02T15:50:58+08:00",
         "price_level": null,
@@ -59,13 +71,16 @@
         5,
         6
       ],
+      "color": "#23468F",
       "baseline": {
         "value": null,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
         "lookback_days": 45,
-        "source": null
+        "source": null,
+        "samples": 10,
+        "min_samples": 15
       },
       "deals": [],
       "cheapest_verified": null,
@@ -82,7 +97,16 @@
         "bag_fee": 1880.0,
         "bag_estimated": false,
         "ratio": null,
-        "airline": "TR",
+        "airline": "酷航",
+        "flight_no": null,
+        "depart_time": null,
+        "arrive_time": null,
+        "return_depart_time": null,
+        "origin_airport": null,
+        "destination_airport": null,
+        "duration_to": null,
+        "duration_back": null,
+        "airline_code": "TR",
         "verified": false,
         "checked_at": "2026-11-02T15:50:58+08:00",
         "price_level": null,
@@ -104,13 +128,16 @@
         4,
         5
       ],
+      "color": "#007A4D",
       "baseline": {
         "value": null,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
         "lookback_days": 45,
-        "source": null
+        "source": null,
+        "samples": 2,
+        "min_samples": 15
       },
       "deals": [],
       "cheapest_verified": null,
@@ -128,6 +155,15 @@
         "bag_estimated": false,
         "ratio": null,
         "airline": "澳門航空",
+        "flight_no": null,
+        "depart_time": null,
+        "arrive_time": null,
+        "return_depart_time": null,
+        "origin_airport": null,
+        "destination_airport": null,
+        "duration_to": null,
+        "duration_back": null,
+        "airline_code": null,
         "verified": false,
         "checked_at": "2026-11-02T15:50:58+08:00",
         "price_level": null,

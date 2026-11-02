@@ -14,13 +14,16 @@
         4,
         5
       ],
+      "color": "#B0124F",
       "baseline": {
         "value": null,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
         "lookback_days": 45,
-        "source": null
+        "source": null,
+        "samples": 0,
+        "min_samples": 15
       },
       "deals": [],
       "cheapest_verified": null,
@@ -38,13 +41,16 @@
         5,
         6
       ],
+      "color": "#23468F",
       "baseline": {
         "value": null,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
         "lookback_days": 45,
-        "source": null
+        "source": null,
+        "samples": 0,
+        "min_samples": 15
       },
       "deals": [],
       "cheapest_verified": null,
@@ -62,13 +68,16 @@
         4,
         5
       ],
+      "color": "#007A4D",
       "baseline": {
         "value": null,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
         "lookback_days": 45,
-        "source": null
+        "source": null,
+        "samples": 0,
+        "min_samples": 15
       },
       "deals": [],
       "cheapest_verified": null,

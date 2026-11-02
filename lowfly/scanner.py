@@ -187,14 +187,15 @@ class Scanner:
     def _record_tp(self, best: dict[str, Offer]) -> None:
         for key, p in self.state["pairs"].items():
             if key not in best:
-                for field in ("tp_price", "tp_airline", "tp_url", "tp_at", "tp_fare", "tp_bag_fee", "tp_bag_estimated"):
+                for field in ("tp_price", "tp_airline", "tp_url", "tp_at", "tp_fare", "tp_bag_fee", "tp_bag_estimated", "tp_flight"):
                     p.pop(field, None)
         for key, offer in best.items():
             p = self.state["pairs"].setdefault(key, {})
             if p.get("tp_price") != offer.price:
                 self.history_rows.append({**offer.to_dict(), "observed_at": self.now.isoformat(timespec="seconds")})
             p.update(tp_price=offer.price, tp_airline=offer.airline, tp_url=offer.url, tp_at=self.now.isoformat(timespec="seconds"),
-                     tp_fare=offer.fare, tp_bag_fee=offer.bag_fee, tp_bag_estimated=offer.bag_estimated)
+                     tp_fare=offer.fare, tp_bag_fee=offer.bag_fee, tp_bag_estimated=offer.bag_estimated,
+                     tp_flight=offer.flight_info())
         # TP 基準用的累積樣本：每組日期每天一筆（同日多次掃描只留最新），保留 lookback_days 天。
         samples = self.state.setdefault("tp_samples", {})
         for key, offer in best.items():
@@ -211,7 +212,8 @@ class Scanner:
         if result.offers:
             best = min(result.offers, key=lambda o: o.price)
             p.update(last_price=best.price, last_airline=best.airline, last_url=best.url, last_source="serpapi",
-                     last_fare=best.fare, last_bag_fee=best.bag_fee, last_bag_estimated=best.bag_estimated)
+                     last_fare=best.fare, last_bag_fee=best.bag_fee, last_bag_estimated=best.bag_estimated,
+                     last_flight=best.flight_info())
             if p.get("min_price") is None or best.price < p["min_price"]:
                 p.update(min_price=best.price, min_at=at)
             for offer in result.offers:
@@ -222,7 +224,7 @@ class Scanner:
                     alert["min_price_after"] = min(alert.get("min_price_after", alert["price"]), best.price)
         else:
             p["last_empty"] = at
-            for field in ("last_price", "last_airline", "last_url", "last_source", "last_fare", "last_bag_fee", "last_bag_estimated"):
+            for field in ("last_price", "last_airline", "last_url", "last_source", "last_fare", "last_bag_fee", "last_bag_estimated", "last_flight"):
                 p.pop(field, None)
         insight = result.insights
         if insight:

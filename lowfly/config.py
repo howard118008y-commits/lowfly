@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import os
 from dataclasses import dataclass
 from pathlib import Path
@@ -64,6 +65,8 @@ def validate_config(cfg: dict) -> None:
         nights = route["stay_nights"]
         if not nights or any(int(n) < 1 for n in nights) or len(set(nights)) != len(nights):
             raise ValueError(f"航線 {route['id']} 的住宿晚數無效")
+        if route.get("color") is not None and not re.fullmatch(r"#[0-9A-Fa-f]{6}", str(route["color"])):
+            raise ValueError(f"航線 {route['id']} 的 color 須為 #RRGGBB")
         if int(route["adults"]) < 1:
             raise ValueError(f"航線 {route['id']} 的成人數須大於零")
     if len({route["id"] for route in routes}) != len(routes):

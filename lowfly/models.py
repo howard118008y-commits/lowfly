@@ -15,6 +15,10 @@ def number(value) -> float | None:
         return None
 
 
+FLIGHT_FIELDS = ("flight_no", "depart_time", "arrive_time", "return_depart_time", "origin_airport",
+                 "destination_airport", "duration_to", "duration_back")
+
+
 @dataclass
 class Offer:
     source: str
@@ -32,6 +36,18 @@ class Offer:
     fare: float | None = None
     bag_fee: float = 0.0
     bag_estimated: bool = False
+    # 真實航班欄位（取不到就是 None）：時間皆為當地時間 "HH:MM"，duration 為分鐘。
+    flight_no: str | None = None
+    depart_time: str | None = None
+    arrive_time: str | None = None
+    return_depart_time: str | None = None
+    origin_airport: str | None = None
+    destination_airport: str | None = None
+    duration_to: int | None = None
+    duration_back: int | None = None
+
+    def flight_info(self) -> dict:
+        return {name: getattr(self, name) for name in FLIGHT_FIELDS} | {"airline_code": self.airline_code}
 
     @property
     def total(self) -> float:

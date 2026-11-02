@@ -44,6 +44,22 @@ def _airline_code(leg: dict) -> str | None:
     return match.group(1) if match else None
 
 
+def _clock(airport: dict) -> str | None:
+    match = re.search(r"(\d{1,2}:\d{2})\s*$", str((airport or {}).get("time") or ""))
+    return match.group(1).zfill(5) if match else None
+
+
+def _leg_fields(leg: dict) -> dict:
+    """去程第一段的航班資料（Google Flights 來回搜尋只列去程）；取不到的欄位留 None。"""
+    dep, arr = leg.get("departure_airport") or {}, leg.get("arrival_airport") or {}
+    number_text = re.sub(r"\s+", " ", str(leg.get("flight_number") or "")).strip()
+    minutes = number(leg.get("duration"))
+    return {"flight_no": number_text or None, "depart_time": _clock(dep), "arrive_time": _clock(arr),
+            "origin_airport": str(dep.get("id") or "").upper() or None,
+            "destination_airport": str(arr.get("id") or "").upper() or None,
+            "duration_to": int(minutes) if minutes else None}
+
+
 def search_round_trip(origin: str, destination: str, outbound: str, inbound: str, api_key: str,
                       currency: str = "TWD", direct_only: bool = True, adults: int = 1,
                       timeout: int = 60) -> SearchResult:
@@ -71,7 +87,8 @@ def search_round_trip(origin: str, destination: str, outbound: str, inbound: str
             continue
         offers.append(Offer("serpapi", outbound, inbound, price, currency,
                             legs[0].get("airline", "") if legs else "", direct, url, at,
-                            airline_code=_airline_code(legs[0]) if legs else None))
+                            airline_code=_airline_code(legs[0]) if legs else None,
+                            **(_leg_fields(legs[0]) if legs else {})))
     pi = data.get("price_insights")
     insights = None
     if isinstance(pi, dict):

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -33,6 +34,8 @@ def validate(folder: Path) -> None:
     for route in routes:
         for field in ("id", "label", "origin", "destination", "stay_nights", "baseline", "deals", "cheapest_verified", "cheapest_cached"):
             assert field in route, f"route 缺少 {field}"
+        assert isinstance(route["baseline"]["samples"], int) and route["baseline"]["min_samples"] > 0
+        assert route.get("color") is None or re.fullmatch(r"#[0-9A-Fa-f]{6}", route["color"])
         assert route["baseline"].get("source") in (None, "google", "travelpayouts")
         assert (route["baseline"]["value"] is None) == (route["baseline"]["source"] is None)
         for field in ("value", "google_low", "google_high", "n_ranges", "lookback_days"):
@@ -51,12 +54,17 @@ def validate(folder: Path) -> None:
     baselines = {r["id"]: r["baseline"]["value"] for r in routes}
     for pair in pairs:
         for field in ("pair_key", "route_id", "outbound", "inbound", "nights", "price", "source", "ratio", "airline", "verified", "checked_at", "price_level", "tp_price", "url",
-                      "total", "fare", "bag_fee", "bag_estimated"):
+                      "total", "fare", "bag_fee", "bag_estimated", "airline_code", "flight_no", "depart_time", "arrive_time",
+                      "return_depart_time", "origin_airport", "destination_airport", "duration_to", "duration_back"):
             assert field in pair, f"pair 缺少 {field}"
         assert pair["route_id"] in baselines
         assert pair["price"] is None or (isinstance(pair["price"], (float, int)) and pair["price"] > 0)
         assert pair["source"] in (None, "serpapi", "travelpayouts")
         assert pair["total"] == pair["price"]
+        for clock in ("depart_time", "arrive_time", "return_depart_time"):
+            assert pair[clock] is None or re.fullmatch(r"\d{2}:\d{2}", pair[clock]), f"{clock} 須為 HH:MM 或 None"
+        for minutes in ("duration_to", "duration_back"):
+            assert pair[minutes] is None or (isinstance(pair[minutes], int) and pair[minutes] > 0)
         if pair["price"] is not None and pair["fare"] is not None:   # 舊狀態沒有行李拆分時兩者皆為 None
             assert pair["bag_fee"] >= 0 and abs(pair["fare"] + pair["bag_fee"] - pair["total"]) < 1e-6
         assert (pair["fare"] is None) == (pair["bag_fee"] is None)

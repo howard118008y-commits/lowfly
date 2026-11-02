@@ -126,30 +126,85 @@ async function appHarness(overrides = {}, offline = false, extra = {}) {
 const patchRoutes = (routes, patch) => routes.map(r => ({...r, ...(patch[r.id] || {})}));
 const baseRoutes = () => JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/empty_data/summary.json'))).routes;
 
-test('首頁依優先序疊出每條航線一張卡', async () => {
+const ticketItem = (extra = {}) => ({pair_key:'HKG:2026-11-27_2026-12-01',outbound:'2026-11-27',inbound:'2026-12-01',nights:4,price:9709,total:9709,fare:7829,bag_fee:1880,bag_estimated:false,ratio:.82,verified:true,airline:'酷航',airline_code:'TR',flight_no:'TR 866',depart_time:'14:25',arrive_time:'18:30',return_depart_time:'22:25',origin_airport:'TPE',destination_airport:'NRT',duration_to:185,duration_back:250,google_flights_url:'https://www.google.com/travel/flights',...extra});
+const withItem = (item, baseline) => appHarness({routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:item,...(baseline?{baseline:{...baseRoutes()[0].baseline,...baseline}}:{})}})});
+
+test('首頁依優先序疊出每條航線一張票根，色條用設定的航線色', async () => {
   const nodes=await appHarness();
   const html=nodes['route-cards'].innerHTML;
-  assert.equal((html.match(/<article class="fare-card"/g)||[]).length,3);
+  assert.equal((html.match(/<article class="ticket/g)||[]).length,3);
   const order=['桃園 ⇄ 香港','桃園 ⇄ 東京','桃園 ⇄ 澳門'].map(label=>html.indexOf(label));
   assert.ok(order.every(i=>i>=0)&&order[0]<order[1]&&order[1]<order[2]);
-  const codes=[...html.matchAll(/<strong>([A-Z]{3})<\/strong>/g)].map(m=>m[1]);
+  const codes=[...html.matchAll(/<div class="code">([A-Z]{3})<\/div>/g)].map(m=>m[1]);
   assert.deepEqual(codes,['TPE','HKG','TPE','TYO','TPE','MFM']);
+  assert.deepEqual([...html.matchAll(/--route:(#[0-9A-F]{6})/g)].map(m=>m[1]),['#B0124F','#23468F','#007A4D']);
   assert.equal((html.match(/等待第一筆票價/g)||[]).length,3);
+  assert.match(html,/基準累積中 0\/15/);
+  assert.match(nodes['home-title'].textContent,/還在等第一筆票價/);
 });
 
-test('沒有已驗證價時，首頁卡顯示該航線 TP 最低快取價與未驗證徽章，不冒充已驗證', async () => {
+test('有班次資料時畫時間軸、航空公司與價格條碼；沒有半價時開頭寫真實狀態', async () => {
+  const nodes=await withItem(ticketItem());
+  const html=nodes['route-cards'].innerHTML;
+  assert.match(html,/酷航 TR 866/);
+  assert.match(html,/pics\.avs\.io\/48\/48\/TR\.png/);
+  assert.match(html,/<div class="code">NRT<\/div>/);
+  assert.match(html,/3h05m/);
+  assert.match(html,/桃園 <b>14:25<\/b>/);
+  assert.match(html,/東京成田 <b>18:30<\/b>/);
+  assert.match(html,/去 11\/27 週五/);
+  assert.match(html,/回 12\/1 週二 22:25 起飛/);
+  assert.match(html,/4 晚/);
+  assert.match(html,/去訂票/);
+  assert.doesNotMatch(html,/去訂票[^<]*[→↗]|看其他日期[^<]*[→↗]/);
+  assert.doesNotMatch(html,/undefined|null|\(\)|（）/);
+  assert.doesNotMatch(html,/class="stamp"/);
+  assert.match(nodes['home-title'].textContent,/三條航線都還沒有半價票/);
+});
+
+test('舊資料缺航班欄位時不畫時間軸，也不出現 undefined', async () => {
+  const old=ticketItem({airline:'UO',airline_code:null,flight_no:null,depart_time:null,arrive_time:null,return_depart_time:null,origin_airport:null,destination_airport:null,duration_to:null,duration_back:null});
+  const html=(await withItem(old))['route-cards'].innerHTML;
+  assert.match(html,/<div class="code">TPE<\/div>/);
+  assert.match(html,/去 11\/27 週五/);
+  assert.doesNotMatch(html,/<b>\d\d:\d\d<\/b>|起飛|3h05m|undefined|null/);
+});
+
+test('比例 ≤ 0.5 蓋「半價」印章並成為開頭；沒有基準時寫累積進度而非比例', async () => {
+  let nodes=await withItem(ticketItem({price:3980,total:3980,fare:3980,bag_fee:0,ratio:.46}),{value:8652,source:'google'});
+  assert.match(nodes['route-cards'].innerHTML,/class="stamp"[^>]*>半價</);
+  assert.match(nodes['route-cards'].innerHTML,/比基準低 54%/);
+  assert.match(nodes["home-title"].textContent,/^香港有半價票：11\/27 NT\$ 3,980$/);
+  nodes=await withItem(ticketItem({ratio:null}),{value:null,source:null,samples:10,min_samples:15});
+  assert.match(nodes['route-cards'].innerHTML,/基準累積中 10\/15/);
+  assert.doesNotMatch(nodes['route-cards'].innerHTML,/比基準/);
+});
+
+test('價格條碼：每個出發日一條，本張票的日期用航線色，沒資料的日子留空', async () => {
+  const pairs=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/empty_data/pairs.json')));
+  const hkg=pairs.pairs.filter(p=>p.route_id==='HKG');
+  hkg[0].price=5000; hkg[3].price=9000; hkg[3].outbound=hkg[3].outbound;   // 不同出發日各一筆
+  const days=[...new Set(hkg.map(p=>p.outbound))];
+  const nodes=await appHarness({routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:ticketItem({outbound:hkg[0].outbound})}})},false,{pairs});
+  const bars=nodes['route-cards'].innerHTML.match(/<div class="barcode"[\s\S]*?<\/div>/)[0];
+  assert.equal((bars.match(/<i class="bar/g)||[]).length,days.length);
+  assert.equal((bars.match(/bar on/g)||[]).length,1);
+  assert.ok((bars.match(/bar gap/g)||[]).length>=days.length-2);
+});
+
+test('沒有已驗證價時，首頁票根顯示該航線 TP 最低快取價與未驗證說明，不冒充已驗證', async () => {
   const cache=(price,i)=>({pair_key:`HKG:2026-11-0${i}_2026-11-0${i+3}`,outbound:`2026-11-0${i}`,inbound:`2026-11-0${i+3}`,nights:3,price,ratio:price/8000,verified:false,airline:'測試航空',google_flights_url:'https://www.google.com/travel/flights'});
-  const routes=patchRoutes(baseRoutes(),{HKG:{cheapest_verified:null,deals:[cache(5200,3),cache(999,2)],baseline:{value:8000,google_low:null,google_high:null,n_ranges:0,lookback_days:45,source:'travelpayouts'}}});
+  const routes=patchRoutes(baseRoutes(),{HKG:{cheapest_verified:null,deals:[cache(5200,3),cache(999,2)],baseline:{value:8000,google_low:null,google_high:null,n_ranges:0,lookback_days:45,source:'travelpayouts',samples:20,min_samples:15}}});
   const nodes=await appHarness({routes});
   const html=nodes['route-cards'].innerHTML;
   assert.match(html,/999/);
-  assert.match(html,/快取價 · 未驗證/);
-  assert.match(html,/基準：Travelpayouts 中位數/);
-  assert.match(html,/比參考價低 88%/);
+  assert.match(html,/Travelpayouts 快取價，未經 Google 驗證/);
+  assert.match(html,/基準 Travelpayouts 中位數/);
+  assert.match(html,/比基準低 88%/);
   assert.doesNotMatch(html,/Google 已驗證/);
-  assert.equal((html.match(/等待第一筆票價/g)||[]).length,2);   // 其餘兩條航線仍無資料
-  assert.match(nodes.deals.innerHTML,/快取 · 待確認/);
-  assert.doesNotMatch(nodes.deals.innerHTML,/999/);   // 已在卡片上的最低價不在好價清單重複
+  assert.equal((html.match(/等待第一筆票價/g)||[]).length,2);
+  assert.match(nodes.deals.innerHTML,/快取價，未經驗證/);
+  assert.doesNotMatch(nodes.deals.innerHTML,/999/);
   assert.equal(nodes['deal-section'].hidden,false);
 });
 
@@ -170,10 +225,10 @@ test('各航線最低價不重複，其他好價合併分批展開且三條航�
   assert.match(h,/<th scope="col">出發日<\/th><th scope="col">4 晚<\/th><th scope="col">5 晚<\/th><th scope="col">6 晚/);
 });
 
-test('通知頁顯示航線，設定頁列出所有航線與停留晚數', async () => {
-  const alert={pair_key:'MFM:2026-11-14_2026-11-17',route_id:'MFM',route_label:'桃園 ⇄ 澳門',alerted_at:'2026-11-02T09:30:00+08:00',price_at_alert:3980,ratio_at_alert:.46,airline:'長榮航空',latest_price:3980,min_price_after:3980,outbound:'2026-11-14',inbound:'2026-11-17',verdict:'持平'};
+test('通知頁寫成「桃園→香港 日期 降到 價格（基準）」，設定頁列出所有航線與停留晚數', async () => {
+  const alert={pair_key:'MFM:2026-11-14_2026-11-17',route_id:'MFM',route_label:'桃園 ⇄ 澳門',alerted_at:'2026-11-02T09:30:00+08:00',price_at_alert:3980,baseline_at_alert:7500,ratio_at_alert:.53,airline:'長榮航空',latest_price:3980,min_price_after:3980,outbound:'2026-11-14',inbound:'2026-11-17',verdict:'持平'};
   const nodes=await appHarness({},false,{alerts:{alerts:[alert]}});
-  assert.match(nodes['alert-list'].innerHTML,/桃園 ⇄ 澳門 · 長榮航空/);
+  assert.match(nodes['alert-list'].innerHTML,/桃園 → 澳門 11\/14–11\/17 降到 NT\$ 3,980（基準 NT\$ 7,500）/);
   const s=nodes['settings-overview'].innerHTML;
   assert.match(s,/桃園 ⇄ 香港[\s\S]*3／4／5 晚[\s\S]*桃園 ⇄ 東京[\s\S]*4／5／6 晚[\s\S]*桃園 ⇄ 澳門[\s\S]*3／4／5 晚/);
 });
@@ -185,8 +240,8 @@ test('首次離線無資料時在主要票價卡顯示可恢復的錯誤', async
   assert.equal(nodes.refresh.disabled,false);
 });
 
-test('卡片兩欄並列不含行李／含行李；含託運單欄；舊資料或不帶託運只顯示一個價格', async () => {
-  const fare=(bag,est,fareValue=3000)=>({pair_key:'HKG:2026-11-10_2026-11-13',outbound:'2026-11-10',inbound:'2026-11-13',nights:3,price:3000+bag,total:3000+bag,fare:fareValue,bag_fee:fareValue==null?null:bag,bag_estimated:est,ratio:.5,verified:true,airline:'酷航',google_flights_url:'https://www.google.com/travel/flights'});
+test('票根兩欄並列不含行李／含行李；含託運單欄；舊資料或不帶託運只顯示一個價格', async () => {
+  const fare=(bag,est,fareValue=3000)=>ticketItem({price:3000+bag,total:3000+bag,fare:fareValue,bag_fee:fareValue==null?null:bag,bag_estimated:est,ratio:.9});
   const run=(item,kg)=>appHarness({baggage:{checked_kg:kg,pieces_each_way:1},routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:item}})});
   let html=(await run(fare(2000,false),20))['route-cards'].innerHTML;   // UO：票價 3,000＋行李 2,000
   assert.match(html,/不含行李<\/small><div class="fare-price"><small>NT\$<\/small>3,000/);
@@ -195,7 +250,7 @@ test('卡片兩欄並列不含行李／含行李；含託運單欄；舊資料�
   assert.match(html,/半價以含行李價判斷/);
   assert.doesNotMatch(html,/行李費估算/);
   html=(await run(fare(3000,true),20))['route-cards'].innerHTML;
-  assert.match(html,/20kg 來回 · 行李費估算/);
+  assert.match(html,/20kg 來回，行李費估算/);
   html=(await run(fare(0,false),20))['route-cards'].innerHTML;   // 傳統航空含託運：單欄
   assert.match(html,/<small>NT\$<\/small>3,000/);
   assert.match(html,/已含 20kg 託運/);

@@ -2,13 +2,13 @@
   "name": "低飛 LowFly",
   "short_name": "低飛",
   "lang": "zh-Hant",
-  "description": "桃園⇄澳門直飛來回機票價格雷達",
+  "description": "桃園出發直飛來回機票價格雷達",
   "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "theme_color": "#56463b",
-  "background_color": "#f6f3ee",
+  "theme_color": "#E4E7EA",
+  "background_color": "#E4E7EA",
   "icons": [
     {"src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
     {"src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}

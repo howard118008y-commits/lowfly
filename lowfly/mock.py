@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import calendar
 import hashlib
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 from .dates import google_url
 from .models import Offer
@@ -18,6 +18,18 @@ def make_sources(now: datetime, cfg: dict):
     at = now.isoformat(timespec="seconds")
     # SerpApi 收到的是 arrival_id（可能是 "NRT,HND"），Travelpayouts 收到 destination；兩者都對回航線。
     by_code = {code: route for route in cfg["routes"] for code in (route["destination"], route["serpapi_arrival"])}
+
+    def flight(route: dict, code: str, outbound: str, inbound: str) -> dict:
+        """示範用的班次資料（時間為當地時間；只為了讓預覽畫面完整，不是真實班表）。"""
+        seed = int(hashlib.sha256(f"{route['id']}{code}{outbound}".encode()).hexdigest()[:6], 16)
+        minutes = {"HKG": 125, "TYO": 185, "MFM": 150}.get(route["id"], 150)
+        depart = datetime.fromisoformat(f"{outbound}T{6 + seed % 14:02d}:{(seed // 7 % 12) * 5:02d}:00+08:00")
+        offset = 9 if route["id"] == "TYO" else 8
+        arrive = (depart + timedelta(minutes=minutes)).astimezone(timezone(timedelta(hours=offset)))
+        airport = {"HKG": "HKG", "TYO": "NRT", "MFM": "MFM"}.get(route["id"], route["destination"])
+        return {"airline_code": code, "flight_no": f"{code} {100 + seed % 800}", "depart_time": depart.strftime("%H:%M"),
+                "arrive_time": arrive.strftime("%H:%M"), "return_depart_time": f"{12 + seed % 10:02d}:{(seed // 3 % 12) * 5:02d}",
+                "origin_airport": route["origin"], "destination_airport": airport, "duration_to": minutes, "duration_back": minutes + 15}
 
     def price(route_id: str, outbound: str, inbound: str) -> float:
         lead = (date.fromisoformat(outbound) - now.date()).days
@@ -37,8 +49,8 @@ def make_sources(now: datetime, cfg: dict):
         airlines = ["台灣虎航", "長榮航空", "澳門航空", "星宇航空"]
         codes = ["IT", "BR", "NX", "JX"]
         index = date.fromisoformat(outbound).day % 4
-        offers = [Offer("serpapi", outbound, inbound, value, currency, airlines[index], True, url, at, airline_code=codes[index]),
-                  Offer("serpapi", outbound, inbound, value + 1800, currency, "長榮航空", True, url, at, airline_code="BR")]
+        offers = [Offer("serpapi", outbound, inbound, value, currency, airlines[index], True, url, at, **flight(route, codes[index], outbound, inbound)),
+                  Offer("serpapi", outbound, inbound, value + 1800, currency, "長榮航空", True, url, at, **flight(route, "BR", outbound, inbound))]
         history = [[int((now - timedelta(days=10 - i)).timestamp()), value + (10 - i) * 180] for i in range(11)]
         scale = SCALE.get(route["id"], 1)
         return SearchResult(offers, Insights(value, "low" if value < 7200 * scale else "typical", 7200 * scale, 10000 * scale, history), url, 2)
@@ -54,6 +66,7 @@ def make_sources(now: datetime, cfg: dict):
                 if (day + nights) % 4 == 0:
                     continue
                 offers.append(Offer("travelpayouts", out.isoformat(), back.isoformat(), price(route["id"], out.isoformat(), back.isoformat()),
-                                    currency, "台灣虎航", True, "https://www.aviasales.com", at, airline_code="IT"))
+                                    currency, "台灣虎航", True, "https://www.aviasales.com", at,
+                                    **flight(route, "IT", out.isoformat(), back.isoformat())))
         return offers
     return serp, tp

@@ -28,12 +28,21 @@ class Baseline:
 MIN_TP_PAIRS = 15
 
 
+def _tp_samples(state: dict, route_id: str, now: datetime, cutoff: datetime) -> list[float]:
+    return [float(s["price"]) for s in state.get("tp_samples", {}).values()
+            if s.get("route") == route_id and s.get("basis") == "total" and number(s.get("price"))
+            and cutoff <= parse_time(s["at"]) <= now]
+
+
+def tp_sample_count(state: dict, cfg: dict, now: datetime, route_id: str) -> int:
+    """前端顯示「基準累積中 n/15」用：該航線回看期內 basis=total 的樣本數。"""
+    return len(_tp_samples(state, route_id, now, now - timedelta(days=int(cfg["baseline"]["lookback_days"]))))
+
+
 def _travelpayouts_median(state: dict, bc: dict, now: datetime, route_id: str, cutoff: datetime):
     """該航線回看期內累積的 TP 樣本（含行李總價，每組日期每天一筆）中位數；不足 15 筆則不成立。
     沒有 basis="total" 的舊樣本（只含票價）不可與總價混算，直接忽略。"""
-    prices = [float(s["price"]) for s in state.get("tp_samples", {}).values()
-              if s.get("route") == route_id and s.get("basis") == "total" and number(s.get("price"))
-              and cutoff <= parse_time(s["at"]) <= now]
+    prices = _tp_samples(state, route_id, now, cutoff)
     return (median(prices), len(prices)) if len(prices) >= MIN_TP_PAIRS else None
 
 
