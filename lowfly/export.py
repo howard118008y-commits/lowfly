@@ -53,15 +53,19 @@ def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_coun
                     continue
                 deals.append({**item, "ratio": baseline.ratio(item["price"]),
                               "google_flights_url": indexed[key]["google_flights_url"]})
-        verified = [p for p in pairs if p["route_id"] == route["id"] and p["verified"]]
+        mine = [p for p in pairs if p["route_id"] == route["id"]]
+        verified = [p for p in mine if p["verified"]]
+        cached = [p for p in mine if p["source"] == "travelpayouts"]
         routes.append({"id": route["id"], "label": route["label"], "origin": route["origin"],
                        "destination": route["destination"], "direct_only": route["direct_only"], "adults": route["adults"],
                        "stay_nights": route["stay_nights"],
                        "baseline": {"value": baseline.value if baseline else None,
                                     "google_low": baseline.google_low if baseline else None, "google_high": baseline.google_high if baseline else None,
-                                    "n_ranges": baseline.n_ranges if baseline else 0, "lookback_days": cfg["baseline"]["lookback_days"]},
+                                    "n_ranges": baseline.n_ranges if baseline else 0, "lookback_days": cfg["baseline"]["lookback_days"],
+                                    "source": baseline.source if baseline else None},
                        "deals": sorted(deals, key=lambda item: (item["ratio"], item["pair_key"])),
-                       "cheapest_verified": min(verified, key=lambda p: p["price"]) if verified else None})
+                       "cheapest_verified": min(verified, key=lambda p: p["price"]) if verified else None,
+                       "cheapest_cached": min(cached, key=lambda p: p["price"]) if cached else None})
     sc = cfg["sources"]["serpapi"]
     return {"generated_at": now.isoformat(timespec="seconds"), "app": cfg["app_name"], "routes": routes,
             "currency": cfg["currency"], "timezone": cfg["timezone"], "window": cfg["window"], "thresholds": cfg["thresholds"],

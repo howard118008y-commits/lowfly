@@ -137,13 +137,19 @@ test('首頁依優先序疊出每條航線一張卡', async () => {
   assert.equal((html.match(/等待第一筆票價/g)||[]).length,3);
 });
 
-test('未驗證快取不會成為首頁已驗證最低價', async () => {
-  const cache={pair_key:'HKG:2026-11-02_2026-11-05',outbound:'2026-11-02',inbound:'2026-11-05',nights:3,price:999,ratio:.2,verified:false,airline:'測試航空'};
-  const nodes=await appHarness({routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:null,deals:[cache]}})});
-  assert.match(nodes['route-cards'].innerHTML,/等待第一筆票價/);
-  assert.doesNotMatch(nodes['route-cards'].innerHTML,/999|Google 已驗證/);
+test('沒有已驗證價時，首頁卡顯示該航線 TP 最低快取價與未驗證徽章，不冒充已驗證', async () => {
+  const cache=(price,i)=>({pair_key:`HKG:2026-11-0${i}_2026-11-0${i+3}`,outbound:`2026-11-0${i}`,inbound:`2026-11-0${i+3}`,nights:3,price,ratio:price/8000,verified:false,airline:'測試航空',google_flights_url:'https://www.google.com/travel/flights'});
+  const routes=patchRoutes(baseRoutes(),{HKG:{cheapest_verified:null,deals:[cache(5200,3),cache(999,2)],baseline:{value:8000,google_low:null,google_high:null,n_ranges:0,lookback_days:45,source:'travelpayouts'}}});
+  const nodes=await appHarness({routes});
+  const html=nodes['route-cards'].innerHTML;
+  assert.match(html,/999/);
+  assert.match(html,/快取價 · 未驗證/);
+  assert.match(html,/基準：Travelpayouts 中位數/);
+  assert.match(html,/比參考價低 88%/);
+  assert.doesNotMatch(html,/Google 已驗證/);
+  assert.equal((html.match(/等待第一筆票價/g)||[]).length,2);   // 其餘兩條航線仍無資料
   assert.match(nodes.deals.innerHTML,/快取 · 待確認/);
-  assert.match(nodes.deals.innerHTML,/桃園 ⇄ 香港/);
+  assert.doesNotMatch(nodes.deals.innerHTML,/999/);   // 已在卡片上的最低價不在好價清單重複
   assert.equal(nodes['deal-section'].hidden,false);
 });
 

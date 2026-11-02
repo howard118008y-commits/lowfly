@@ -31,8 +31,10 @@ def validate(folder: Path) -> None:
     today = datetime.fromisoformat(summary["generated_at"]).date()
     assert set(docs["pairs"]["baseline"]) == set(ids), "pairs.baseline 須依 route_id 分組"
     for route in routes:
-        for field in ("id", "label", "origin", "destination", "stay_nights", "baseline", "deals", "cheapest_verified"):
+        for field in ("id", "label", "origin", "destination", "stay_nights", "baseline", "deals", "cheapest_verified", "cheapest_cached"):
             assert field in route, f"route 缺少 {field}"
+        assert route["baseline"].get("source") in (None, "google", "travelpayouts")
+        assert (route["baseline"]["value"] is None) == (route["baseline"]["source"] is None)
         for field in ("value", "google_low", "google_high", "n_ranges", "lookback_days"):
             assert field in route["baseline"], f"baseline 缺少 {field}"
         mine = [p for p in pairs if p["route_id"] == route["id"]]

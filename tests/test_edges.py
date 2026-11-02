@@ -26,10 +26,10 @@ from conftest import KEY, KEY2, KEY_DATES, NOW, make_serp, make_tp, state_with_b
 @pytest.mark.parametrize("mode,provided,missing", [
     ("mock", (), ()),
     ("test-telegram", ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"), ()),
-    ("dry-run", ("SERPAPI_API_KEY", "TRAVELPAYOUTS_TOKEN"), ()),
-    ("normal", ("SERPAPI_API_KEY", "TRAVELPAYOUTS_TOKEN", "TELEGRAM_BOT_TOKEN"), ("TELEGRAM_CHAT_ID",)),
+    ("dry-run", ("TRAVELPAYOUTS_TOKEN",), ()),
+    ("normal", ("TRAVELPAYOUTS_TOKEN", "TELEGRAM_BOT_TOKEN"), ("TELEGRAM_CHAT_ID",)),
     ("normal", ("SERPAPI_API_KEY", "TRAVELPAYOUTS_TOKEN", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"), ()),
-    ("force-digest", (), ("SERPAPI_API_KEY", "TRAVELPAYOUTS_TOKEN", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID")),
+    ("force-digest", (), ("TRAVELPAYOUTS_TOKEN", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID")),
 ])
 def test_workflow_missing_secrets_fail_before_scanning(mode, provided, missing):
     workflow = yaml.safe_load((Path(__file__).resolve().parents[1] / ".github/workflows/scan.yml").read_text())
@@ -43,6 +43,17 @@ def test_workflow_missing_secrets_fail_before_scanning(mode, provided, missing):
     for key in provided:
         assert key not in result.stdout
     assert "non-secret-test-value" not in result.stdout + result.stderr
+
+
+def test_workflow_serpapi_is_optional_notice_only():
+    workflow = yaml.safe_load((Path(__file__).resolve().parents[1] / ".github/workflows/scan.yml").read_text())
+    first = workflow["jobs"]["preflight"]["steps"][0]
+    env = {"PATH": os.defpath, "MODE": "normal", "TRAVELPAYOUTS_TOKEN": "x", "TELEGRAM_BOT_TOKEN": "x", "TELEGRAM_CHAT_ID": "x"}
+    result = subprocess.run(["bash", "-c", first["run"]], env=env, capture_output=True, text=True, timeout=5)
+    assert result.returncode == 0 and "::notice" in result.stdout and "Travelpayouts 模式" in result.stdout
+    assert "::error" not in result.stdout and "::warning" not in result.stdout
+    result = subprocess.run(["bash", "-c", first["run"]], env={**env, "SERPAPI_API_KEY": "x"}, capture_output=True, text=True, timeout=5)
+    assert result.returncode == 0 and "::notice" not in result.stdout
 
 
 def test_workflow_schedule_skips_quietly_when_secrets_missing():

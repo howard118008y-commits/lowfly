@@ -33,11 +33,17 @@
   const modeText = r => r.direct_only === false ? "來回" : "直飛來回";
   function routeCard(r) {
     const cheapest = r.cheapest_verified;
-    const featured = cheapest?.verified && Number.isFinite(cheapest.price) && cheapest.price > 0 ? cheapest : null;
+    const verified = cheapest?.verified && Number.isFinite(cheapest.price) && cheapest.price > 0 ? cheapest : null;
+    // 沒有已驗證價時，退回該航線 Travelpayouts 最便宜的快取價（匯出的 cheapest_cached，或好價清單中最低者）。
+    const cachedPool = [r.cheapest_cached, ...r.deals.filter(item => !item.verified)].filter(item => item && Number.isFinite(item.price) && item.price > 0);
+    const cached = verified ? null : cachedPool.sort((a, b) => a.price - b.price)[0] || null;
+    const featured = verified || cached;
+    const badge = verified ? '<span class="tag verified">Google 已驗證</span>' : '<span class="tag pending">快取價 · 未驗證</span>';
+    const source = r.baseline?.source ? `<p class="fare-helper baseline-source">基準：${r.baseline.source === "travelpayouts" ? "Travelpayouts 中位數" : "Google"}</p>` : "";
     const adults = r.adults || 1;
     const band = `<div class="route-band"><div><span>出發</span><strong>${e(r.origin)}</strong></div><div class="route-journey"><span>${modeText(r)}</span><svg viewBox="0 0 120 24" aria-hidden="true"><path d="M2 12h40m36 0h40"/><path d="m48 12 23-8-7 8 7 8-23-8Z"/></svg><small>${adults} 位成人</small></div><div><span>目的地</span><strong>${e(r.destination)}</strong></div></div>`;
-    const body = featured ? `<div class="fare-kicker"><span>目前已驗證最低價</span><span class="tag verified">Google 已驗證</span></div><div class="fare-price"><small>NT$</small>${e(Math.round(featured.price).toLocaleString("en-US"))}</div>${featured.ratio != null && featured.ratio < 1 ? `<p class="fare-savings">比參考價低 ${e(fmtPct(featured.ratio).replace("-", ""))}</p>` : '<p class="fare-helper">每人來回票價</p>'}<p class="fare-date">${e(fmtDate(featured.outbound))} → ${e(fmtDate(featured.inbound))}</p><p class="fare-airline">${featured.nights} 晚 · ${e(featured.airline || "航空公司未提供")}</p>${externalLink(featured.google_flights_url, "查看航班 ↗")}<a class="fare-secondary" href="#calendar">看看其他日期 →</a>` : `<div class="fare-kicker"><span>你的下一趟旅程</span></div><h2 class="fare-empty-title">等待第一筆票價</h2><p class="fare-helper">完成掃描後，好價會自動出現。</p><a class="primary-button" href="#calendar">查看出發日期 →</a>`;
-    return {featured, html: `<article class="fare-card" aria-label="${e(r.label)}，${modeText(r)}，${adults} 位成人，最低票價"><h2 class="route-title">${e(r.label)}</h2>${band}<div class="fare-body">${body}</div></article>`};
+    const body = featured ? `<div class="fare-kicker"><span>${verified ? "目前已驗證最低價" : "目前最低快取價"}</span>${badge}</div><div class="fare-price"><small>NT$</small>${e(Math.round(featured.price).toLocaleString("en-US"))}</div>${featured.ratio != null && featured.ratio < 1 ? `<p class="fare-savings">比參考價低 ${e(fmtPct(featured.ratio).replace("-", ""))}</p>` : '<p class="fare-helper">每人來回票價</p>'}<p class="fare-date">${e(fmtDate(featured.outbound))} → ${e(fmtDate(featured.inbound))}</p><p class="fare-airline">${featured.nights} 晚 · ${e(featured.airline || "航空公司未提供")}</p>${externalLink(featured.google_flights_url, "查看航班 ↗")}<a class="fare-secondary" href="#calendar">看看其他日期 →</a>${source}` : `<div class="fare-kicker"><span>你的下一趟旅程</span></div><h2 class="fare-empty-title">等待第一筆票價</h2><p class="fare-helper">完成掃描後，好價會自動出現。</p><a class="primary-button" href="#calendar">查看出發日期 →</a>${source}`;
+    return {featured, verified: Boolean(verified), html: `<article class="fare-card" aria-label="${e(r.label)}，${modeText(r)}，${adults} 位成人，最低票價"><h2 class="route-title">${e(r.label)}</h2>${band}<div class="fare-body">${body}</div></article>`};
   }
 
   function renderHome() {
@@ -49,13 +55,13 @@
       .map(item => ({...item, route_label: r.label}))).sort((a, b) => a.ratio - b.ratio);
     const dealCard = item => `<article class="deal-card"><div class="deal-top"><span class="tag ${item.verified ? "verified" : "pending"}">${item.verified ? "Google 已驗證" : "快取 · 待確認"}</span><span class="nights">${e(item.route_label)} · ${item.nights} 晚</span></div><h3>${e(fmtDate(item.outbound))} → ${e(fmtDate(item.inbound))}</h3><div class="price-row"><strong>${e(fmtMoney(item.price))}</strong><span class="discount">${e(fmtPct(item.ratio))}</span></div><div class="deal-bottom"><span class="muted">${e(item.airline || "航空公司未提供")}</span>${externalLink(item.google_flights_url, "查看航班 ↗")}</div></article>`;
     $("deal-section").hidden = !deals.length;
-    $("deals-title").textContent = cards.some(card => card.featured) ? "其他好價" : "待確認的好價";
+    $("deals-title").textContent = cards.some(card => card.verified) ? "其他好價" : "待確認的好價";
     $("deal-count").textContent = `${deals.length} 組日期`;
     $("deals").innerHTML = deals.slice(0, 2).map(dealCard).join("");
     $("remaining-deals").innerHTML = deals.slice(2).map(dealCard).join("");
     $("more-deals").hidden = deals.length <= 2;
     $("more-deals-label").textContent = `再看 ${Math.max(0, deals.length - 2)} 組日期`;
-    $("baseline-card").innerHTML = s.routes.map(r => { const b = r.baseline; return `<span>${e(r.label)} · Google 典型價格基準</span><strong>${b.value == null ? "等待價格資料" : e(fmtMoney(b.value))}</strong><p>${b.google_low == null ? "取得 Google 典型區間後建立參考。" : `典型區間 ${e(fmtMoney(b.google_low))}～${e(Math.round(b.google_high).toLocaleString("en-US"))}`} · 近 ${b.lookback_days} 天 · ${b.n_ranges} 筆觀測</p>`; }).join("");
+    $("baseline-card").innerHTML = s.routes.map(r => { const b = r.baseline; return `<span>${e(r.label)} · 基準：${b.source === "travelpayouts" ? "Travelpayouts 中位數" : "Google 典型價格"}</span><strong>${b.value == null ? "等待價格資料" : e(fmtMoney(b.value))}</strong><p>${b.source === "travelpayouts" ? "以近期 Travelpayouts 快取價的中位數估算；取得 Google 典型區間後自動改用 Google。" : b.google_low == null ? "取得 Google 典型區間後建立參考。" : `典型區間 ${e(fmtMoney(b.google_low))}～${e(Math.round(b.google_high).toLocaleString("en-US"))}`} · 近 ${b.lookback_days} 天 · ${b.n_ranges} 筆觀測</p>`; }).join("");
     const q = s.budget;
     $("budget").innerHTML = `<div><span>SerpAPI 本月用量</span><strong>${q.serpapi_used_month}<small> / ${q.serpapi_quota}</small></strong><progress max="${q.serpapi_quota}" value="${q.serpapi_used_month}" aria-label="本月 SerpAPI 用量"></progress></div><div class="budget-bottom"><span>今日 <b>${q.serpapi_used_day} / ${q.serpapi_daily_budget}</b></span><span>快取資料 <b>${q.tp_pairs} 組</b></span></div>`;
   }
@@ -126,7 +132,7 @@
     const s = bundle.summary, q = s.budget;
     $("settings-overview").innerHTML = s.routes.map(r => `<strong>${e(r.label)} · ${modeText(r)}</strong><p>${r.adults || 1} 位成人 · ${r.stay_nights.join("／")} 晚</p>`).join("") + `<p>每天自動掃描 ${s.schedule.runs_per_day} 次</p>`;
     const routeFields = s.routes.map(r => [r.label, `${r.origin} ⇄ ${r.destination} · ${modeText(r)} · ${r.adults || 1} 位成人 · ${r.stay_nights.join("／")} 晚`]);
-    const fields = [...routeFields, ["幣別", s.currency], ["掃描窗口", `後天起至未來 ${s.window.days_ahead} 天（最早 ${s.window.min_lead_days} 天）`], ["立即推播", `≤ 基準 ${s.thresholds.instant * 100}% · Google 驗證`], ["每日摘要", `≤ 基準 ${s.thresholds.digest * 100}% · ${s.digest.hour_local}:00 後首次掃描`], ["基準回看", `${s.routes[0].baseline.lookback_days} 天`], ["SerpAPI 額度", `每日 ${q.serpapi_daily_budget}／每月 ${q.serpapi_quota}，安全額 ${q.monthly_safety}`], ["候選保留", `每次最多 ${q.reserve_for_candidates} 組；${q.reverify_hours} 小時內未降價不重驗`], ["重發條件", `再降 ≥${s.dedupe.min_drop_ratio * 100}% 或超過 ${s.dedupe.cooldown_hours} 小時`], ["排程", `台北 09:17／15:17／21:17／03:17`]];
+    const fields = [...routeFields, ["幣別", s.currency], ["掃描窗口", `後天起至未來 ${s.window.days_ahead} 天（最早 ${s.window.min_lead_days} 天）`], ["立即推播", `≤ 基準 ${s.thresholds.instant * 100}% · Google 驗證（SerpApi 未啟用時為 Travelpayouts 快取價）· 單次最多 ${s.thresholds.max_instant_per_run ?? 5} 則`], ["每日摘要", `≤ 基準 ${s.thresholds.digest * 100}% · ${s.digest.hour_local}:00 後首次掃描`], ["基準回看", `${s.routes[0].baseline.lookback_days} 天`], ["SerpAPI 額度", `每日 ${q.serpapi_daily_budget}／每月 ${q.serpapi_quota}，安全額 ${q.monthly_safety}`], ["候選保留", `每次最多 ${q.reserve_for_candidates} 組；${q.reverify_hours} 小時內未降價不重驗`], ["重發條件", `再降 ≥${s.dedupe.min_drop_ratio * 100}% 或超過 ${s.dedupe.cooldown_hours} 小時`], ["排程", `台北 09:17／15:17／21:17／03:17`]];
     $("settings-values").innerHTML = `<dl class="details">${fields.map(([name, value]) => `<div><dt>${e(name)}</dt><dd>${e(value)}</dd></div>`).join("")}</dl>`;
     const config = window.LOWFLY_CONFIG;
     const owner = config.owner || (location.hostname.endsWith(".github.io") ? location.hostname.split(".")[0] : "");

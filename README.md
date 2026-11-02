@@ -49,7 +49,7 @@ PYTHONDONTWRITEBYTECODE=1 python -m lowfly.main --mock --dry-run --force-digest
 
 `PYTHONDONTWRITEBYTECODE=1` 同時避免 Python 自行建立位元碼快取；程式的 dry-run 不寫 state、history、JSON、PNG 或模擬 App shell。
 
-## 設定四個 GitHub Secrets
+## 設定 GitHub Secrets（必要 3 個＋選用 SerpApi）
 
 建立一個 GitHub repo，預設分支使用 `main`，上傳本專案的全部檔案，包含 `.github/`。
 
@@ -67,16 +67,16 @@ git push -u origin main
 
 | Secret | 內容 |
 | --- | --- |
-| `SERPAPI_API_KEY` | 自己帳戶的 SerpAPI 金鑰 |
 | `TRAVELPAYOUTS_TOKEN` | Travelpayouts 個人檔案內的 Data API token |
 | `TELEGRAM_BOT_TOKEN` | 既有 Telegram bot 的 token |
 | `TELEGRAM_CHAT_ID` | 要接收通知的既有對話 chat ID |
+| `SERPAPI_API_KEY`（選用） | 自己帳戶的 SerpAPI 金鑰；未設定時以 Travelpayouts 模式運作，補上後自動恢復 |
 
 金鑰只填 Secrets；不要放進 `config.yaml`、`docs/config.js`、Issue、截圖或公開 JSON。請先與既有 bot 開始對話，再填入正確 chat ID。
 
 本機正式掃描可由自己的 shell 設定同名環境變數；本專案不會自動讀 `.env`。本機缺少任一來源金鑰會警告並跳過該來源；缺少 Telegram 設定只預覽文字與產生圖片，不把預覽標為已送達。
 
-雲端 Actions 會先檢查該模式需要的 Secrets：正式掃描／強制摘要需要四個，Telegram 測試需要 Telegram 兩個，dry-run 需要兩個價格來源，mock 不需金鑰。缺少時只列出缺少的名稱並明確失敗，不啟動掃描、不寫入正式資料，避免把略過來源的執行誤認為成功。
+雲端 Actions 會先檢查該模式需要的 Secrets：正式掃描／強制摘要需要三個（Travelpayouts、Telegram 兩個），Telegram 測試需要 Telegram 兩個，dry-run 需要 Travelpayouts，mock 不需金鑰。`SERPAPI_API_KEY` 為選用，缺席只寫 `::notice`：沒有 SerpApi 時，各航線以 Travelpayouts 近 `lookback_days` 天快取價的中位數（至少 15 組日期）當基準，快取價 ≤ 基準 50% 仍會即時通知，訊息明確標示「未經 Google 驗證」；單次 run 即時通知上限為 `thresholds.max_instant_per_run`（預設 5，有 SerpApi 時同樣適用）。其他必要 Secrets 缺少時只列出缺少的名稱並明確失敗，不啟動掃描、不寫入正式資料，避免把略過來源的執行誤認為成功。
 
 ## GitHub Pages 設定
 
@@ -100,7 +100,7 @@ Pages 的啟用、帳戶方案與 repo 可見性依自己的 GitHub 帳戶為準
 
 前往 **Actions → LowFly scan → Run workflow**，先使用 `mock` 看格式，再選 `test-telegram` 驗證真實推播，最後選 `normal`。
 
-若透過已連接的 GitHub 工具操作，也可以由 repo 擁有者建立標題以 `[LowFly scan]` 開頭的 Issue，啟動一次 `normal` 正式掃描；重新開啟同一 Issue 可重試。其他使用者建立的 Issue 不會啟動掃描，Issue 內文不會傳入 shell。這個入口同樣先檢查四個 Secrets，缺少時明確失敗並保留紀錄，不會假裝取得票價。
+若透過已連接的 GitHub 工具操作，也可以由 repo 擁有者建立標題以 `[LowFly scan]` 開頭的 Issue，啟動一次 `normal` 正式掃描；重新開啟同一 Issue 可重試。其他使用者建立的 Issue 不會啟動掃描，Issue 內文不會傳入 shell。這個入口同樣先檢查必要的三個 Secrets，缺少時明確失敗並保留紀錄，不會假裝取得票價。
 
 | mode | 動作 | 寫入正式資料 |
 | --- | --- | --- |
@@ -184,7 +184,7 @@ python scripts/generate_icons.py
 - 圖片失敗才退文字：保留可讀通知而不阻塞掃描。
 - 缺 Telegram 憑證不計已發送：補好憑證後仍能收到第一則通知。
 - 90 天通知事件另保留 `alert_history`：同一日期多次降價推播也能逐筆回顧。
-- 額外 `pages: write` 僅用發布 build：保留既定 `main /docs` 與四個 Secrets。
+- 額外 `pages: write` 僅用發布 build：保留既定 `main /docs` 與三個必要 Secrets（SerpApi 選用）。
 
 ## 來源文件
 

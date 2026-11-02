@@ -79,7 +79,8 @@ def render_alert(offer, baseline, cfg: dict, state: dict, output_dir: Path) -> P
     draw_text(draw, (65, 207), f"{fmt_date(offer.outbound)} → {fmt_date(offer.inbound)}", 36)
     draw_text(draw, (60, 282), fmt_money(offer.price), 120, width=810, bold=True)
     draw_text(draw, (875, 325), fmt_pct(baseline.ratio(offer.price)), 72, GREEN, width=270, bold=True)
-    draw_text(draw, (65, 447), f"基準 {fmt_money(baseline.value)} · {offer.airline}", 32, MUTED)
+    note = " · 快取價・未經 Google 驗證" if offer.source == "travelpayouts" else ""
+    draw_text(draw, (65, 447), f"基準 {fmt_money(baseline.value)} · {offer.airline}{note}", 32, MUTED)
     history = state.get("pairs", {}).get(offer.pair_key, {}).get("price_history", [])
     sparkline(draw, history, (68, 525, 1128, 600))
     output_dir.mkdir(parents=True, exist_ok=True)

@@ -70,6 +70,8 @@ def validate_config(cfg: dict) -> None:
         raise ValueError("航線 id 不可重複")
     if not 0 < float(thr["instant"]) <= float(thr["digest"]) <= 1:
         raise ValueError("通知門檻須為 0 < instant ≤ digest ≤ 1")
+    if int(thr.get("max_instant_per_run", 5)) < 1:
+        raise ValueError("max_instant_per_run 須大於零")
     for name in ("monthly_quota", "monthly_safety", "daily_budget", "reserve_for_candidates"):
         if int(sc[name]) < 0:
             raise ValueError(f"{name} 不得為負數")

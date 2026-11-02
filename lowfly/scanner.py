@@ -9,7 +9,7 @@ from pathlib import Path
 
 from .baseline import Baseline, compute_baseline
 from .config import ROOT
-from .dates import date_pairs, fmt_date, months_covering, pair_key, parse_time, split_key
+from .dates import date_pairs, fmt_date, google_url, months_covering, pair_key, parse_time, split_key
 from .models import Offer, number
 from .notifier import Telegram, esc, fmt_money, fmt_pct, fmt_range, link
 from .sources import serpapi_flights, travelpayouts
@@ -41,6 +41,9 @@ class Scanner:
         keys = [pair_key(rid, o, b) for rid, pairs in route_pairs.items() for o, b in pairs]
         self.summary["pair_keys"] = keys
         self._rollover_budgets()
+        # SerpApi 不可用（無 key、enabled false 或額度 0）時，改以 Travelpayouts 快取價判斷。
+        self.tp_only = self._run_budget() == 0
+        self.summary["tp_only"] = self.tp_only
         self._prune_pairs()
         tp_best: dict[str, Offer] = {}
         if cfg["sources"]["travelpayouts"].get("enabled", True) and self.secrets.travelpayouts_token:
@@ -240,34 +243,41 @@ class Scanner:
         self._maintain_pool(tp_best, checked, baselines)
         items = self.state["digest_pool"]["items"]
         at = self.now.isoformat(timespec="seconds")
-        for key, offer in verified.items():
-            baseline = baselines.get(offer.route_id)
-            if baseline is None:
-                continue
-            ratio = baseline.ratio(offer.price)
-            if ratio <= self.cfg["thresholds"]["instant"] and self._should_alert(key, offer.price):
-                if self._send_instant(offer, baseline, ratio):
-                    record = {"pair_key": key, "route_id": offer.route_id, "price": offer.price, "at": at, "baseline_at_alert": baseline.value,
-                              "ratio": ratio, "airline": offer.airline, "outbound": offer.outbound, "inbound": offer.inbound,
-                              "url": offer.url, "latest_price": offer.price, "min_price_after": offer.price}
-                    self.state["alerts"][key] = record
-                    self.state["alert_history"].append(dict(record))
-                    self.state["stats"]["alerts_sent"] += 1
-                    self.summary["instant_alerts"] += 1
+        def ranked(offers):   # 比例低的先處理，單 run 即時通知達上限時留下最好的
+            return sorted(((baselines[o.route_id].ratio(o.price), k, o) for k, o in offers.items()
+                           if baselines.get(o.route_id)), key=lambda item: item[:2])
+        for ratio, key, offer in ranked(verified):
+            baseline = baselines[offer.route_id]
+            self._maybe_instant(key, offer, baseline, ratio, True, at)
             if ratio <= self.cfg["thresholds"]["digest"]:
                 items[key] = {**offer.to_dict(), "ratio": ratio, "verified": True, "at": at}
-        for key, offer in tp_best.items():
-            baseline = baselines.get(offer.route_id)
-            if baseline is None or key in checked:
+        for ratio, key, offer in ranked(tp_best):
+            baseline = baselines[offer.route_id]
+            if key in checked:
                 continue
+            if self.tp_only:
+                self._maybe_instant(key, offer, baseline, ratio, False, at)
             existing = items.get(key)
             if existing and existing["verified"]:
                 continue
-            ratio = baseline.ratio(offer.price)
             if ratio <= self.cfg["thresholds"]["digest"]:
                 items[key] = {**offer.to_dict(), "ratio": ratio, "verified": False, "at": at}
             else:
                 items.pop(key, None)
+
+    def _maybe_instant(self, key: str, offer: Offer, baseline: Baseline, ratio: float, verified: bool, at: str) -> None:
+        thresholds = self.cfg["thresholds"]
+        if (ratio > thresholds["instant"] or self.summary["instant_alerts"] >= int(thresholds.get("max_instant_per_run", 5))
+                or not self._should_alert(key, offer.price)):
+            return
+        if self._send_instant(offer, baseline, ratio, verified):
+            record = {"pair_key": key, "route_id": offer.route_id, "price": offer.price, "at": at, "baseline_at_alert": baseline.value,
+                      "ratio": ratio, "airline": offer.airline, "outbound": offer.outbound, "inbound": offer.inbound,
+                      "url": offer.url, "latest_price": offer.price, "min_price_after": offer.price, "verified": verified}
+            self.state["alerts"][key] = record
+            self.state["alert_history"].append(dict(record))
+            self.state["stats"]["alerts_sent"] += 1
+            self.summary["instant_alerts"] += 1
 
     def _should_alert(self, key: str, price: float) -> bool:
         previous = self.state["alerts"].get(key)
@@ -293,16 +303,23 @@ class Scanner:
                 log.warning("圖片產生失敗（%s）；改送純文字", type(exc).__name__)
         return self.tg.send_photo(path, text)
 
-    def _send_instant(self, offer: Offer, baseline: Baseline, ratio: float) -> bool:
+    def _send_instant(self, offer: Offer, baseline: Baseline, ratio: float, verified: bool = True) -> bool:
         cfg = self.cfg
         level = self.state["pairs"].get(offer.pair_key, {}).get("price_level") or "—"
-        text = (f"✈️ <b>{esc(cfg['app_name'])}｜神票 ≤{cfg['thresholds']['instant'] * 100:.0f}%</b>\n"
+        source = "" if baseline.source == "google" else "，Travelpayouts 中位數"
+        head = (f"✈️ <b>{esc(cfg['app_name'])}｜神票 ≤{cfg['thresholds']['instant'] * 100:.0f}%</b>\n"
                 f"{esc(self.routes[offer.route_id]['label'])} 直飛來回（{offer.nights} 晚）\n"
                 f"出發 {fmt_date(offer.outbound)} → 回程 {fmt_date(offer.inbound)}\n"
-                f"<b>{fmt_money(offer.price)}</b>（基準 {fmt_money(baseline.value)}，{fmt_pct(ratio)}）\n"
-                f"航空：{esc(offer.airline or '—')}\n"
-                f"Google 價位：{esc(level)}｜典型區間 {fmt_range(baseline.google_low, baseline.google_high)}\n"
-                f"🔗 {link(offer.url, 'Google Flights 查看／訂票')}")
+                f"<b>{fmt_money(offer.price)}</b>（基準 {fmt_money(baseline.value)}{source}，{fmt_pct(ratio)}）\n"
+                f"航空：{esc(offer.airline or '—')}\n")
+        if verified:
+            text = (head + f"Google 價位：{esc(level)}｜典型區間 {fmt_range(baseline.google_low, baseline.google_high)}\n"
+                    f"🔗 {link(offer.url, 'Google Flights 查看／訂票')}")
+        else:
+            route = self.routes[offer.route_id]
+            text = (head + "⚠️ Travelpayouts 快取價，未經 Google 驗證，訂票前請以實際頁面為準\n"
+                    f"🔗 {link(google_url(cfg, route, offer.outbound, offer.inbound), 'Google Flights 查看')}"
+                    f"｜{link(offer.url, 'Aviasales')}")
         return self._deliver(text, "alert", offer, baseline)
 
     def _maybe_digest(self, baselines: dict[str, Baseline | None], tp_best: dict) -> None:
@@ -316,7 +333,9 @@ class Scanner:
         for rid, route in self.routes.items():
             nights, baseline = route["stay_nights"], baselines.get(rid)
             head = f"{esc(route['label'])}（{min(nights)}～{max(nights)} 晚）"
-            if baseline:
+            if baseline and baseline.source != "google":
+                lines.append(f"{head} 基準價 <b>{fmt_money(baseline.value)}</b>（Travelpayouts 近 {cfg['baseline']['lookback_days']} 天快取價中位數）")
+            elif baseline:
                 lines.append(f"{head} 基準價 <b>{fmt_money(baseline.value)}</b>（Google 典型區間 {fmt_range(baseline.google_low, baseline.google_high)}，近 {cfg['baseline']['lookback_days']} 天 {baseline.n_ranges} 筆）")
             else:
                 lines.append(f"{head} 基準價：尚未取得 Google 典型區間（程式剛啟動或 SerpAPI 額度用完）")
@@ -342,6 +361,8 @@ class Scanner:
                 baseline = baselines.get(rid)
                 discount = fmt_pct(baseline.ratio(p["last_price"])) + "，" if baseline else ""
                 lines += ["", f"{esc(route['label'])} 已驗證最低：{fmt_date(out)}→{fmt_date(back)} {fmt_money(p['last_price'])}（{discount}{esc(p.get('last_airline', ''))}）"]
+        if self.tp_only:
+            lines.append("SerpAPI 目前不可用：以上皆為 Travelpayouts 快取價，未經 Google 驗證，訂票前請以實際頁面為準。")
         lines.append(f"SerpAPI 本月 {st['serpapi']['used_month']}/{cfg['sources']['serpapi']['monthly_quota']}｜Travelpayouts 快取 {len(tp_best)} 組日期")
         if self._deliver("\n".join(lines), "digest", len(tp_best), baselines):
             st["last_digest_date"] = today.isoformat()

@@ -53,10 +53,15 @@ jobs:
           case "$MODE" in
             mock) required=() ;;
             test-telegram) required=(TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID) ;;
-            dry-run) required=(SERPAPI_API_KEY TRAVELPAYOUTS_TOKEN) ;;
-            normal|force-digest) required=(SERPAPI_API_KEY TRAVELPAYOUTS_TOKEN TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID) ;;
+            dry-run) required=(TRAVELPAYOUTS_TOKEN) ;;
+            normal|force-digest) required=(TRAVELPAYOUTS_TOKEN TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID) ;;
             *) echo "不支援的執行模式" >&2; exit 2 ;;
           esac
+          # SERPAPI_API_KEY 為選用：缺席時以 Travelpayouts 模式運作（補上後自動恢復 Google 驗證）。
+          if [[ "$MODE" =~ ^(normal|dry-run|force-digest)$ && -z "${SERPAPI_API_KEY:-}" ]]; then
+            echo "::notice title=SerpApi 未設定::SerpApi 未設定，以 Travelpayouts 模式運作（票價為快取價，未經 Google 驗證）。"
+            echo "SerpApi 未設定，以 Travelpayouts 模式運作；補上 \`SERPAPI_API_KEY\` 後自動恢復 Google 驗證。" >> "${GITHUB_STEP_SUMMARY:-/dev/null}"
+          fi
           missing=()
           for secret_name in "${required[@]}"; do
             if [[ -z "${!secret_name:-}" ]]; then missing+=("$secret_name"); fi

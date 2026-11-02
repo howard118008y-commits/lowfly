@@ -48,3 +48,4 @@ lowfly/
   tests/test_acceptance.py
   tests/test_edges.py
   tests/test_routes.py
+  tests/test_tp_mode.py
