@@ -11,7 +11,7 @@
 | 測試 | pytest 121 passed、node 22 pass、四份 JSON 合約檢查通過 | 見第 2 節「跑測試」 |
 | 線上 PWA | v1.9.0；app.js 含 `促銷月加跑`；圖示改登機證配色（墨藍底 #1B2430） | `curl -s https://howard118008y-commits.github.io/lowfly/sw.js \| grep -o 'v1\.[0-9.]*'` |
 | 排程掃描 | cron `17 1,7,13,19 * * *`（台北 09:17／15:17／21:17／03:17）＋促銷月（5、6、11、12 月）第二條 `17 4,10,16,22 * 5,6,11,12 *`，合計每 3 小時；最近一次 workflow_dispatch 成功 | `gh run list --workflow=scan.yml --limit 3` |
-| 線上資料 | 掃描窗口 60 天；TP 26 組（30 天內 19、31～60 天 7）。東京基準已成立 12,116（17 筆）；香港、澳門樣本 6／3，滿 15 筆才成立；好價線 4,500／5,000／9,000；目前最低含行李價 7,296／6,389／9,709，都還沒觸發 | `curl -s https://howard118008y-commits.github.io/lowfly/data/summary.json \| python3 -c "import json,sys;[print(r['id'],r['good_price'],r['baseline']['samples'],(r['cheapest_cached'] or {}).get('price')) for r in json.load(sys.stdin)['routes']]"` |
+| 線上資料 | 掃描窗口 60 天；住宿晚數 香港／澳門 1～5 晚、東京 1／2／4／5／6 晚（含 2天1夜、3天2夜）；TP 26 組（30 天內 19、31～60 天 7）。東京基準已成立 12,116（17 筆）；香港、澳門樣本 6／3，滿 15 筆才成立；好價線 4,500／5,000／9,000；目前最低含行李價 7,296／6,389／9,709，都還沒觸發 | `curl -s https://howard118008y-commits.github.io/lowfly/data/summary.json \| python3 -c "import json,sys;[print(r['id'],r['good_price'],r['baseline']['samples'],(r['cheapest_cached'] or {}).get('price')) for r in json.load(sys.stdin)['routes']]"` |
 
 **今天上線的功能**（細節請看 commit message）：
 - 登機證票根 UI，顯示真實航班欄位。
@@ -39,7 +39,7 @@
   1. `git push`
   2. `gh workflow run scan.yml`
   3. `gh run watch <id> --exit-status`
-  4. 等 `gh api repos/howard118008y-commits/lowfly/pages/builds/latest -q .status` 變成 `built`
+  4. 等 `gh api repos/howard118008y-commits/lowfly/pages/builds/latest -q .status` 變成 `built`；若顯示 `errored`，先看 `gh run list --workflow pages-build-deployment --limit 3`，連續 push 時被取消的舊 build 也會標 errored
   5. curl 線上檔案確認
 - **測試隔離**：`tests/conftest.py` 的 `cfg` 預設把託運設成 0kg、也不帶好價線。行李相關測試寫在 `tests/test_baggage.py`，好價線和須知寫在 `tests/test_deal_notices.py`，兩者都各自設定。
 - **所有數字都在 `config.yaml`**：好價線、須知、行李費表、均價天數，程式裡不寫死。
