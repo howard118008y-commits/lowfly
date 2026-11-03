@@ -62,6 +62,7 @@ class Scanner:
                         self._error(f"Travelpayouts {rid} {month} 失敗（{type(exc).__name__}）")
         self.summary["tp_offers"] = len(tp_best)
         self._record_tp(tp_best)
+        self._refresh_market()
         baselines = self._baselines()
         selected = self._select_pairs(keys, tp_best, baselines)
         self.summary["candidates"] = selected
@@ -90,6 +91,37 @@ class Scanner:
         """蓋上航線並加計行李：price 變成總價（之後所有判斷都用它），原票價留在 fare。"""
         fee, estimated = bag_fee(self.cfg, route_id, offer.airline_code)
         return replace(offer, route_id=route_id, fare=offer.price, price=offer.price + fee, bag_fee=fee, bag_estimated=estimated)
+
+    def _refresh_market(self) -> None:
+        """行情：未來 months_ahead 個月出發的 TP 快取價，依出發月份彙整（含行李總價與票價），每天抓一次。
+        任一次請求失敗就保留舊資料、不記日期，下一輪重抓。"""
+        months_ahead = int((self.cfg.get("market") or {}).get("months_ahead", 0))
+        today = self.now.date()
+        if (not months_ahead or (self.state.get("market") or {}).get("date") == today.isoformat()
+                or not self.cfg["sources"]["travelpayouts"].get("enabled", True) or not self.secrets.travelpayouts_token):
+            return
+        months = [f"{today.year + (today.month - 1 + i) // 12}-{(today.month - 1 + i) % 12 + 1:02d}" for i in range(months_ahead)]
+        routes = {}
+        for rid, route in self.routes.items():
+            routes[rid] = {}
+            for month in months:
+                try:
+                    offers = self.tp_fn(route["origin"], route["destination"], month,
+                                        self.secrets.travelpayouts_token, self.cfg["currency"], route["direct_only"])
+                except Exception as exc:
+                    self._error(f"行情 Travelpayouts {rid} {month} 失敗（{type(exc).__name__}）；保留舊行情")
+                    return
+                best: dict[str, Offer] = {}
+                for offer in (self._stamp(o, rid) for o in offers):
+                    if (self._valid_offer(offer) and offer.outbound.startswith(month) and offer.outbound >= today.isoformat()
+                            and offer.nights in route["stay_nights"]
+                            and (offer.pair_key not in best or offer.price < best[offer.pair_key].price)):
+                        best[offer.pair_key] = offer
+                if best:
+                    routes[rid][month] = {"n": len(best), "sum": sum(o.price for o in best.values()),
+                                          "fare_sum": sum(o.fare for o in best.values()), "min": min(o.price for o in best.values())}
+        self.state["market"] = {"date": today.isoformat(), "at": self.now.isoformat(timespec="seconds"),
+                                "months": months, "routes": routes}
 
     def _baselines(self) -> dict[str, Baseline | None]:
         return {rid: compute_baseline(self.state, self.cfg, self.now, rid) for rid in self.routes}
@@ -205,6 +237,17 @@ class Scanner:
         cutoff = self.now - timedelta(days=int(self.cfg["baseline"]["lookback_days"]))
         for k in [k for k, s in samples.items() if parse_time(s["at"]) < cutoff]:
             del samples[k]
+        # 行情「過去 3／6 個月」：每天每條航線的樣本合計，從仍保留的樣本重算；樣本過期後該日合計留著，保留 190 天。
+        grouped: dict[str, dict] = {}
+        for k, s in samples.items():
+            if s.get("basis") == "total":
+                row = grouped.setdefault(k.rsplit("|", 1)[1], {}).setdefault(s["route"], {"n": 0, "sum": 0})
+                row["n"] += 1
+                row["sum"] += s["price"]
+        daily = self.state.setdefault("market_daily", {})
+        daily.update(grouped)
+        for day in [d for d in daily if d < (self.now.date() - timedelta(days=190)).isoformat()]:
+            del daily[day]
 
     def _record_serpapi(self, key: str, result) -> None:
         at = self.now.isoformat(timespec="seconds")

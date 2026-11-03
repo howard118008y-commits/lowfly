@@ -93,6 +93,18 @@ schedule:
   # 航空促銷旺季：scan.yml 第二條 cron 只在這些月份加跑，改這裡要同步改 cron 的月份欄。
   promo_months: [5, 6, 11, 12]
   promo_runs_per_day: 8
+# 行情分頁：過去 3／6 個月＝LowFly 每天記錄的含行李價平均（自 2026-11-02 起累積）；
+# 未來 3／6 個月＝未來 months_ahead 個月出發的 Travelpayouts 快取均價（每天抓一次，住宿晚數同上）。
+# reference：外部網站公布的參考值（一次性整理）。2026-11-04 查無公開的過去 3／6 個月逐月均價，只有 Kayak 過去 12 個月最便宜／最貴月份。
+market:
+  months_ahead: 6
+  reference:
+    HKG:
+      - {source: "Kayak", url: "https://www.tw.kayak.com/flight-routes/Taipei-Taiwan-Taoyuan-Intl-TPE/Hong-Kong-Intl-HKG", text: "過去 12 個月最便宜 3 月 NT$4,845、最貴 2 月 NT$6,862（來回，未註明含行李與直飛）"}
+    MFM:
+      - {source: "Kayak", url: "https://www.tw.kayak.com/flight-routes/Taipei-Taiwan-Taoyuan-Intl-TPE/Macau-Intl-MFM", text: "過去 12 個月最便宜 1 月 NT$6,536、最貴 6 月 NT$8,423（來回，未註明含行李與直飛）"}
+    TYO:
+      - {source: "Kayak", url: "https://www.tw.kayak.com/flight-routes/Taipei-Taiwan-Taoyuan-Intl-TPE/Tokyo-TYO", text: "過去 12 個月最便宜 5 月 NT$8,553、最貴 2 月 NT$15,772；頁面平均來回 NT$9,300（期間未註明）"}
 digest:
   hour_local: 9
   top_n: 5

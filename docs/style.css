@@ -28,6 +28,15 @@ h1,h2,h3,p{margin:0}
 .connection.offline,.connection.demo{color:var(--stamp)}
 
 .lead{font-size:22px;font-weight:700;line-height:1.35;margin:8px 0 18px}
+.market-wrap{overflow-x:auto}
+.market-table{width:100%;border-collapse:collapse;background:var(--paper);border-radius:14px;font-size:12px}
+.market-table th,.market-table td{padding:10px 6px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+.market-table th:first-child{text-align:left;padding-left:12px}
+.market-table thead th{color:var(--muted);font-weight:500}
+.market-table td{font:600 16px var(--num);font-variant-numeric:tabular-nums}
+.market-table td small{display:block;font:11px var(--text);color:var(--muted)}
+.market-route{margin-top:16px}.market-route h2{font-size:16px;margin-bottom:8px}
+.market-route .market-table td{font-size:15px}
 .page-heading{padding:8px 0 16px}.page-heading h1{font-size:22px;font-weight:700}.page-heading p{font-size:13px;margin-top:4px}
 
 /* 票根 */
@@ -150,7 +159,7 @@ progress::-webkit-progress-bar{background:var(--line)}progress::-webkit-progress
 .secondary-button{min-height:44px;padding:0 18px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--ink);margin:6px 0}
 .app-footer{text-align:center;font-size:12px;color:var(--muted);padding:24px 0 0}
 
-.tab-bar{position:fixed;left:0;right:0;bottom:0;z-index:10;display:grid;grid-template-columns:repeat(4,1fr);
+.tab-bar{position:fixed;left:0;right:0;bottom:0;z-index:10;display:grid;grid-template-columns:repeat(5,1fr);
   padding:6px max(8px,calc((100vw - 560px)/2)) calc(6px + var(--safe-bottom));background:var(--paper);border-top:1px solid var(--line)}
 .tab-bar a{display:flex;flex-direction:column;align-items:center;gap:3px;min-height:52px;padding:6px;font-size:12px;color:var(--muted);text-decoration:none}
 .tab-bar a[aria-current=page]{color:var(--ink);font-weight:700;box-shadow:inset 0 2px 0 var(--ink)}

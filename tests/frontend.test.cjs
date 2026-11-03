@@ -113,7 +113,7 @@ async function appHarness(overrides = {}, offline = false, extra = {}) {
   Object.assign(payload, extra);
   if (extra.alerts) payload.alerts.generated_at = payload.summary.generated_at;
   const document = {getElementById(id){assert.ok(nodes[id],`缺少頁面元素 ${id}`);return nodes[id];},
-    querySelectorAll(selector){return selector === '.view' ? ['home','calendar','records','settings'].map(id=>Object.assign(nodes[id],{id})) : [];}};
+    querySelectorAll(selector){return selector === '.view' ? ['home','calendar','records','market','settings'].map(id=>Object.assign(nodes[id],{id})) : [];}};
   const context = {document,window:{LowFly:U,LOWFLY_CONFIG:{owner:'',repo:'',branch:'main'},addEventListener(){}},
     location:{hash:'',hostname:'example.test',pathname:'/lowfly/',href:'https://example.test/lowfly/'},navigator:{onLine:!offline},
     localStorage:{setItem(){},getItem(){return null;}},setInterval(){},AbortSignal,URL,console,
@@ -283,4 +283,18 @@ test('含行李總價 ≤ 好價線蓋「好價」章並成為開頭；優惠須
   assert.ok(html.indexOf('t-notes')<html.indexOf('去訂票'));
   const plain=(await appHarness({routes:patchRoutes(baseRoutes(),{HKG:{cheapest_verified:{...item,price:4600,total:4600,fare:4600,notes:[]},good_price:4500}})}))['route-cards'].innerHTML;
   assert.doesNotMatch(plain,/class="stamp"|t-notes/);
+});
+
+test('行情分頁：過去／未來 3、6 個月均價並列；各月份明細與 Kayak 參考；沒資料顯示—', async () => {
+  const market={updated_at:'2026-11-04T09:17:00+08:00',past_3m:{total:7100,n:40,days:3},past_6m:{total:7100,n:40,days:3},next_3m:{total:7400,fare:6000,n:12},next_6m:{total:7600,fare:6200,n:20},months:[{month:'2026-11',total:7300,fare:5900,min:6100,n:5},{month:'2026-12',total:null,fare:null,min:null,n:0}],reference:[{source:'Kayak',url:'https://www.tw.kayak.com/x',text:'過去 12 個月最便宜 3 月 NT$4,845'}]};
+  const nodes=await appHarness({routes:patchRoutes(baseRoutes(),{HKG:{market}})});
+  const t=nodes['market-table'].innerHTML;
+  assert.match(t,/<th scope="row">香港<\/th><td>7,100<small>3 天紀錄<\/small><\/td><td>7,100<small>3 天紀錄<\/small><\/td><td>7,400<small>12 組<\/small><\/td><td>7,600<small>20 組<\/small><\/td>/);
+  assert.match(t,/<th scope="row">澳門<\/th><td>—<\/td><td>—<\/td><td>—<\/td><td>—<\/td>/);
+  assert.match(t,/未來均價更新於 11\/4 09:17/);
+  const d=nodes['market-detail'].innerHTML;
+  assert.match(d,/<th scope="row">11 月<\/th><td>7,300<\/td><td>5,900<\/td><td>6,100<\/td><td>5<\/td>/);
+  assert.match(d,/<th scope="row">12 月<\/th><td>—<\/td><td>—<\/td><td>—<\/td><td>0<\/td>/);
+  assert.match(d,/>Kayak<\/a>：過去 12 個月最便宜 3 月 NT\$4,845/);
+  assert.match(d,/桃園 ⇄ 澳門 各月份<\/summary><p class="muted">尚無未來月份資料。/);
 });

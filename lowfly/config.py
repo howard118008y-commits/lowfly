@@ -104,6 +104,8 @@ def validate_config(cfg: dict) -> None:
         raise ValueError("promo_months 須為 1～12 月")
     if int(schedule.get("promo_runs_per_day", schedule["runs_per_day"])) < int(schedule["runs_per_day"]):
         raise ValueError("promo_runs_per_day 不得少於 runs_per_day")
+    if not 0 <= int((cfg.get("market") or {}).get("months_ahead", 0)) <= 12:
+        raise ValueError("market.months_ahead 須介於 0～12")
     if not 0 <= int(cfg["digest"]["hour_local"]) <= 23:
         raise ValueError("摘要時間須介於 0～23")
     if int(cfg["digest"]["top_n"]) < 1:

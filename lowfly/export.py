@@ -55,6 +55,28 @@ def build_pairs(cfg: dict, state: dict, now: datetime) -> dict:
             "baseline": {rid: b.value if b else None for rid, b in baselines.items()}, "pairs": result}
 
 
+def _market(cfg: dict, state: dict, now: datetime, route_id: str) -> dict:
+    """行情分頁：過去 3／6 個月（LowFly 每日紀錄）與未來 3／6 個月、各出發月份的含行李均價（以組數加權），加上外部參考。"""
+    market = state.get("market") or {}
+    stats, months = (market.get("routes") or {}).get(route_id, {}), market.get("months", [])
+    def avg(rows, field):
+        n = sum(r["n"] for r in rows)
+        return round(sum(r[field] for r in rows) / n) if n else None
+    def span(count):
+        rows = [stats[m] for m in months[:count] if m in stats]
+        return {"total": avg(rows, "sum"), "fare": avg(rows, "fare_sum"), "n": sum(r["n"] for r in rows)}
+    def past(days):
+        cutoff = (now.date() - timedelta(days=days)).isoformat()
+        rows = [d[route_id] for day, d in (state.get("market_daily") or {}).items() if day > cutoff and route_id in d]
+        return {"total": avg(rows, "sum"), "n": sum(r["n"] for r in rows), "days": len(rows)}
+    return {"updated_at": market.get("at"), "past_3m": past(91), "past_6m": past(182),
+            "months": [{"month": m, "total": avg([stats[m]], "sum") if m in stats else None,
+                        "fare": avg([stats[m]], "fare_sum") if m in stats else None,
+                        "min": stats[m]["min"] if m in stats else None, "n": stats[m]["n"] if m in stats else 0} for m in months],
+            "next_3m": span(3), "next_6m": span(6),
+            "reference": ((cfg.get("market") or {}).get("reference") or {}).get(route_id, [])}
+
+
 def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_count: int | None = None) -> dict:
     baselines = _baselines(cfg, state, now)
     pairs = build_pairs(cfg, state, now)["pairs"]
@@ -80,7 +102,7 @@ def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_coun
                                     "n_ranges": baseline.n_ranges if baseline else 0, "lookback_days": cfg["baseline"]["lookback_days"],
                                     "source": baseline.source if baseline else None,
                                     "samples": tp_sample_count(state, cfg, now, route["id"]), "min_samples": MIN_TP_PAIRS},
-                       "average": tp_average(state, cfg, now, route["id"]),
+                       "average": tp_average(state, cfg, now, route["id"]), "market": _market(cfg, state, now, route["id"]),
                        "deals": sorted(deals, key=lambda item: (item["ratio"], item["pair_key"])),
                        "cheapest_verified": min(verified, key=lambda p: p["price"]) if verified else None,
                        "cheapest_cached": min(cached, key=lambda p: p["price"]) if cached else None})

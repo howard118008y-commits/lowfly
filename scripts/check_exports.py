@@ -32,12 +32,16 @@ def validate(folder: Path) -> None:
     today = datetime.fromisoformat(summary["generated_at"]).date()
     assert set(docs["pairs"]["baseline"]) == set(ids), "pairs.baseline 須依 route_id 分組"
     for route in routes:
-        for field in ("id", "label", "origin", "destination", "stay_nights", "baseline", "average", "deals", "cheapest_verified", "cheapest_cached"):
+        for field in ("id", "label", "origin", "destination", "stay_nights", "baseline", "average", "market", "deals", "cheapest_verified", "cheapest_cached"):
             assert field in route, f"route 缺少 {field}"
         assert isinstance(route["baseline"]["samples"], int) and route["baseline"]["min_samples"] > 0
         assert route.get("color") is None or re.fullmatch(r"#[0-9A-Fa-f]{6}", route["color"])
         assert route["baseline"].get("source") in (None, "google", "travelpayouts")
         assert route.get("good_price") is None or (isinstance(route["good_price"], (int, float)) and route["good_price"] > 0)
+        market = route["market"]
+        assert isinstance(market["months"], list) and isinstance(market["reference"], list)
+        for item in [*market["months"], market["next_3m"], market["next_6m"], market["past_3m"], market["past_6m"]]:
+            assert isinstance(item["n"], int) and (item["total"] is None) == (item["n"] == 0), "行情均價與組數不一致"
         avg = route["average"]
         assert avg["days"] > 0 and isinstance(avg["samples"], int) and (avg["value"] is None) == (avg["samples"] == 0)
         assert (route["baseline"]["value"] is None) == (route["baseline"]["source"] is None)

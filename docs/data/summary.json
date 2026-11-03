@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-04T05:47:54+08:00",
+  "generated_at": "2026-11-04T07:57:00+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -32,6 +32,37 @@
         "value": 7831,
         "samples": 30,
         "days": 30
+      },
+      "market": {
+        "updated_at": null,
+        "past_3m": {
+          "total": null,
+          "n": 0,
+          "days": 0
+        },
+        "past_6m": {
+          "total": null,
+          "n": 0,
+          "days": 0
+        },
+        "months": [],
+        "next_3m": {
+          "total": null,
+          "fare": null,
+          "n": 0
+        },
+        "next_6m": {
+          "total": null,
+          "fare": null,
+          "n": 0
+        },
+        "reference": [
+          {
+            "source": "Kayak",
+            "url": "https://www.tw.kayak.com/flight-routes/Taipei-Taiwan-Taoyuan-Intl-TPE/Hong-Kong-Intl-HKG",
+            "text": "過去 12 個月最便宜 3 月 NT$4,845、最貴 2 月 NT$6,862（來回，未註明含行李與直飛）"
+          }
+        ]
       },
       "deals": [],
       "cheapest_verified": null,
@@ -101,6 +132,37 @@
         "samples": 18,
         "days": 30
       },
+      "market": {
+        "updated_at": null,
+        "past_3m": {
+          "total": null,
+          "n": 0,
+          "days": 0
+        },
+        "past_6m": {
+          "total": null,
+          "n": 0,
+          "days": 0
+        },
+        "months": [],
+        "next_3m": {
+          "total": null,
+          "fare": null,
+          "n": 0
+        },
+        "next_6m": {
+          "total": null,
+          "fare": null,
+          "n": 0
+        },
+        "reference": [
+          {
+            "source": "Kayak",
+            "url": "https://www.tw.kayak.com/flight-routes/Taipei-Taiwan-Taoyuan-Intl-TPE/Macau-Intl-MFM",
+            "text": "過去 12 個月最便宜 1 月 NT$6,536、最貴 6 月 NT$8,423（來回，未註明含行李與直飛）"
+          }
+        ]
+      },
       "deals": [],
       "cheapest_verified": null,
       "cheapest_cached": {
@@ -166,6 +228,37 @@
         "value": 12511,
         "samples": 60,
         "days": 30
+      },
+      "market": {
+        "updated_at": null,
+        "past_3m": {
+          "total": null,
+          "n": 0,
+          "days": 0
+        },
+        "past_6m": {
+          "total": null,
+          "n": 0,
+          "days": 0
+        },
+        "months": [],
+        "next_3m": {
+          "total": null,
+          "fare": null,
+          "n": 0
+        },
+        "next_6m": {
+          "total": null,
+          "fare": null,
+          "n": 0
+        },
+        "reference": [
+          {
+            "source": "Kayak",
+            "url": "https://www.tw.kayak.com/flight-routes/Taipei-Taiwan-Taoyuan-Intl-TPE/Tokyo-TYO",
+            "text": "過去 12 個月最便宜 5 月 NT$8,553、最貴 2 月 NT$15,772；頁面平均來回 NT$9,300（期間未註明）"
+          }
+        ]
       },
       "deals": [],
       "cheapest_verified": null,

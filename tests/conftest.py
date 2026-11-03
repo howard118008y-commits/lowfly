@@ -33,6 +33,7 @@ def cfg():
     # 既有測試以 30 天窗口、每天 4 次（NOW 在 11 月＝促銷月）為前提；60 天與促銷月另見 test_scan_window.py
     config["window"]["days_ahead"] = 30
     config["schedule"].pop("promo_months", None)
+    config["market"]["months_ahead"] = 0   # 行情每天另抓 6 個月 TP；既有測試不計這些呼叫，行情見 test_market.py
     return config
 
 

@@ -216,6 +216,23 @@
     $("alert-list").innerHTML = records.length ? records.map(item => `<article class="deal-row" style="--route:${e(colors[item.route_id] || "#5B6673")}"><div class="deal-line"><strong>${e(String(item.route_label || "").replace("⇄", "→"))} ${e(md(item.outbound))}–${e(md(item.inbound))} 降到 ${e(fmtMoney(item.price_at_alert))}${item.baseline_at_alert != null ? `（基準 ${e(fmtMoney(item.baseline_at_alert))}）` : ""}</strong></div><div class="deal-bottom"><span class="verdict">${e(item.verdict)}</span><span class="muted small">${e(item.airline)}　通知於 ${e(localTime(item.alerted_at))}</span></div><details class="disclosure record-detail"><summary>提醒後的價格</summary><p>現在 ${e(fmtMoney(item.latest_price))}　提醒後最低 ${e(fmtMoney(item.min_price_after))}</p></details></article>`).join("") : '<div class="empty"><h3>目前還沒有提醒紀錄</h3><p>票價降到基準的一半以下時，會用 Telegram 通知並記在這裡。</p></div>';
   }
 
+  function renderMarket() {
+    const routes = bundle.summary.routes, num = v => v == null ? "—" : Math.round(v).toLocaleString("en-US");
+    const name = r => AIRPORT_ZH[r.destination] || r.label;
+    const cell = (v, note) => `<td>${e(num(v))}${note ? `<small>${e(note)}</small>` : ""}</td>`;
+    const updated = routes.map(r => r.market?.updated_at).find(Boolean);
+    $("market-table").innerHTML = `<table class="market-table"><caption class="sr-only">各航線來回均價，單位新台幣</caption><thead><tr><th scope="col">航線</th><th scope="col">過去 3 個月</th><th scope="col">過去 6 個月</th><th scope="col">未來 3 個月</th><th scope="col">未來 6 個月</th></tr></thead><tbody>${routes.map(r => {
+      const m = r.market || {}, days = x => x?.days ? `${x.days} 天紀錄` : "", count = x => x?.n ? `${x.n} 組` : "";
+      return `<tr><th scope="row">${e(name(r))}</th>${cell(m.past_3m?.total, days(m.past_3m))}${cell(m.past_6m?.total, days(m.past_6m))}${cell(m.next_3m?.total, count(m.next_3m))}${cell(m.next_6m?.total, count(m.next_6m))}</tr>`;
+    }).join("")}</tbody></table><p class="muted small">${updated ? `未來均價更新於 ${e(md(updated.slice(0, 10)))} ${e(updated.slice(11, 16))}，含行李。` : "未來均價會在每天第一次掃描後產生。"}過去均價是 LowFly 每天記錄的含行李價，自 11/2 起累積，滿 3／6 個月前天數較少。</p>`;
+    $("market-detail").innerHTML = routes.map(r => {
+      const m = r.market || {};
+      const months = (m.months || []).map(x => `<tr><th scope="row">${Number(x.month.slice(5))} 月</th>${cell(x.total)}${cell(x.fare)}${cell(x.min)}<td>${x.n}</td></tr>`).join("");
+      const refs = (m.reference || []).map(x => `<li>${externalLink(x.url, x.source)}：${e(x.text)}</li>`).join("");
+      return `<details class="disclosure market-route"><summary>${e(r.label)} 各月份</summary>${months ? `<table class="market-table"><caption class="sr-only">${e(r.label)} 未來各出發月份均價</caption><thead><tr><th scope="col">出發月份</th><th scope="col">含行李均價</th><th scope="col">不含行李</th><th scope="col">最低</th><th scope="col">組數</th></tr></thead><tbody>${months}</tbody></table>` : '<p class="muted">尚無未來月份資料。</p>'}${refs ? `<ul class="muted small">${refs}</ul>` : ""}</details>`;
+    }).join("");
+  }
+
   function renderSettings() {
     const s = bundle.summary, q = s.budget;
     $("settings-overview").innerHTML = s.routes.map(r => `<p><strong>${e(r.label)}</strong>　${modeText(r)}　${r.adults || 1} 位成人　${r.stay_nights.join("／")} 晚</p>`).join("") + `<p class="muted small">每天自動掃描 ${s.schedule.runs_per_day} 次${s.schedule.promo_months?.length ? `，促銷月（${s.schedule.promo_months.join("、")} 月）${s.schedule.promo_runs_per_day} 次` : ""}</p>`;
@@ -235,7 +252,7 @@
     }
   }
 
-  function render() { renderHome(); renderCalendar(); renderRecords(); renderSettings(); status(); }
+  function render() { renderHome(); renderCalendar(); renderRecords(); renderMarket(); renderSettings(); status(); }
   async function fetchBundle() {
     for (let attempt = 0; attempt < 2; attempt++) {
       let fromCache = false;
@@ -275,13 +292,13 @@
 
   function navigate() {
     const requested = location.hash.slice(1) || "home";
-    const tab = ["home", "calendar", "records", "settings"].includes(requested) ? requested : "home";
+    const tab = ["home", "calendar", "records", "market", "settings"].includes(requested) ? requested : "home";
     document.querySelectorAll(".view").forEach(view => { view.hidden = view.id !== tab; });
     document.querySelectorAll("[data-tab]").forEach(link => {
       if (link.dataset.tab === tab) link.setAttribute("aria-current", "page");
       else link.removeAttribute("aria-current");
     });
-    document.title = `${({home:"首頁", calendar:"價格日曆", records:"通知紀錄", settings:"設定"})[tab]}｜低飛 LowFly`;
+    document.title = `${({home:"首頁", calendar:"價格日曆", records:"通知紀錄", market:"票價行情", settings:"設定"})[tab]}｜低飛 LowFly`;
   }
   $("refresh").addEventListener("click", load);
   $("deals-only").addEventListener("change", () => bundle && renderCalendar());
