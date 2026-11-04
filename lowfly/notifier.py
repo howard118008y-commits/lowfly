@@ -47,6 +47,7 @@ class Telegram:
     def __init__(self, token: str, chat_id: str, dry_run: bool = False):
         self.token, self.chat_id, self.dry_run = token, chat_id, dry_run
         self.sent: list[str] = []
+        self.failures = 0   # 真的送出但失敗的次數；main 據此讓 workflow 標紅
 
     @property
     def preview(self) -> bool:
@@ -58,10 +59,12 @@ class Telegram:
             data = response.json()
             if response.status_code != 200 or not isinstance(data, dict) or data.get("ok") is not True:
                 log.error("Telegram %s 失敗（HTTP %s）", method, response.status_code)
+                self.failures += 1
                 return False
             return True
         except Exception as exc:
             log.error("Telegram %s 失敗（%s）", method, type(exc).__name__)
+            self.failures += 1
             return False
 
     def send(self, text_html: str) -> bool:

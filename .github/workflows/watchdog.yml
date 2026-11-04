@@ -1,0 +1,83 @@
+name: LowFly watchdog
+
+# 看門狗：GitHub 排程會延遲或漏跑（2026-11-01～03 實測間隔 6～15 小時），缺 Secrets 時排程也只會黃色跳過。
+# 每 2 小時讀線上 summary.json：超過 STALE_HOURS 沒更新就自動補跑一次掃描；超過 ALERT_HOURS 每天推一次 Telegram 告警。
+on:
+  schedule:
+    - cron: "43 */2 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write   # 補跑 scan.yml
+  contents: read
+
+concurrency:
+  group: lowfly-watchdog
+  cancel-in-progress: true
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      STALE_HOURS: "7"
+      ALERT_HOURS: "18"
+    steps:
+      - name: 檢查公開資料新鮮度
+        id: check
+        shell: bash
+        run: |
+          url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/data/summary.json?t=$(date +%s)"
+          curl -fsS --retry 3 --retry-delay 10 --max-time 30 "$url" -o summary.json
+          python3 - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          summary = json.load(open("summary.json", encoding="utf-8"))
+          at = datetime.fromisoformat(summary["generated_at"])
+          age = (datetime.now(timezone.utc) - at).total_seconds() / 3600
+          stale, alert = age > float(os.environ["STALE_HOURS"]), age >= float(os.environ["ALERT_HOURS"]) and age % 24 < 2
+          print(f"資料時間 {summary['generated_at']}，已 {age:.1f} 小時")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
+              out.write(f"age={age:.0f}\ngenerated_at={summary['generated_at']}\nstale={str(stale).lower()}\nalert={str(alert).lower()}\n")
+          PY
+      - name: 補跑掃描
+        if: steps.check.outputs.stale == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AGE: ${{ steps.check.outputs.age }}
+        shell: bash
+        run: |
+          busy=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow scan.yml --limit 5 --json status \
+                 --jq '[.[] | select(.status == "queued" or .status == "in_progress" or .status == "waiting")] | length')
+          if [[ "$busy" -gt 0 ]]; then echo "已有掃描在排隊或執行，不重複補跑"; exit 0; fi
+          gh workflow run scan.yml --repo "$GITHUB_REPOSITORY" --ref main
+          echo "::warning title=資料過期::${AGE} 小時沒更新，已補跑 scan.yml"
+      - name: 過期告警
+        if: steps.check.outputs.alert == 'true'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          AGE: ${{ steps.check.outputs.age }}
+          AT: ${{ steps.check.outputs.generated_at }}
+          RUNS_URL: ${{ github.server_url }}/${{ github.repository }}/actions/workflows/scan.yml
+        shell: bash
+        run: |
+          if [[ -z "${TELEGRAM_BOT_TOKEN:-}" || -z "${TELEGRAM_CHAT_ID:-}" ]]; then
+            echo "::error title=無法告警::資料已 ${AGE} 小時沒更新，且 Telegram Secrets 未設定"; exit 1
+          fi
+          curl -fsS --max-time 20 -o /dev/null "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=⚠️ 低飛 LowFly 資料已 ${AGE} 小時沒更新（最後 ${AT}）。可能是 GitHub 排程延遲、Secrets 失效或掃描失敗；已嘗試自動補跑：${RUNS_URL}"
+      # 線上資料讀不到（Pages 掛掉、JSON 壞掉）也是失敗：job 標紅，GitHub 寄失敗通知信。
+      - name: 讀不到資料時告警
+        if: failure() && steps.check.outcome == 'failure'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          if [[ -z "${TELEGRAM_BOT_TOKEN:-}" || -z "${TELEGRAM_CHAT_ID:-}" ]]; then exit 0; fi
+          curl -fsS --max-time 20 -o /dev/null "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=⚠️ 低飛 LowFly 網站資料讀不到（GitHub Pages 或 summary.json 異常）：${RUN_URL}" || true

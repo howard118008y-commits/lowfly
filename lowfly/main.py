@@ -65,12 +65,20 @@ def main(argv: list[str] | None = None) -> int:
     summary = scanner.run()
     logging.info("掃描完成：SerpAPI %d 次、Travelpayouts %d 組、推播 %d 則、基準 %s",
                  summary["serpapi_calls"], summary["tp_offers"], summary["instant_alerts"], summary["baseline"])
+    # 三條航線、未來 60 天一筆快取價都沒有，幾乎只會是 token 失效或 API 故障：不寫入（否則各組日期的價格會被清空），以失敗結束讓 workflow 告警。
+    if (not args.mock and summary["tp_offers"] == 0 and secrets.travelpayouts_token
+            and cfg["sources"]["travelpayouts"].get("enabled", True)):
+        logging.error("Travelpayouts 本輪 0 筆報價；不寫入狀態與公開資料，請檢查 TRAVELPAYOUTS_TOKEN 或 API 狀態")
+        return 1
     if not args.dry_run:
         save_state(state, target / "data/state.json")
         append_history(scanner.history_rows, target / "data/history.jsonl")
         if args.mock:
             shutil.copytree(ROOT / "docs", target / "docs", dirs_exist_ok=True, ignore=shutil.ignore_patterns("data"))
         export_all(cfg, state, now, read_history(target / "data/history.jsonl"), target / "docs/data")
+    if tg.failures:   # 資料已寫入；回 3 讓 workflow 先存檔再標紅
+        logging.error("Telegram 有 %d 則送出失敗；請檢查 TELEGRAM_BOT_TOKEN／TELEGRAM_CHAT_ID", tg.failures)
+        return 3
     return 0
 
 

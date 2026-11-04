@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import time
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urljoin, urlparse
 
@@ -15,6 +16,8 @@ AIRLINE_ZH = {"UO": "香港快運", "TR": "酷航", "MM": "樂桃航空", "GK": 
 # 機場所在地的 UTC 偏移（小時），用來把抵達時間換成當地時間；表外的機場不推算抵達時間。
 AIRPORT_UTC_OFFSET = {"TPE": 8, "TSA": 8, "HKG": 8, "MFM": 8, "NRT": 9, "HND": 9}
 log = logging.getLogger(__name__)
+RETRY_STATUS = (429, 500, 502, 503, 504)
+RETRY_WAIT = (2, 5)   # 秒；網路錯誤或 429／5xx 時重試兩次
 
 
 def _hhmm(value) -> str | None:
@@ -49,7 +52,16 @@ def fetch_month(origin: str, destination: str, month: str, token: str, currency:
               "direct": "true" if direct_only else "false", "currency": currency.lower(), "sorting": "price",
               "unique": "false", "limit": 1000, "page": 1, "token": token}
     try:
-        response = requests.get(API, params=params, timeout=timeout)
+        for wait in (*RETRY_WAIT, None):
+            try:
+                response = requests.get(API, params=params, timeout=timeout)
+            except (requests.ConnectionError, requests.Timeout):
+                if wait is None:
+                    raise
+            else:
+                if response.status_code not in RETRY_STATUS or wait is None:
+                    break
+            time.sleep(wait)
         response.raise_for_status()
         data = response.json()
         if not isinstance(data, dict) or data.get("success") is not True or not isinstance(data.get("data"), list):

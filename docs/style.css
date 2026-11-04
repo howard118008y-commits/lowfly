@@ -1,5 +1,5 @@
 /* 登機證票根。只用系統字型；數字用 DIN 系窄體。 */
-:root{--page:#E4E7EA;--paper:#FAFBFC;--ink:#1B2430;--muted:#5B6673;--line:#C9CED4;--half:#0A7D45;--stamp:#C2361F;--safe-bottom:env(safe-area-inset-bottom,0px);
+:root{--page:#E4E7EA;--paper:#FAFBFC;--ink:#1B2430;--muted:#5B6673;--line:#C9CED4;--half:#0A7D45;--stamp:#B02E19;--control:#7A8591;--safe-bottom:env(safe-area-inset-bottom,0px);
   --num:"DIN Condensed","DIN Alternate","Roboto Condensed","Arial Narrow",sans-serif;
   --text:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;color-scheme:light}
 *{box-sizing:border-box}
@@ -17,7 +17,10 @@ h1,h2,h3,p{margin:0}
 
 .app-shell{width:100%;max-width:560px;margin:auto;padding:env(safe-area-inset-top,0px) 16px calc(96px + var(--safe-bottom))}
 .app-header{height:64px;display:flex;align-items:center;justify-content:space-between}
-.brand{font-size:22px;font-weight:700;letter-spacing:.08em;text-decoration:none}
+.brand{font-size:22px;font-weight:700;letter-spacing:.08em;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.skip-link{position:absolute;left:8px;top:-60px;z-index:20;background:var(--ink);color:#fff;padding:10px 16px;border-radius:6px}
+.skip-link:focus{top:8px}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 .header-right{display:flex;align-items:center;gap:8px}
 .updated{font:13px var(--num);color:var(--muted);letter-spacing:.02em}
 .updated.stale{color:var(--stamp)}
@@ -77,7 +80,7 @@ h1,h2,h3,p{margin:0}
 .fare-helper{font-size:12px;color:var(--muted);margin-top:4px}
 .t-state{font-size:12px;color:var(--muted);margin-top:8px}
 .barcode{display:flex;align-items:flex-end;gap:2px;height:40px;margin:12px 0 8px}
-.bar{flex:1;min-width:2px;background:#9AA3AD;border-radius:1px 1px 0 0}
+.bar{flex:1;min-width:2px;background:var(--control);border-radius:1px 1px 0 0}
 .bar.on{background:var(--route)}
 .bar.gap{height:2px!important;background:var(--line)}
 .t-ratio{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;font-size:13px}
@@ -92,7 +95,7 @@ h1,h2,h3,p{margin:0}
 .t-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
 .t-body+.t-actions{padding:0 18px 16px;margin-top:0}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 24px;border-radius:6px;background:var(--route,var(--ink));color:#fff;font-weight:600;text-decoration:none;border:1px solid transparent}
-.btn.plain{background:transparent;color:var(--ink);border-color:var(--line);margin:14px 0 6px}
+.btn.plain{background:transparent;color:var(--ink);border-color:var(--control);margin:14px 0 6px}
 .t-link{display:inline-flex;align-items:center;min-height:44px;font-size:14px;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 .stamp{position:absolute;top:12px;right:18px;border:2px solid var(--stamp);color:var(--stamp);border-radius:4px;padding:0 10px;
   font:700 24px/1.3 var(--num);letter-spacing:.1em;transform:rotate(-8deg);opacity:.85;pointer-events:none}
@@ -118,7 +121,7 @@ h1,h2,h3,p{margin:0}
 .deal-row .disclosure{margin-top:8px}
 .record-stats{margin-bottom:14px;font-size:13px;color:var(--muted)}.record-stats strong{color:var(--ink)}
 .spend-field{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border-radius:14px;padding:10px 16px;margin-bottom:10px;font-size:14px}
-.spend-field input{width:9em;min-height:44px;border:1px solid var(--line);border-radius:8px;padding:0 10px;font:16px var(--num);color:var(--ink);background:#fff;text-align:right}
+.spend-field input{width:9em;min-height:44px;border:1px solid var(--control);border-radius:8px;padding:0 10px;font:16px var(--num);color:var(--ink);background:#fff;text-align:right}
 .empty{text-align:center;padding:32px 18px;border:1px dashed var(--line);border-radius:14px;background:var(--paper)}
 .empty p{font-size:13px;color:var(--muted);margin-top:6px}
 
@@ -158,7 +161,7 @@ progress{width:100%;height:4px;grid-column:1/-1;border:0;border-radius:4px;appea
 progress::-webkit-progress-bar{background:var(--line)}progress::-webkit-progress-value{background:var(--ink)}
 .budget-bottom{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}.budget-bottom b{color:var(--ink)}
 .install-note p{margin-bottom:12px}
-.secondary-button{min-height:44px;padding:0 18px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--ink);margin:6px 0}
+.secondary-button{min-height:44px;padding:0 18px;border:1px solid var(--control);border-radius:6px;background:transparent;color:var(--ink);margin:6px 0}
 .app-footer{text-align:center;font-size:12px;color:var(--muted);padding:24px 0 0}
 
 .tab-bar{position:fixed;left:0;right:0;bottom:0;z-index:10;display:grid;grid-template-columns:repeat(5,1fr);

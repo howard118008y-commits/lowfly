@@ -1,5 +1,5 @@
 "use strict";
-const VERSION = "v1.12.1";
+const VERSION = "v1.13.0";
 const PREFIX = `lowfly:${new URL(self.registration.scope).pathname}:`;
 const SHELL_CACHE = PREFIX + "shell-" + VERSION;
 const DATA_CACHE = PREFIX + "data-" + VERSION;

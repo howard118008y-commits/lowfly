@@ -18,6 +18,7 @@
   <script defer src="./app.js"></script>
 </head>
 <body>
+  <a id="skip-link" class="skip-link" href="#main">跳到主要內容</a>
   <div class="app-shell">
     <header class="app-header">
       <a href="#home" class="brand" aria-label="低飛 LowFly 首頁">低飛</a>
@@ -30,7 +31,7 @@
     <main id="main" tabindex="-1">
       <section id="home" class="view" aria-labelledby="home-title">
         <h1 id="home-title" class="lead">正在查看票價…</h1>
-        <div id="route-cards" class="route-cards" aria-live="polite"><article class="ticket skeleton" aria-label="各航線最低票價"><div class="t-body">正在查看票價…</div></article></div>
+        <div id="route-cards" class="route-cards"><article class="ticket skeleton" aria-label="各航線最低票價"><div class="t-body">正在查看票價…</div></article></div>
         <section id="deal-section" aria-labelledby="deals-title" hidden>
           <div class="section-heading"><h2 id="deals-title">其他好價</h2><span id="deal-count" class="subtle-label"></span></div>
           <div id="deals" class="deal-list"></div>
@@ -47,7 +48,7 @@
         <div class="page-heading"><h1 id="calendar-title">出發日曆</h1><p class="muted">每格是該出發日、該晚數的來回價。</p></div>
         <label class="filter"><input id="deals-only" type="checkbox">只看好價</label>
         <div id="heatmap" class="heatmap-wrap" role="region" aria-label="來回票價日曆，依出發日與住宿晚數排列" tabindex="0"></div>
-        <details class="disclosure calendar-help"><summary>怎麼看票價</summary><p>格內為含行李價（未設定託運時即票價）。✓ 已經 Google 驗證，「快取」仍待確認。點一格可看詳情與歷史。</p><div class="legend"><span class="r50">≤50% 半價</span><span class="r70">≤70%</span><span class="r85">≤85%</span><span class="r100">≤100%</span><span class="rhigh">&gt;100% 比基準貴</span><span class="rnone">無資料</span></div><p>百分比是目前價格除以基準價；「只看好價」保留 ≤70% 的票價。</p></details>
+        <details class="disclosure calendar-help"><summary>怎麼看票價</summary><p>格內為含行李價（未設定託運時即票價）。✓ 已經 Google 驗證，「快取」仍待確認。點一格可看詳情與歷史。</p><div class="legend"><span class="r50">★ ≤50% 半價</span><span class="r70">▼ ≤70%</span><span class="r85">≤85%</span><span class="r100">≤100%</span><span class="rhigh">&gt;100% 比基準貴</span><span class="rnone">無資料</span></div><p>百分比是目前價格除以基準價；「只看好價」保留 ≤70% 的票價。★、▼ 讓不靠顏色也看得出好價。</p></details>
       </section>
       <section id="records" class="view" aria-labelledby="records-title" hidden>
         <div class="page-heading"><h1 id="records-title">好價提醒</h1></div>

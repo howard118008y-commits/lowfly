@@ -62,7 +62,7 @@
   const plane = '<svg viewBox="0 0 120 24" aria-hidden="true"><path class="rail" d="M2 12h44m28 0h44"/><path class="jet" d="m72 12-22-8 6 8-6 8 22-8Z"/></svg>';
   function logo(code) {
     const safe = /^[A-Z0-9]{2}$/.test(code || "") ? code : "";
-    return safe ? `<img class="logo" src="https://pics.avs.io/48/48/${safe}.png" width="24" height="24" alt="" loading="lazy" data-code="${safe}" onerror="this.outerHTML='<span class=&quot;logo-fb&quot;>'+this.dataset.code+'</span>'">` : "";
+    return safe ? `<img class="logo" src="https://pics.avs.io/48/48/${safe}.png" width="24" height="24" alt="" loading="lazy" data-code="${safe}">` : "";
   }
   function ratioText(r, item) {
     const b = r.baseline;
@@ -177,21 +177,31 @@
     const dates = [...new Set(pairs.map(p => p.outbound))];
     const nights = r.stay_nights;
     const visibleDates = only ? dates.filter(date => pairs.some(p => p.outbound === date && p.price != null && p.ratio != null && p.ratio <= bundle.summary.thresholds.digest)) : dates;
-    const heading = `<h2 class="route-title" style="--route:${routeColor(r)}">${e(r.label)}</h2>`;
+    const heading = `<h2 class="route-title" id="cal-${e(r.id)}" tabindex="-1" style="--route:${routeColor(r)}">${e(r.label)}</h2>`;
     if (!visibleDates.length) return `<section class="route-block">${heading}<div class="empty"><h3>目前沒有符合的好價</h3><p>取消篩選，可查看全部出發日。</p></div></section>`;
     return `<section class="route-block">${heading}<table class="heatmap"><caption class="sr-only">${e(r.label)}，依出發日與住宿晚數排列的來回票價，單位新台幣</caption><thead><tr><th scope="col">出發日</th>${nights.map(n => `<th scope="col">${n} 晚</th>`).join("")}</tr></thead><tbody>${visibleDates.map(date => `<tr><th scope="row" class="${[0, 6].includes(new Date(date + "T12:00:00+08:00").getUTCDay()) ? "weekend" : ""}">${e(fmtDate(date))}</th>${nights.map(n => {
       const p = pairs.find(pair => pair.outbound === date && pair.nights === n);
       if (!p) return "<td>—</td>";
       const filtered = only && (p.ratio == null || p.ratio > bundle.summary.thresholds.digest);
       if (filtered) return '<td class="muted" aria-label="此組日期未達好價門檻" style="text-align:center">—</td>';
-      const label = `${r.label}，${fmtDate(date)}，${n} 晚，${fmtMoney(p.price)}，${p.verified ? "已驗證" : "待驗證"}`;
-      return `<td><button data-pair="${e(p.pair_key)}" class="heat-cell ${ratioClass(p.ratio, p.price)} ${filtered ? "filtered" : ""}" aria-label="${e(label)}">${p.price == null ? "—" : e(Math.round(p.price).toLocaleString("en-US"))}<small>${p.verified ? "✓" : p.price == null ? "" : "快取"}</small></button></td>`;
+      // 不只靠底色：半價標 ★、≤70% 標 ▼（色盲也分得出好價）；讀屏名稱以格內可見文字開頭（WCAG 2.5.3）。
+      const cls = ratioClass(p.ratio, p.price), mark = cls === "r50" ? "★" : cls === "r70" ? "▼" : "";
+      const shown = p.price == null ? "—" : Math.round(p.price).toLocaleString("en-US"), tag = p.verified ? "✓" : p.price == null ? "" : "快取";
+      const label = `${mark}${shown}${tag}，${r.label}，${fmtDate(date)}，${n} 晚，${p.verified ? "已驗證" : "待驗證"}${p.ratio != null ? `，基準的 ${Math.round(p.ratio * 100)}%` : ""}`;
+      return `<td><button data-pair="${e(p.pair_key)}" class="heat-cell ${cls} ${filtered ? "filtered" : ""}" aria-label="${e(label)}">${mark}${e(shown)}<small>${tag}</small></button></td>`;
     }).join("")}</tr>`).join("")}</tbody></table></section>`;
   }
 
   function renderCalendar() {
     const only = $("deals-only").checked;
-    $("heatmap").innerHTML = bundle.summary.routes.map(r => routeHeatmap(r, only)).join("");
+    // 日曆很長（每條航線數十列）：頂端加跳轉按鈕，鍵盤不必 Tab 過整張表（WCAG 2.4.1）。分頁用 hash 路由，所以不用錨點。
+    const jump = bundle.summary.routes.length > 1 ? `<nav class="jump" aria-label="跳到航線">${bundle.summary.routes.map(r => `<button type="button" class="secondary-button" data-jump="cal-${e(r.id)}">${e(AIRPORT_ZH[r.destination] || r.label)}</button>`).join("")}</nav>` : "";
+    $("heatmap").innerHTML = jump + bundle.summary.routes.map(r => routeHeatmap(r, only)).join("");
+    $("heatmap").querySelectorAll("[data-jump]").forEach(button => button.addEventListener("click", () => {
+      const heading = $(button.dataset.jump);
+      heading.scrollIntoView({block: "start"});
+      heading.focus({preventScroll: true});
+    }));
     $("heatmap").querySelectorAll("[data-pair]").forEach(button => button.addEventListener("click", () => showPair(button.dataset.pair)));
   }
 
@@ -310,7 +320,7 @@
     } finally { busy = false; $("refresh").disabled = false; }
   }
 
-  function navigate() {
+  function navigate(event) {
     const requested = location.hash.slice(1) || "home";
     const tab = ["home", "calendar", "records", "market", "settings"].includes(requested) ? requested : "home";
     document.querySelectorAll(".view").forEach(view => { view.hidden = view.id !== tab; });
@@ -318,9 +328,26 @@
       if (link.dataset.tab === tab) link.setAttribute("aria-current", "page");
       else link.removeAttribute("aria-current");
     });
-    document.title = `${({home:"首頁", calendar:"價格日曆", records:"通知紀錄", market:"票價行情", settings:"設定"})[tab]}｜低飛 LowFly`;
+    document.title = `${({home:"票根", calendar:"出發日曆", records:"好價提醒", market:"票價行情", settings:"設定"})[tab]}｜低飛 LowFly`;
+    // 切換分頁（不是第一次載入）時回到頂端並把焦點移到該頁標題，讀屏與鍵盤使用者才知道換頁了（WCAG 2.4.3）。
+    if (event) {
+      window.scrollTo(0, 0);
+      $(`${tab}-title`).setAttribute("tabindex", "-1");
+      $(`${tab}-title`).focus({preventScroll: true});
+    }
   }
   $("refresh").addEventListener("click", load);
+  // 航空 logo 載入失敗改顯示代碼（不用 inline onerror，方便套 CSP）。
+  document.addEventListener("error", event => {
+    const img = event.target;
+    if (img.tagName === "IMG" && img.classList.contains("logo")) {
+      const fallback = document.createElement("span");
+      fallback.className = "logo-fb";
+      fallback.textContent = img.dataset.code;
+      img.replaceWith(fallback);
+    }
+  }, true);
+  $("skip-link").addEventListener("click", event => { event.preventDefault(); $("main").focus(); });
   $("deals-only").addEventListener("change", () => bundle && renderCalendar());
   try { $("spend-input").value = localStorage.getItem(spendKey) || ""; } catch { /* 無法讀取本機儲存時預算留空。 */ }
   $("spend-input").addEventListener("input", () => {

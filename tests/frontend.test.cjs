@@ -112,7 +112,7 @@ async function appHarness(overrides = {}, offline = false, extra = {}, storage =
   Object.assign(payload.summary, overrides);
   Object.assign(payload, extra);
   if (extra.alerts) payload.alerts.generated_at = payload.summary.generated_at;
-  const document = {getElementById(id){assert.ok(nodes[id],`缺少頁面元素 ${id}`);return nodes[id];},
+  const document = {addEventListener(){}, getElementById(id){assert.ok(nodes[id],`缺少頁面元素 ${id}`);return nodes[id];},
     querySelectorAll(selector){return selector === '.view' ? ['home','calendar','records','market','settings'].map(id=>Object.assign(nodes[id],{id})) : [];}};
   const context = {document,window:{LowFly:U,LOWFLY_CONFIG:{owner:'',repo:'',branch:'main'},addEventListener(){}},
     location:{hash:'',hostname:'example.test',pathname:'/lowfly/',href:'https://example.test/lowfly/'},navigator:{onLine:!offline},
@@ -332,4 +332,18 @@ test('設定頁列出航線新低與廉航促銷消息的推播條件；舊資�
   assert.match(html,/<dt>促銷消息<\/dt><dd>台灣虎航、香港快運：新聞與 PTT 標題有促銷字眼、48 小時內的新消息，每輪合成一則推播<\/dd>/);
   nodes=await appHarness();
   assert.doesNotMatch(nodes['settings-values'].innerHTML,/航線最低價|促銷消息/);
+});
+
+test('日曆格不只靠顏色：半價 ★、≤70% ▼，讀屏名稱以可見文字開頭；頂端有跳到各航線的按鈕；logo 不用 inline onerror', async () => {
+  const pair=(outbound,nights,price,ratio,verified=false)=>({pair_key:`HKG:${outbound}_x${nights}`,route_id:'HKG',outbound,inbound:outbound,nights,price,total:price,ratio,verified,airline:'台灣虎航'});
+  const pairs={generated_at:'2026-11-02T15:15:20+08:00',baseline:{},pairs:[pair('2026-11-14',3,4000,.45),pair('2026-11-14',4,6000,.65,true),pair('2026-11-14',5,9000,.95)]};
+  const nodes=await appHarness({},false,{pairs});
+  const html=nodes['heatmap'].innerHTML;
+  assert.match(html,/aria-label="★4,000快取，桃園 ⇄ 香港，[^"]+，3 晚，待驗證，基準的 45%">★4,000<small>快取<\/small>/);
+  assert.match(html,/aria-label="▼6,000✓，[^"]+已驗證，基準的 65%">▼6,000<small>✓<\/small>/);
+  assert.match(html,/aria-label="9,000快取，[^"]+">9,000<small>/);
+  assert.match(html,/^<nav class="jump" aria-label="跳到航線"><button type="button" class="secondary-button" data-jump="cal-HKG">香港<\/button>/);
+  assert.match(html,/<h2 class="route-title" id="cal-HKG" tabindex="-1"/);
+  assert.doesNotMatch(fs.readFileSync(path.join(__dirname,'../docs/app.js'),'utf8'),/onerror=/);
+  assert.match(fs.readFileSync(path.join(__dirname,'../docs/index.html'),'utf8'),/<a id="skip-link" class="skip-link" href="#main">跳到主要內容<\/a>/);
 });

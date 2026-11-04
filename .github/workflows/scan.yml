@@ -119,7 +119,9 @@ jobs:
           node --check docs/sw.js
           node --test tests/frontend.test.cjs
           python scripts/check_exports.py
+      # main 結束碼：0 正常；1 不寫入（state 讀不到、Travelpayouts 0 筆）；3 已寫入但 Telegram 送失敗（存檔後再標紅）。
       - name: 執行掃描
+        id: scan
         env:
           SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
           TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
@@ -127,6 +129,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           MODE: ${{ inputs.mode || 'normal' }}
         run: |
+          set +e
           case "$MODE" in
             normal) python -m lowfly.main ;;
             dry-run) python -m lowfly.main --dry-run ;;
@@ -135,6 +138,14 @@ jobs:
             mock) python -m lowfly.main --mock --force-digest ;;
             *) echo "不支援的執行模式" >&2; exit 1 ;;
           esac
+          rc=$?
+          set -e
+          if [[ $rc -eq 3 ]]; then
+            echo "::error title=Telegram 推播失敗::資料已更新，但有推播沒送出；請檢查 TELEGRAM_BOT_TOKEN／TELEGRAM_CHAT_ID。"
+            echo "telegram_failed=true" >> "${GITHUB_OUTPUT:-/dev/null}"
+            exit 0
+          fi
+          exit $rc
       - name: 檢查本次匯出
         if: inputs.mode == '' || inputs.mode == 'normal' || inputs.mode == 'force-digest'
         run: python scripts/check_exports.py
@@ -149,8 +160,12 @@ jobs:
             echo "changed=false" >> "${GITHUB_OUTPUT:-/dev/null}"
           else
             git commit -m "chore(state): scan $(date -u +'%Y-%m-%dT%H:%MZ') [skip ci]"
-            git pull --rebase --autostash origin main
-            git push origin HEAD:main
+            # 推播已送出，state 一定要寫回，否則下一輪會重推、額度少算：遇到同時 push 就重試三次。
+            for attempt in 1 2 3; do
+              if git pull --rebase --autostash origin main && git push origin HEAD:main; then break; fi
+              if [[ $attempt -eq 3 ]]; then echo "::error title=state 寫回失敗::重試三次仍無法 push" >&2; exit 1; fi
+              sleep $((attempt * 15))
+            done
             echo "changed=true" >> "${GITHUB_OUTPUT:-/dev/null}"
           fi
       - name: 請求 main／docs 的 Pages 建置
@@ -167,3 +182,20 @@ jobs:
           name: lowfly-mock-preview
           path: out/mock/
           retention-days: 7
+      - name: Telegram 推播失敗時標紅
+        if: steps.scan.outputs.telegram_failed == 'true'
+        run: exit 1
+      # 任何一步失敗（測試、掃描、匯出檢查、寫回）都用 Telegram 告知；Telegram 本身壞掉時仍有 GitHub 的失敗通知信。
+      - name: 失敗告警
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [[ -z "${TELEGRAM_BOT_TOKEN:-}" || -z "${TELEGRAM_CHAT_ID:-}" ]]; then exit 0; fi
+          curl -fsS --max-time 20 -o /dev/null "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=⚠️ 低飛 LowFly 掃描失敗（${EVENT}）。資料沒有更新，請看執行紀錄：${RUN_URL}" \
+            || echo "::warning::失敗告警也送不出去"

@@ -21,10 +21,22 @@ def default_state() -> dict:
             "stats": {"alerts_sent": 0, "digests_sent": 0, "runs": 0}}
 
 
+STATE_TYPES = {"version": int, "serpapi": dict, "pairs": dict, "tp_samples": dict, "typical_ranges": list, "alerts": dict,
+               "alert_history": list, "digest_pool": dict, "last_digest_date": str, "stats": dict}
+
+
 def load_state(path: Path = STATE_PATH) -> dict:
+    """JSON 合法但結構不對（例如手動改壞）時拋 ValueError；main 會保留原檔並停止，不用預設值蓋掉額度與紀錄。"""
     if not path.exists():
         return default_state()
-    return deep_merge(default_state(), json.loads(path.read_text(encoding="utf-8")))
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict):
+        raise ValueError("state 必須是物件")
+    st = deep_merge(default_state(), raw)
+    wrong = [key for key, kind in STATE_TYPES.items() if not isinstance(st.get(key), kind)]
+    if wrong or not isinstance(st["digest_pool"].get("items"), dict):
+        raise ValueError(f"state 欄位型別不符：{', '.join(wrong) or 'digest_pool.items'}")
+    return st
 
 
 def write_json(value: dict, path: Path) -> None:
