@@ -360,5 +360,7 @@ test('離線快取含 HTML 字元（同網域他站可寫 localStorage）就不�
   assert.doesNotMatch(nodes['route-cards'].innerHTML,/onerror/);
   const html=fs.readFileSync(path.join(__dirname,'../docs/index.html'),'utf8');
   assert.match(html,/<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';/);
-  assert.doesNotMatch(html,/<script>|\son[a-z]+="/);
+  const scripts=html.toLowerCase().split('<script').slice(1);   // 每個 script 都要是外部檔（CSP 不允許 inline）
+  assert.ok(scripts.length>0 && scripts.every(tag=>/^\s[^>]*\bsrc=/.test(tag)));
+  assert.doesNotMatch(html,/\son[a-z]+\s*=/i);
 });
