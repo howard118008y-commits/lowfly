@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-05T04:28:14+08:00",
+  "generated_at": "2026-11-05T05:53:08+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -25,24 +25,24 @@
         "n_ranges": 0,
         "lookback_days": 45,
         "source": "travelpayouts",
-        "samples": 275,
+        "samples": 285,
         "min_samples": 15
       },
       "average": {
-        "value": 8039,
-        "samples": 275,
+        "value": 8036,
+        "samples": 285,
         "days": 30
       },
       "market": {
         "updated_at": "2026-11-05T00:51:06+08:00",
         "past_3m": {
-          "total": 8039,
-          "n": 275,
+          "total": 8036,
+          "n": 285,
           "days": 4
         },
         "past_6m": {
-          "total": 8039,
-          "n": 275,
+          "total": 8036,
+          "n": 285,
           "days": 4
         },
         "months": [
@@ -137,10 +137,10 @@
           "手提＋隨身物品合計 7kg，腰包也算一件"
         ],
         "verified": false,
-        "checked_at": "2026-11-05T04:28:14+08:00",
+        "checked_at": "2026-11-05T05:53:08+08:00",
         "price_level": null,
         "tp_price": 7038.0,
-        "tp_at": "2026-11-05T04:28:14+08:00",
+        "tp_at": "2026-11-05T05:53:08+08:00",
         "url": "https://www.aviasales.com/search/TPE0711HKG1?t=UO17940861001794093900000130TPEHKG_521ce33389e9e0766b818259f7ac8adf_6026&search_date=31102026&expected_price_uuid=01a193b6-bb34-8030-2258-1f260127f6e0&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=2448",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+HKG+2026-11-07+return+2026-11-09+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -172,19 +172,19 @@
         "min_samples": 15
       },
       "average": {
-        "value": 6866,
+        "value": 6867,
         "samples": 41,
         "days": 30
       },
       "market": {
         "updated_at": "2026-11-05T00:51:06+08:00",
         "past_3m": {
-          "total": 6866,
+          "total": 6867,
           "n": 41,
           "days": 4
         },
         "past_6m": {
-          "total": 6866,
+          "total": 6867,
           "n": 41,
           "days": 4
         },
@@ -278,10 +278,10 @@
         "airline_code": "NX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-05T04:28:14+08:00",
+        "checked_at": "2026-11-05T05:53:08+08:00",
         "price_level": null,
         "tp_price": 6231.0,
-        "tp_at": "2026-11-05T04:28:14+08:00",
+        "tp_at": "2026-11-05T05:53:08+08:00",
         "url": "https://www.aviasales.com/search/TPE1411MFM16111?t=NX17946870001794693900000115TPEMFM17948160001794821700000095MFMTPE_c73f698c5e2ac228f5c9afd2f742731c_15338&search_date=31102026&expected_price_uuid=01a190dc-6385-8030-6244-6ac8754f3795&static_fare_key=TY%7CP1%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=svC-nN_tTunDyOG4w5POwA&expected_price_source=share&expected_price_currency=twd&expected_price=6231",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+MFM+2026-11-14+return+2026-11-16+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -303,7 +303,7 @@
       "color": "#23468F",
       "good_price": 9000.0,
       "baseline": {
-        "value": 11038.0,
+        "value": 11038.5,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
@@ -313,19 +313,19 @@
         "min_samples": 15
       },
       "average": {
-        "value": 11408,
+        "value": 11409,
         "samples": 170,
         "days": 30
       },
       "market": {
         "updated_at": "2026-11-05T00:51:06+08:00",
         "past_3m": {
-          "total": 11408,
+          "total": 11409,
           "n": 170,
           "days": 4
         },
         "past_6m": {
-          "total": 11408,
+          "total": 11409,
           "n": 170,
           "days": 4
         },
@@ -399,13 +399,13 @@
         "outbound": "2026-11-11",
         "inbound": "2026-11-12",
         "nights": 1,
-        "price": 8346.0,
+        "price": 8351.0,
         "source": "travelpayouts",
-        "total": 8346.0,
-        "fare": 7396.0,
+        "total": 8351.0,
+        "fare": 7401.0,
         "bag_fee": 950.0,
         "bag_estimated": false,
-        "ratio": 0.7561152382678021,
+        "ratio": 0.7565339493590615,
         "airline": "星宇航空／台灣虎航",
         "flight_no": "JX 804／IT 217",
         "depart_time": "15:00",
@@ -419,10 +419,10 @@
         "airline_code": "JX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-05T04:28:14+08:00",
+        "checked_at": "2026-11-05T05:53:08+08:00",
         "price_level": null,
-        "tp_price": 8346.0,
-        "tp_at": "2026-11-05T04:28:14+08:00",
+        "tp_price": 8351.0,
+        "tp_at": "2026-11-05T05:53:08+08:00",
         "url": "https://www.aviasales.com/search/TPE1111TYO1?t=JX17944092001794423600000180TPENRT_6150ccccb091777d1ea1f6cdcb1311f2_9268&search_date=03112026&expected_price_uuid=01a1a0cf-6107-8031-65f1-4177b4d11093&static_fare_key=TY%7CP1%7CH0%7CL1_1_20%7CCH0%7CR0%7CTBC1&itinerary_key=FxzumK5zRm_mgp9WuE302w&expected_price_source=share&expected_price_currency=twd&expected_price=3732",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+TYO+2026-11-11+return+2026-11-12+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -459,12 +459,12 @@
     "monthly_safety": 10,
     "reserve_for_candidates": 3,
     "reverify_hours": 12,
-    "tp_pairs": 192
+    "tp_pairs": 202
   },
   "stats": {
     "alerts_sent": 2,
     "digests_sent": 3,
-    "runs": 30
+    "runs": 31
   },
   "schedule": {
     "runs_per_day": 4,
@@ -489,7 +489,7 @@
     "alerts_7d": 2,
     "sales_7d": 1,
     "sample_days": 4,
-    "runs": 30
+    "runs": 31
   },
   "airline_sales": {
     "enabled": true,
