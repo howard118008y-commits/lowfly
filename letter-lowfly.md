@@ -12,8 +12,8 @@
 | 測試 | pytest 158 passed、node 29 pass、四份 JSON 合約檢查通過、pip-audit 無已知漏洞；test.yml 最新 push success；CodeQL 開著的 alert 0 | 見第 2 節「跑測試」；`gh api "repos/howard118008y-commits/lowfly/code-scanning/alerts?state=open" --jq length` |
 | 線上 PWA | v1.14.0；index 含 CSP meta 與 `team-cards`；設定頁有「AI 團隊」面板；Lighthouse（v1.12 時）效能 96／無障礙 100／最佳實務 100／SEO 100 | `curl -s https://howard118008y-commits.github.io/lowfly/sw.js \| grep -o 'v1\.[0-9.]*'` |
 | 線上資料（14:33） | 有價組合 206；基準 香港 8,030／澳門 6,802／東京 11,305；好價線 4,500／5,000／9,000；最低含行李價 7,038／6,231／8,684；`team`：近 7 天推播 1、促銷 1、樣本 3 天、掃描 23 輪 | `curl -s https://howard118008y-commits.github.io/lowfly/data/summary.json \| python3 -c "import json,sys;d=json.load(sys.stdin);print(d['generated_at'],d['budget']['tp_pairs'],d['team']);[print(r['id'],r['baseline']['value'],r['good_price'],(r['cheapest_cached'] or {}).get('price')) for r in d['routes']]"` |
-| 排程 | scan.yml：`17 1,7,13,19 * * *`＋促銷月 `17 4,10,16,22 * 5,6,11,12 *`（11 月每 3 小時）。**11/4 實測漏跑**：04:17Z 那輪沒跑，01:17Z 晚一小時才跑 | `gh run list --workflow=scan.yml --limit 5` |
-| 監看 | scan.yml 任一 job 失敗→`alert` job 推 Telegram；watchdog.yml 每 2 小時（`43 */2 * * *`）。**watchdog 自 01:47Z 上線後還沒有任何一次排程觸發**（只有 01:51Z 手動那次） | `gh run list --workflow=watchdog.yml --limit 5` |
+| 排程 | scan.yml：`17 1,7,13,19 * * *`＋促銷月 `17 4,10,16,22 * 5,6,11,12 *`（11 月每 3 小時）。GitHub 排程約漏一半，11/4 起 Sir 的 Mac 每小時 :50 補觸發：最近一輪過 30 分鐘沒 run 就 `workflow_dispatch`（設定在 repo 外，見塔台記憶）；改 cron 要同步改補觸發器 | `gh run list --workflow=scan.yml --limit 5` |
+| 監看 | scan.yml 任一 job 失敗→`alert` job 推 Telegram；watchdog.yml 每 2 小時（`43 */2 * * *`），GitHub 排程沒觸發過，改由 Mac 補觸發器 2 小時 15 分沒 run 就補 | `gh run list --workflow=watchdog.yml --limit 5` |
 | 資安設定 | workflow 預設權限 `{}`；scan job 唯讀、不留 token；只有 publish job 可寫且不裝套件；actions 全釘 SHA、只允許 GitHub 官方 action；main 禁止 force push／刪除（ruleset `protect-main`）；Dependabot alerts＋security updates、CodeQL、secret scanning＋push protection、私下回報漏洞都開；外部 PR 一律要核准 | `gh api repos/howard118008y-commits/lowfly/rulesets --jq '.[].name'` |
 | GitHub secrets | `TELEGRAM_BOT_TOKEN`（11/4 輪替）、`TELEGRAM_CHAT_ID`、`TRAVELPAYOUTS_TOKEN`；沒有 `SERPAPI_API_KEY`，以 Travelpayouts 快取模式運作 | `gh secret list` |
 | Telegram 塔台 | tmux session `lowfly-tower` 已建立，**停在「信任資料夾」確認畫面，等 Sir 按** | `tmux ls` |
@@ -58,7 +58,7 @@
 ## 3. 未竟任務
 
 **硬期限相關**
-1. **GitHub 排程漏跑**：11/4 scan 04:17Z 那輪沒跑，watchdog 上線 5 小時一次都沒被排程觸發。先跑 `gh run list --workflow=watchdog.yml --limit 5` 看有沒有恢復；11/5 仍沒有就改用外部觸發：Cloudflare Worker 的 Cron Trigger（Sir 有 Cloudflare 帳號）每小時呼叫 `workflow_dispatch`，需要一把只有 `actions:write` 的 fine-grained PAT 存成 Worker secret（用 mac-dialog 收）。約 1 小時。
+1. **GitHub 排程漏跑（11/4 已上 Mac 補觸發器）**：11/5 跑 `gh run list --workflow=scan.yml --limit 10`，確認有 `workflow_dispatch` 補跑、相鄰兩輪間隔不超過 3.5 小時。Mac 關機時只剩 GitHub 排程；要不靠 Mac，備案是 Cloudflare Worker Cron＋只有 `actions:write` 的 PAT（約 1 小時）。
 2. **2026-11-09（週一）驗收兩件事**：首份團隊週報有送到 Telegram（09:00 後第一輪）；航線新低滿 7 天紀錄開始生效（設定頁 AI 團隊面板的「樣本」天數 ≥ 7）。
 
 **可選、不急**
