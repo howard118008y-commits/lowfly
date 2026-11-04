@@ -106,7 +106,7 @@ def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_coun
                        "deals": sorted(deals, key=lambda item: (item["ratio"], item["pair_key"])),
                        "cheapest_verified": min(verified, key=lambda p: p["price"]) if verified else None,
                        "cheapest_cached": min(cached, key=lambda p: p["price"]) if cached else None})
-    sc = cfg["sources"]["serpapi"]
+    sc, sales = cfg["sources"]["serpapi"], cfg.get("airline_sales") or {}
     return {"generated_at": now.isoformat(timespec="seconds"), "app": cfg["app_name"], "routes": routes,
             "currency": cfg["currency"], "baggage": {"checked_kg": (cfg.get("baggage") or {}).get("checked_kg", 0),
                                                       "pieces_each_way": (cfg.get("baggage") or {}).get("pieces_each_way", 1)},
@@ -116,6 +116,9 @@ def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_coun
                        "monthly_safety": sc["monthly_safety"], "reserve_for_candidates": sc["reserve_for_candidates"],
                        "reverify_hours": sc["reverify_hours"], "tp_pairs": tp_count if tp_count is not None else state.get("last_tp_count", 0)},
             "stats": state["stats"], "schedule": cfg["schedule"], "dedupe": cfg["dedupe"],
+            "new_low": cfg.get("new_low") or {"days": 0, "min_days": 1},
+            "airline_sales": {"enabled": bool(sales.get("enabled")), "max_age_hours": sales.get("max_age_hours"),
+                              "airlines": [airline["name"] for airline in (sales.get("airlines") or {}).values()]},
             "digest": cfg["digest"], "demo": state.get("demo", False)}
 
 

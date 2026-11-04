@@ -18,7 +18,7 @@ def validate(folder: Path) -> None:
     for timestamp in timestamps:
         assert datetime.fromisoformat(timestamp).tzinfo is not None, "時間必須含時區"
     summary, pairs = docs["summary"], docs["pairs"]["pairs"]
-    for field in ("app", "routes", "window", "thresholds", "budget", "stats", "baggage"):
+    for field in ("app", "routes", "window", "thresholds", "budget", "stats", "baggage", "new_low", "airline_sales"):
         assert field in summary, f"summary 缺少 {field}"
     for removed in ("route", "baseline", "deals", "cheapest_verified"):
         assert removed not in summary, f"summary 不應再有頂層 {removed}"

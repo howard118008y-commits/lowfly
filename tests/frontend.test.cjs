@@ -324,3 +324,12 @@ test('預算模式：列出所有航線含行李總價 ≤ 預算的組合，由
   assert.equal(nodes['spend-count'].textContent,'輸入預算，看哪些日期去得成');
   assert.equal(nodes['spend-list'].innerHTML,'');
 });
+
+test('設定頁列出航線新低與廉航促銷消息的推播條件；舊資料沒有這兩個欄位時不列', async () => {
+  let nodes=await appHarness({new_low:{days:30,min_days:7},airline_sales:{enabled:true,max_age_hours:48,airlines:['台灣虎航','香港快運']}});
+  const html=nodes['settings-values'].innerHTML;
+  assert.match(html,/或比近 30 天航線最低價再低 3%（紀錄滿 7 天才開始）/);
+  assert.match(html,/<dt>促銷消息<\/dt><dd>台灣虎航、香港快運：新聞與 PTT 標題有促銷字眼、48 小時內的新消息，每輪合成一則推播<\/dd>/);
+  nodes=await appHarness();
+  assert.doesNotMatch(nodes['settings-values'].innerHTML,/航線最低價|促銷消息/);
+});
