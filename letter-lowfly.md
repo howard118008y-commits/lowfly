@@ -1,16 +1,18 @@
 # LowFly 交接信
 
-> 改寫：2026-11-04 09:40（台北），原因：新增航線新低、改一天、預算模式、廉航促銷消息（v1.12.0）。這是現況快照，不是 changelog，歷史請看 `git log`。
+> 改寫：2026-11-04 10:30（台北），原因：資安、可靠度、無障礙三項稽核後全面強化（v1.13.1）。這是現況快照，不是 changelog，歷史請看 `git log`。
 > 放在 repo 根目錄而不是 `docs/`：`docs/` 是 GitHub Pages 網站根目錄，放進去會被當成公開網頁。本 repo 是 **PUBLIC**，這份信只寫技術資訊；私密細節用 `memory: <name>` 引用（位置是本機 `~/.claude/projects/...LowFly/memory/`）。
 
 ## 1. 當前狀態快照
 
 | 項目 | 現況 | 重驗指令 |
 |---|---|---|
-| 程式 | 最新功能 commit `0a5e876` feat: route new-low push, shift-a-day hint, budget mode, airline sale news | `git log --oneline -8` |
-| 測試 | pytest 143 passed、node 25 pass、四份 JSON 合約檢查通過 | 見第 2 節「跑測試」 |
-| 線上 PWA | v1.12.0；index 含 `spend-input`；app.js 含 `renderSpend`、`renderMarket` | `curl -s https://howard118008y-commits.github.io/lowfly/sw.js \| grep -o 'v1\.[0-9.]*'` |
+| 程式 | 最新：`01ae4e1` security（權限拆分、SHA 釘選、CSP）、`17e6f09` 失敗告警＋無障礙、`0a5e876` 四項新功能 | `git log --oneline -8` |
+| 測試 | pytest 154 passed、node 28 pass、四份 JSON 合約檢查通過；pip-audit 無已知漏洞 | 見第 2 節「跑測試」 |
+| 線上 PWA | v1.13.1；index 含 CSP meta、`skip-link`、`spend-input`；Lighthouse（v1.12 時）效能 96／無障礙 100／最佳實務 100／SEO 100 | `curl -s https://howard118008y-commits.github.io/lowfly/sw.js \| grep -o 'v1\.[0-9.]*'` |
 | 排程掃描 | `17 1,7,13,19 * * *`（台北 09:17／15:17／21:17／03:17）＋促銷月（5、6、11、12 月）`17 4,10,16,22 * 5,6,11,12 *`，11 月起每 3 小時一次 | `gh run list --workflow=scan.yml --limit 3` |
+| 監看 | `scan.yml` 任一 job 失敗→`alert` job 推 Telegram；`watchdog.yml` 每 2 小時看線上 summary.json，超過 7 小時沒更新自動補跑，滿 18 小時每天告警一次 | `gh run list --workflow=watchdog.yml --limit 3` |
+| 資安設定 | 掃描 job 唯讀、只有 `publish` job 可寫且不裝套件；actions 全釘 SHA、只允許 GitHub 官方 action；main 禁止 force push／刪除；Dependabot、CodeQL、secret scanning＋push protection、私下回報漏洞都已開 | `gh api repos/howard118008y-commits/lowfly/rulesets` |
 | GitHub secrets | `TELEGRAM_BOT_TOKEN`（11/4 輪替）、`TELEGRAM_CHAT_ID`、`TRAVELPAYOUTS_TOKEN`；沒有 `SERPAPI_API_KEY`，所以以 Travelpayouts 快取模式運作 | `gh secret list` |
 | 線上資料（11/4 08:45） | 窗口 60 天；住宿 香港／澳門 1～5 晚、東京 1／2／4／5／6 晚；TP 有價組合 191（其中 159 為單程拼接）。三條航線基準都已成立：香港 8,035／澳門 6,782／東京 11,318；好價線 4,500／5,000／9,000；最低含行李價 7,038／5,916／8,684；已推播 1 則（東京 8,684，星宇去＋虎航回） | `curl -s https://howard118008y-commits.github.io/lowfly/data/summary.json \| python3 -c "import json,sys;d=json.load(sys.stdin);print(d['generated_at'],d['budget']['tp_pairs']);[print(r['id'],r['baseline']['value'],r['good_price'],(r['cheapest_cached'] or {}).get('price')) for r in d['routes']]"` |
 
@@ -39,6 +41,8 @@
   ```bash
   git pull --rebase --autostash && "$SCRATCH/venv/bin/python" -c "import sys;sys.path.insert(0,'.');from datetime import datetime;from zoneinfo import ZoneInfo;from lowfly.config import load_config;from lowfly.export import export_all;from lowfly.state import load_state,read_history;export_all(load_config(),load_state(),datetime.now(ZoneInfo('Asia/Taipei')).replace(microsecond=0),read_history())"
   ```
+- **iCloud 資料夾的 git**：`git commit` 後馬上 `git pull --rebase` 常因 iCloud 同步誤判「本機有變更」而中斷（rebase 卡在 pick）。先 `git status` 確認乾淨，再 `GIT_EDITOR=true git rebase --continue`，比對 `git diff --stat <原 commit> HEAD` 為空再 push。不要 `reset --hard`。
+- **main 結束碼**：0 正常；1 不寫入（state 讀不到、Travelpayouts 0 筆）；3 已寫入但 Telegram 送失敗（publish 存檔後標紅）。
 - **改了前端以後**：`docs/sw.js` 的 `VERSION` 一定要往上加。手機的 PWA 要開關兩次才會換到新版；主畫面圖示要刪掉捷徑重新加入才會換。
 - **上線流程**：
   1. `git push`
@@ -56,7 +60,7 @@
 ## 3. 未竟任務
 
 **可選、不急（建議順序）**
-1. **設定頁推播說明沒跟上**：「立即推播」那行還沒寫到航線新低與廉航促銷消息。要補得先把 `new_low`／`airline_sales` 匯出到 summary.json，再重匯 docs/data（約 30 分鐘）。
+1. **稽核剩下的 Low 項**（不急）：字級改 rem（目前 px，系統字級放大不跟著變）、sw.js `VERSION` 自動化、commit 簽章、每週健康摘要推播。
 2. **其他平台挑票方式**（11/4 調查，剩下的）：首頁三條航線並排（約 2h）、星期幾出發均價（約 2h）。之後再考慮：價格走勢折線（約 4h）、紅眼／早班標籤（要先確認快取有沒有起飛時間）。
 3. **廉航促銷的限制**：酷航、樂桃、捷星、ZIPAIR 官網擋爬蟲或要 JS，只能靠新聞，會晚數小時，快閃促銷可能漏；預期約 3 成誤報（旅展懶人包、轉載），改 `keywords`／`exclude` 調整。PTT 沒有 AirTicket 板。
 4. **航線新低用 TP 快取樣本當前低**：之後若啟用 SerpApi，Google 驗證價會拿來和 TP 前低比，兩者有價差，可能誤報或漏報。
@@ -68,6 +72,11 @@
 - 拼接讓基準樣本多了約 5 倍，基準價跟著變動：上線前後香港 7,791 → 8,035、澳門 6,803 → 6,782、東京 11,985 → 11,318。觀察幾天，看半價線是否變得太難或太容易觸發；好價線不受影響。
 
 ## 4. 等 Sir 本人處理
+
+- **另兩個 bot token 輪替**（資安 High，不屬於 LowFly）：細節見 memory: `lowfly-token-rotation`。revoke 後那兩個專案要同步換設定，Sir 點頭才做。
+- **GitHub 帳號設定**：Settings → Emails 勾「Block command line pushes that expose my email」。本 repo 之後的 commit 已改用 noreply 信箱，但 28 個舊 commit 的作者欄仍是 Gmail（改寫歷史要 force push，未做）。
+- **要不要換自訂網域**：LowFly 與同帳號其他 github.io 網站共用網域（localStorage 共用）。已加防護（離線快取含 HTML 字元就不採用），換網域才是根治，需購買網域。
+- `docs/data/alerts.json` 公開了推播過的出發日期（是好價日期，不是訂票紀錄）。介意的話可改成不匯出日期。
 
 - **SerpApi 手機驗證**：屬於帳號真人驗證，Claude 不能代做。完成後由 Claude 用 mac-dialog 收 key → `gh secret set SERPAPI_API_KEY` → 跑一輪掃描驗證。選用，不處理也能運作。
 - **其他專案的 bot token 輪替**：細節只寫在 memory: `lowfly-token-rotation`（公開 repo 不寫名稱）。
