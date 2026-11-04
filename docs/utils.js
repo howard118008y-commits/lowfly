@@ -35,10 +35,12 @@
     return `${Math.floor(minutes / 1440)} 天前`;
   }
   function coherent(bundle) {
-    if (!bundle || !["summary", "pairs", "history", "alerts"].every(k => bundle[k] && bundle[k].generated_at)) return false;
+    const object = value => value !== null && typeof value === "object" && !Array.isArray(value);
+    const records = value => Array.isArray(value) && value.every(object);
+    if (!object(bundle) || !["summary", "pairs", "history", "alerts"].every(k => object(bundle[k]) && typeof bundle[k].generated_at === "string" && bundle[k].generated_at)) return false;
     return new Set(Object.values(bundle).map(d => d.generated_at)).size === 1 &&
-      Array.isArray(bundle.pairs.pairs) && Array.isArray(bundle.alerts.alerts) &&
-      Array.isArray(bundle.summary.routes) && typeof bundle.history.series === "object";
+      records(bundle.pairs.pairs) && records(bundle.alerts.alerts) &&
+      records(bundle.summary.routes) && object(bundle.history.series);
   }
   const api = {fmtDate, fmtMoney, fmtPct, ratioClass, escapeHTML, safeURL, relativeTime, coherent};
   root.LowFly = api;

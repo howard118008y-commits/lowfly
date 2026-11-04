@@ -33,6 +33,29 @@ test("混合批次 JSON 不得覆寫一致快取", () => {
   bundle.alerts.generated_at = "b";
   assert.equal(U.coherent(bundle), false);
 });
+
+test("快取結構缺少歷史資料或文件形狀錯誤時不得採用", () => {
+  const valid = () => ({summary:{generated_at:"same",routes:[]},pairs:{generated_at:"same",pairs:[]},history:{generated_at:"same",series:{}},alerts:{generated_at:"same",alerts:[]}});
+  assert.equal(U.coherent(valid()), true);
+  for (const invalid of [null, [], "broken"]) {
+    const bundle = valid(); bundle.history.series = invalid;
+    assert.equal(U.coherent(bundle), false, "history.series must be an object");
+  }
+  for (const key of ["summary", "pairs", "history", "alerts"]) {
+    const bundle = valid(); bundle[key] = Object.assign([],bundle[key]);
+    assert.equal(U.coherent(bundle), false, "a JSON document cannot be an array");
+  }
+});
+
+test("資料集合中的空項目不能讓不完整快取覆蓋可用版本", () => {
+  const valid = () => ({summary:{generated_at:"same",routes:[]},pairs:{generated_at:"same",pairs:[]},history:{generated_at:"same",series:{}},alerts:{generated_at:"same",alerts:[]}});
+  for (const [key,list] of [["summary","routes"],["pairs","pairs"],["alerts","alerts"]]) {
+    for (const invalid of [null, "broken", []]) {
+      const bundle=valid();bundle[key][list]=[invalid];
+      assert.equal(U.coherent(bundle),false, key+" list entries must be objects");
+    }
+  }
+});
 test("PWA 路徑與圖示均相對，可部署於 repo 子路徑", () => {
   const root = path.join(__dirname,"../docs");
   const manifest = JSON.parse(fs.readFileSync(path.join(root,"manifest.webmanifest")));
