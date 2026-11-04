@@ -84,13 +84,23 @@ function workerHarness() {
       };
     }
   };
-  let fail = false, fetches = 0;
+  let fail = false, fetches = 0, payload;
   const scope = "https://example.test/repo/";
   const context = {URL,Response,Headers,AbortSignal,console,caches,
-    fetch:async () => { fetches++; if(fail) throw new Error("offline"); return new Response('{"generated_at":"2026-11-02T09:30:00+08:00"}',{headers:{"Content-Type":"application/json"}}); },
+    fetch:async request => {
+      fetches++;
+      if(fail) throw new Error("offline");
+      const name = normalize(request).match(/data\/(\w+)\.json$/)?.[1];
+      const data = payload === undefined ? JSON.parse(fs.readFileSync(path.join(__dirname,`fixtures/empty_data/${name}.json`))) : payload;
+      return new Response(JSON.stringify(data),{headers:{"Content-Type":"application/json"}});
+    },
     self:{registration:{scope},location:{origin:"https://example.test"},clients:{claim:async()=>{}},skipWaiting:async()=>{},addEventListener:(name,fn)=>handlers[name]=fn}};
-  vm.runInNewContext(fs.readFileSync(path.join(__dirname,"../docs/sw.js"),"utf8"),context);
-  return {handlers,caches,setOffline(){fail=true;},get fetches(){return fetches;},async lifecycle(name){let p;handlers[name]({waitUntil:v=>p=v});await p;},async request(url,mode="cors"){let p;handlers.fetch({request:{url,method:"GET",mode},respondWith:v=>p=v});return await p;}};
+  const runtime = vm.createContext(context);
+  context.importScripts = (...files) => {
+    for (const file of files) vm.runInContext(fs.readFileSync(path.join(__dirname,"../docs",file),"utf8"),runtime);
+  };
+  vm.runInContext(fs.readFileSync(path.join(__dirname,"../docs/sw.js"),"utf8"),runtime);
+  return {handlers,caches,setPayload(value){payload=value;},setOffline(){fail=true;},get fetches(){return fetches;},async lifecycle(name){let p;handlers[name]({waitUntil:v=>p=v});await p;},async request(url,mode="cors"){let p;handlers.fetch({request:{url,method:"GET",mode},respondWith:v=>p=v});return await p;}};
 }
 test("Service Worker JSON network-first，斷線回退快取並標示", async () => {
   const h = workerHarness(), url = "https://example.test/repo/data/summary.json";
@@ -123,6 +133,27 @@ test("Service Worker 更新只清理此 repo 舊版快取", async () => {
 test("Service Worker 首次離線沒有資料時回 503", async () => {
   const h = workerHarness();h.setOffline();
   assert.equal((await h.request("https://example.test/repo/data/pairs.json")).status,503);
+});
+
+test("Service Worker 不讓結構錯誤的 JSON 蓋掉上次可用資料", async () => {
+  for (const name of ['summary','pairs','history','alerts']) {
+    const h = workerHarness(), url = `https://example.test/repo/data/${name}.json`;
+    const original = await (await h.request(url)).text();
+    for (const invalid of [null, [], {generated_at:'broken'}, {generated_at:'broken',routes:[null],pairs:[null],series:null,alerts:[null]}]) {
+      h.setPayload(invalid);
+      const response = await h.request(url);
+      assert.equal(response.headers.get('X-LowFly-Cache'),'offline',name+' must use the last valid response');
+      assert.equal(await response.text(),original,name+' must keep the last valid document');
+    }
+    h.setOffline();
+    assert.equal(await (await h.request(url)).text(),original);
+  }
+});
+
+test("Service Worker 首次收到結構錯誤資料時回可重試錯誤", async () => {
+  const h = workerHarness();
+  h.setPayload(null);
+  assert.equal((await h.request('https://example.test/repo/data/summary.json')).status,503);
 });
 
 async function appHarness(overrides = {}, offline = false, extra = {}, storage = {}) {

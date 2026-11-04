@@ -34,15 +34,23 @@
     if (minutes < 1440) return `${Math.floor(minutes / 60)} 小時前`;
     return `${Math.floor(minutes / 1440)} 天前`;
   }
-  function coherent(bundle) {
-    const object = value => value !== null && typeof value === "object" && !Array.isArray(value);
-    const records = value => Array.isArray(value) && value.every(object);
-    if (!object(bundle) || !["summary", "pairs", "history", "alerts"].every(k => object(bundle[k]) && typeof bundle[k].generated_at === "string" && bundle[k].generated_at)) return false;
-    return new Set(Object.values(bundle).map(d => d.generated_at)).size === 1 &&
-      records(bundle.pairs.pairs) && records(bundle.alerts.alerts) &&
-      records(bundle.summary.routes) && object(bundle.history.series);
+  const object = value => value !== null && typeof value === "object" && !Array.isArray(value);
+  const records = value => Array.isArray(value) && value.every(object);
+  function validDataDocument(name, data) {
+    if (!object(data) || typeof data.generated_at !== "string" || !data.generated_at) return false;
+    switch (name) {
+      case "summary": return records(data.routes);
+      case "pairs": return records(data.pairs);
+      case "history": return object(data.series);
+      case "alerts": return records(data.alerts);
+      default: return false;
+    }
   }
-  const api = {fmtDate, fmtMoney, fmtPct, ratioClass, escapeHTML, safeURL, relativeTime, coherent};
+  function coherent(bundle) {
+    if (!object(bundle) || !["summary", "pairs", "history", "alerts"].every(k => validDataDocument(k, bundle[k]))) return false;
+    return new Set(Object.values(bundle).map(d => d.generated_at)).size === 1;
+  }
+  const api = {fmtDate, fmtMoney, fmtPct, ratioClass, escapeHTML, safeURL, relativeTime, validDataDocument, coherent};
   root.LowFly = api;
   if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof window !== "undefined" ? window : globalThis);

@@ -1,5 +1,6 @@
 "use strict";
-const VERSION = "v1.14.1";
+importScripts("./utils.js");
+const VERSION = "v1.14.2";
 const PREFIX = `lowfly:${new URL(self.registration.scope).pathname}:`;
 const SHELL_CACHE = PREFIX + "shell-" + VERSION;
 const DATA_CACHE = PREFIX + "data-" + VERSION;
@@ -22,7 +23,8 @@ self.addEventListener("fetch", event => {
       try {
         const response = await fetch(request, {signal: AbortSignal.timeout(10000)});
         if (!response.ok) throw new Error("資料請求失敗");
-        await response.clone().json();
+        const name = relative.match(/^data\/(\w+)\.json$/)[1];
+        if (!LowFly.validDataDocument(name, await response.clone().json())) throw new Error("資料結構不完整");
         await cache.put(request, response.clone());
         return response;
       } catch {
