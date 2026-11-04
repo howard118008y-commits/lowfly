@@ -60,6 +60,8 @@ class Scanner:
                                     tp_best[offer.pair_key] = offer
                     except Exception as exc:
                         self._error(f"Travelpayouts {rid} {month} 失敗（{type(exc).__name__}）")
+            if cfg["sources"]["travelpayouts"].get("one_way"):
+                self._splice_one_way(route_pairs, tp_best)
         self.summary["tp_offers"] = len(tp_best)
         self._record_tp(tp_best)
         self._refresh_market()
@@ -122,6 +124,47 @@ class Scanner:
                                           "fare_sum": sum(o.fare for o in best.values()), "min": min(o.price for o in best.values())}
         self.state["market"] = {"date": today.isoformat(), "at": self.now.isoformat(timespec="seconds"),
                                 "months": months, "routes": routes}
+
+    def _splice_one_way(self, route_pairs: dict, tp_best: dict[str, Offer]) -> None:
+        """兩張單程拼來回：去程、回程各取每天最低價；比來回快取便宜（或來回沒有）就採用。廉航來回本來就是兩段相加。"""
+        for rid, route in self.routes.items():
+            legs: dict[str, dict[str, Offer]] = {"out": {}, "back": {}}
+            for direction, origin, destination, days in (
+                    ("out", route["origin"], route["destination"], [o for o, _ in route_pairs[rid]]),
+                    ("back", route["destination"], route["origin"], [b for _, b in route_pairs[rid]])):
+                best = legs[direction]
+                for month in sorted({day.strftime("%Y-%m") for day in days}):
+                    try:
+                        found = self.tp_fn(origin, destination, month, self.secrets.travelpayouts_token,
+                                           self.cfg["currency"], route["direct_only"], one_way=True)
+                    except Exception as exc:
+                        self._error(f"Travelpayouts 單程 {rid} {origin}→{destination} {month} 失敗（{type(exc).__name__}）")
+                        continue
+                    for leg in found:
+                        if (number(leg.price) and leg.currency.upper() == self.cfg["currency"].upper()
+                                and (leg.direct or not route["direct_only"])
+                                and (leg.outbound not in best or leg.price < best[leg.outbound].price)):
+                            best[leg.outbound] = leg
+            for out, back in route_pairs[rid]:
+                a, b = legs["out"].get(out.isoformat()), legs["back"].get(back.isoformat())
+                key = pair_key(rid, out, back)
+                if a and b:
+                    offer = self._splice(rid, a, b)
+                    if key not in tp_best or offer.price < tp_best[key].price:
+                        tp_best[key] = offer
+
+    def _splice(self, rid: str, a: Offer, b: Offer) -> Offer:
+        """去程 a＋回程 b。bag_fee 回傳來回行李費，單程各取一半，依該段航空公司計算。"""
+        fee_a, est_a = bag_fee(self.cfg, rid, a.airline_code)
+        fee_b, est_b = bag_fee(self.cfg, rid, b.airline_code)
+        fare, fee = a.price + b.price, (fee_a + fee_b) / 2
+        return Offer("travelpayouts", a.outbound, b.outbound, fare + fee, a.currency,
+                     a.airline if a.airline == b.airline else f"{a.airline}／{b.airline}", a.direct and b.direct,
+                     a.url, a.observed_at, rid, airline_code=a.airline_code, fare=fare, bag_fee=fee,
+                     bag_estimated=est_a or est_b, flight_no="／".join(x for x in (a.flight_no, b.flight_no) if x) or None,
+                     depart_time=a.depart_time, arrive_time=a.arrive_time, return_depart_time=b.depart_time,
+                     origin_airport=a.origin_airport, destination_airport=a.destination_airport,
+                     duration_to=a.duration_to, duration_back=b.duration_to, split=True)
 
     def _baselines(self) -> dict[str, Baseline | None]:
         return {rid: compute_baseline(self.state, self.cfg, self.now, rid) for rid in self.routes}
@@ -403,6 +446,8 @@ class Scanner:
                 f"{'｜'.join(compare)}\n"
                 f"{esc(flight)}\n"
                 f"去 {fmt_date(offer.outbound)} → 回 {fmt_date(offer.inbound)}，{offer.nights} 晚\n")
+        if offer.split:
+            head += "✂️ 兩張單程拼成：去回分開訂，退改與行李各依該航空規定\n"
         same, limit = self._same_price_dates(offer)
         if same:
             shown = "、".join(fmt_date(day) for day in same[:4]) + ("…" if len(same) > 4 else "")
@@ -421,7 +466,7 @@ class Scanner:
             text = (head + f"⏱ {self.now.strftime('%m/%d %H:%M')} 掃描到｜Travelpayouts 快取價（航空公司報價時間不明），"
                     "未經 Google 驗證，訂票前請以實際頁面為準\n"
                     f"🔗 {link(google_url(cfg, route, offer.outbound, offer.inbound), 'Google Flights 查看')}"
-                    f"｜{link(offer.url, 'Aviasales')}")
+                    f"｜{link(offer.url, 'Aviasales（去程）' if offer.split else 'Aviasales')}")
         return self._deliver(text, "alert", offer, baseline)
 
     def _same_price_dates(self, offer: Offer) -> tuple[list[str], float]:
@@ -463,7 +508,7 @@ class Scanner:
         if items:
             lines.append(f"目前好價（≤{threshold:.0f}%）：")
             for item in items[:cfg["digest"]["top_n"]]:
-                tag = "✓ 已驗證" if item["verified"] else "⌛ 待驗證（Aviasales 快取）"
+                tag = ("✓ 已驗證" if item["verified"] else "⌛ 待驗證（Aviasales 快取）") + ("｜兩張單程" if item.get("split") else "")
                 lines.append(f"• {esc(self.routes[item['route_id']]['label'])} {fmt_date(item['outbound'])}→{fmt_date(item['inbound'])} <b>{fmt_money(item['price'])}</b>（{fmt_pct(item['ratio'])}）{esc(item['airline'])} {tag} {link(item['url'])}")
                 bag = bag_line(cfg, item.get("fare"), item.get("bag_fee", 0), item.get("bag_estimated"))
                 if bag:

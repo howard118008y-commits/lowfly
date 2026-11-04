@@ -81,6 +81,7 @@ baseline:
 sources:
   travelpayouts:
     enabled: true
+    one_way: true           # 另抓去、回單程拼成來回（2026-11-04 實測可定價組合約 5 倍）；每輪多 18 次請求
   serpapi:
     enabled: true
     monthly_quota: 250

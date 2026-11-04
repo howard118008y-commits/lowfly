@@ -298,3 +298,10 @@ test('行情分頁：過去／未來 3、6 個月均價並列；各月份明細�
   assert.match(d,/>Kayak<\/a>：過去 12 個月最便宜 3 月 NT\$4,845/);
   assert.match(d,/桃園 ⇄ 澳門 各月份<\/summary><p class="muted">尚無未來月份資料。/);
 });
+
+test('兩張單程拼成的票根標「兩張單程」；一般來回仍是「直飛來回」', async () => {
+  const split=(await withItem(ticketItem({split:true,airline:'香港快運／香港航空'})))['route-cards'].innerHTML;
+  assert.match(split,/<span class="t-tag">兩張單程<\/span>/);
+  const normal=(await withItem(ticketItem()))['route-cards'].innerHTML;
+  assert.doesNotMatch(normal,/兩張單程/);
+});

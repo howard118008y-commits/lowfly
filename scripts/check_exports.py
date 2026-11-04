@@ -62,8 +62,9 @@ def validate(folder: Path) -> None:
     for pair in pairs:
         for field in ("pair_key", "route_id", "outbound", "inbound", "nights", "price", "source", "ratio", "airline", "verified", "checked_at", "price_level", "tp_price", "url",
                       "total", "fare", "bag_fee", "bag_estimated", "airline_code", "flight_no", "depart_time", "arrive_time",
-                      "return_depart_time", "origin_airport", "destination_airport", "duration_to", "duration_back", "notes"):
+                      "return_depart_time", "origin_airport", "destination_airport", "duration_to", "duration_back", "split", "notes"):
             assert field in pair, f"pair 缺少 {field}"
+        assert pair["split"] in (None, True), "split 只能是 null 或 true"
         assert pair["route_id"] in baselines
         assert pair["price"] is None or (isinstance(pair["price"], (float, int)) and pair["price"] > 0)
         assert pair["source"] in (None, "serpapi", "travelpayouts")

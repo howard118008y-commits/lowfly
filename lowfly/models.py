@@ -16,7 +16,7 @@ def number(value) -> float | None:
 
 
 FLIGHT_FIELDS = ("flight_no", "depart_time", "arrive_time", "return_depart_time", "origin_airport",
-                 "destination_airport", "duration_to", "duration_back")
+                 "destination_airport", "duration_to", "duration_back", "split")
 
 
 @dataclass
@@ -45,6 +45,7 @@ class Offer:
     destination_airport: str | None = None
     duration_to: int | None = None
     duration_back: int | None = None
+    split: bool | None = None   # True＝兩張單程拼成（去回可能不同航空，要分開訂）
 
     def flight_info(self) -> dict:
         return {name: getattr(self, name) for name in FLIGHT_FIELDS} | {"airline_code": self.airline_code}

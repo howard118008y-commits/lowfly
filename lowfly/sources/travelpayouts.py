@@ -43,8 +43,9 @@ def _arrival_time(departure_at, minutes: int | None, airport: str | None) -> str
 
 
 def fetch_month(origin: str, destination: str, month: str, token: str, currency: str = "TWD",
-                direct_only: bool = True, timeout: int = 30) -> list[Offer]:
-    params = {"origin": origin, "destination": destination, "departure_at": month, "one_way": "false",
+                direct_only: bool = True, timeout: int = 30, one_way: bool = False) -> list[Offer]:
+    """one_way=True 時回傳單程（inbound 與 outbound 同一天，只給 scanner 拼接用）。"""
+    params = {"origin": origin, "destination": destination, "departure_at": month, "one_way": "true" if one_way else "false",
               "direct": "true" if direct_only else "false", "currency": currency.lower(), "sorting": "price",
               "unique": "false", "limit": 1000, "page": 1, "token": token}
     try:
@@ -61,12 +62,14 @@ def fetch_month(origin: str, destination: str, month: str, token: str, currency:
     for row in data["data"]:
         price = number(row.get("price"))
         out, back = str(row.get("departure_at") or "")[:10], str(row.get("return_at") or "")[:10]
+        if one_way:
+            back = out
         # 缺少任一方向的轉機資訊時，不宣稱已確認直飛。
-        direct = row.get("transfers") == 0 and row.get("return_transfers") == 0
+        direct = row.get("transfers") == 0 and (one_way or row.get("return_transfers") == 0)
         if not out or not back or price is None or (direct_only and not direct):
             continue
         try:
-            if datetime.fromisoformat(back) <= datetime.fromisoformat(out):
+            if not one_way and datetime.fromisoformat(back) <= datetime.fromisoformat(out):
                 continue
         except ValueError:
             continue
