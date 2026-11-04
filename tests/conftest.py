@@ -37,6 +37,7 @@ def cfg():
     config["market"]["months_ahead"] = 0   # 行情每天另抓 6 個月 TP；既有測試不計這些呼叫，行情見 test_market.py
     config["new_low"]["days"] = 0   # 航線新低另見 test_new_low.py
     config["airline_sales"]["enabled"] = False   # 廉航促銷消息要連網；另見 test_airline_sales.py
+    config["team_report"]["enabled"] = False   # NOW 是週一 09:30，會觸發週報；另見 test_team_report.py
     return config
 
 

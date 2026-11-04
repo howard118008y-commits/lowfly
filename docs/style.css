@@ -182,3 +182,17 @@ dialog::backdrop{background:rgba(27,36,48,.4)}
 
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 @media (max-width:374px){.code{font-size:38px}.fare-pair:not(.single) .fare-price{font-size:26px}.heat-cell{font-size:13px}.heatmap th:first-child{width:66px}}
+
+/* AI 團隊（設定頁） */
+.team{margin:4px 0 18px}
+.team-title{font-size:17px;margin-bottom:10px}
+.team-cards{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.member{display:flex;gap:12px;background:var(--paper);border-radius:14px;padding:12px 14px}
+.avatar{flex:none;font-size:26px;line-height:1;width:44px;height:44px;display:grid;place-items:center;background:var(--page);border-radius:50%}
+.member-body{min-width:0;flex:1}
+.member-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.member-head span{font-size:12px;color:var(--muted)}
+.member-head .light{margin-left:auto;padding:1px 8px;border-radius:10px;border:1px solid currentColor}
+.light::before{content:"● "}
+.member-head .light.green{color:var(--half)}.member-head .light.amber{color:#8A5A00}.member-head .light.red{color:var(--stamp)}
+.member-now{font-size:13px;margin-top:4px}

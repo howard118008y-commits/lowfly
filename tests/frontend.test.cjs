@@ -364,3 +364,17 @@ test('離線快取含 HTML 字元（同網域他站可寫 localStorage）就不�
   assert.ok(scripts.length>0 && scripts.every(tag=>/^\s[^>]*\bsrc=/.test(tag)));
   assert.doesNotMatch(html,/\son[a-z]+\s*=/i);
 });
+
+test('設定頁 AI 團隊：四位助手、分工與即時狀態（燈號有文字），舊資料沒有 team 時不顯示', async () => {
+  let nodes=await appHarness({team:{report_date:'2026-11-02',alerts_7d:3,sales_7d:13,sample_days:3,runs:52},airline_sales:{enabled:true,max_age_hours:48,airlines:['台灣虎航','香港快運']}});
+  const html=nodes['team-cards'].innerHTML;
+  assert.deepEqual([...html.matchAll(/<strong>([^<]+)<\/strong><span>([^<]+)<\/span>/g)].map(m=>m[1]+'／'+m[2]),['塔台／總監','領航員／票價分析','瞭望員／促銷情報','地勤／維運']);
+  assert.match(html,/最近團隊週報 11\/2/);
+  assert.match(html,/近 7 天推播 3 則，有價組合 \d+ 組/);
+  assert.match(html,/監看 2 家廉航的促銷消息與規則<\/p><p class="member-now">近 7 天推出促銷消息 13 則/);
+  assert.match(html,/<span class="light (green|amber|red)">(正常|資料延遲|需要處理)<\/span>/);
+  assert.match(html,/資料已 \d+ 小時沒更新，看門狗會自動補跑/);   // fixture 是 11/2 的資料
+  assert.doesNotMatch(html,/提示詞|prompt/i);
+  nodes=await appHarness();
+  assert.equal(nodes['team-cards'].innerHTML,'');
+});

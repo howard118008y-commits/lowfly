@@ -132,6 +132,12 @@ airline_sales:
     MM: {name: "樂桃航空", match: [樂桃, Peach], sources: ["news:樂桃"]}
     GK: {name: "捷星日本", match: [捷星, Jetstar], sources: ["news:捷星"]}
     ZG: {name: "ZIPAIR", match: [ZIPAIR], sources: ["news:ZIPAIR"]}
+# 團隊週報：weekday（0＝週一）hour_local 點後第一輪掃描推一則，依 AI 團隊四個角色整理過去 7 天：
+# 推播則數與類型、各航線最低價（比上週）、促銷消息則數、成功掃描輪數（比排程應有輪數）、還在累積的功能。
+team_report:
+  enabled: true
+  weekday: 0
+  hour_local: 9
 dedupe:
   min_drop_ratio: 0.03
   cooldown_hours: 48

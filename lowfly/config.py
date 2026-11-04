@@ -91,6 +91,9 @@ def validate_config(cfg: dict) -> None:
     low = cfg.get("new_low") or {}
     if not 0 <= int(low.get("days", 0)) <= int(cfg["baseline"]["lookback_days"]) or int(low.get("min_days", 1)) < 1:
         raise ValueError("new_low.days 須介於 0～baseline.lookback_days，min_days 至少 1")
+    report = cfg.get("team_report") or {}
+    if report.get("enabled") and not (0 <= int(report.get("weekday", 0)) <= 6 and 0 <= int(report.get("hour_local", 9)) <= 23):
+        raise ValueError("team_report.weekday 須為 0～6、hour_local 須為 0～23")
     sales = cfg.get("airline_sales") or {}
     if sales.get("enabled"):
         if float(sales["max_age_hours"]) <= 0 or not sales.get("keywords"):

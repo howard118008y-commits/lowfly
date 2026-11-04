@@ -16,6 +16,7 @@ from .notices import deal_notes, good_price
 from .notifier import Telegram, esc, fmt_money, fmt_pct, fmt_range, link
 from .sources import airline_sales, serpapi_flights, travelpayouts
 from .state import prune_typical_ranges
+from .team_report import build_team_report
 
 log = logging.getLogger(__name__)
 
@@ -87,6 +88,7 @@ class Scanner:
         self._evaluate(verified, tp_best, baselines, checked)
         self._check_sales()
         self._maybe_digest(baselines, tp_best)
+        self._maybe_team_report(tp_best)
         st["stats"]["runs"] += 1
         st["last_run_at"] = self.now.isoformat(timespec="seconds")
         st["last_tp_count"] = len(tp_best)
@@ -592,7 +594,25 @@ class Scanner:
             if len("\n".join(lines)) <= 4096:
                 break
         if self.tg.send("\n".join(lines)):   # 送失敗的下一輪重送
-            seen.update({item["id"]: self.now.isoformat(timespec="seconds") for items in news.values() for item in items})
+            at = self.now.isoformat(timespec="seconds")
+            seen.update({item["id"]: at for items in news.values() for item in items})
+            log_rows = [row for row in self.state.get("sales_log", []) if parse_time(row["at"]) >= cutoff]
+            self.state["sales_log"] = log_rows + [{"at": at, "count": self.summary["sales_news"]}]   # 團隊週報用
+
+    def _maybe_team_report(self, tp_best: dict[str, Offer]) -> None:
+        """團隊週報：team_report.weekday 當天 hour_local 後第一輪送出；送失敗下一輪再試。"""
+        conf = self.cfg.get("team_report") or {}
+        if (not conf.get("enabled") or self.now.weekday() != int(conf.get("weekday", 0))
+                or self.now.hour < int(conf.get("hour_local", 9))
+                or (self.state.get("team_report") or {}).get("date") == self.now.date().isoformat()):
+            return
+        lows: dict[str, float] = {}
+        for offer in tp_best.values():
+            lows[offer.route_id] = min(lows.get(offer.route_id, math.inf), offer.price)
+        text, snapshot = build_team_report(self.cfg, self.state, self.now, lows)
+        if self.tg.send(text):
+            self.state["team_report"] = snapshot
+            self.summary["team_report_sent"] = True
 
     def _maybe_digest(self, baselines: dict[str, Baseline | None], tp_best: dict) -> None:
         cfg, st, today = self.cfg, self.state, self.now.date()

@@ -117,9 +117,20 @@ def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_coun
                        "reverify_hours": sc["reverify_hours"], "tp_pairs": tp_count if tp_count is not None else state.get("last_tp_count", 0)},
             "stats": state["stats"], "schedule": cfg["schedule"], "dedupe": cfg["dedupe"],
             "new_low": cfg.get("new_low") or {"days": 0, "min_days": 1},
+            "team": _team(state, now),
             "airline_sales": {"enabled": bool(sales.get("enabled")), "max_age_hours": sales.get("max_age_hours"),
                               "airlines": [airline["name"] for airline in (sales.get("airlines") or {}).values()]},
             "digest": cfg["digest"], "demo": state.get("demo", False)}
+
+
+def _team(state: dict, now: datetime) -> dict:
+    """設定頁「AI 團隊」面板用的公開數字（不含提示詞或任何私密設定）。"""
+    week_ago = now - timedelta(days=7)
+    return {"report_date": (state.get("team_report") or {}).get("date"),
+            "alerts_7d": sum(1 for a in state.get("alert_history", []) if parse_time(a["at"]) >= week_ago),
+            "sales_7d": sum(row["count"] for row in state.get("sales_log", []) if parse_time(row["at"]) >= week_ago),
+            "sample_days": len({s["at"][:10] for s in state.get("tp_samples", {}).values()}),
+            "runs": state["stats"]["runs"]}
 
 
 def build_history(rows: list[dict], now: datetime) -> dict:

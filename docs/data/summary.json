@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-04T10:20:52+08:00",
+  "generated_at": "2026-11-04T14:31:31+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -483,6 +483,13 @@
   "new_low": {
     "days": 30,
     "min_days": 7
+  },
+  "team": {
+    "report_date": null,
+    "alerts_7d": 1,
+    "sales_7d": 0,
+    "sample_days": 3,
+    "runs": 22
   },
   "airline_sales": {
     "enabled": true,

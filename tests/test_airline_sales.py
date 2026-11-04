@@ -151,3 +151,11 @@ def test_oversized_response_is_rejected(monkeypatch):
     monkeypatch.setattr(airline_sales.requests, "get", lambda url, **k: FakeResponse("x" * (airline_sales.MAX_BYTES + 1)))
     with pytest.raises(ValueError, match="回應超過"):
         airline_sales.fetch("hkexpress")
+
+
+def test_sent_count_is_logged_for_weekly_report(run_scan):
+    state = default_state()
+    run_scan(state, sales_fn=feed({"news:虎航": [item("a", "虎航限時開賣"), item("b", "台灣虎航旅展 999 元起")]}))
+    assert state["sales_log"] == [{"at": NOW.isoformat(timespec="seconds"), "count": 2}]
+    run_scan(state, sales_fn=feed({"news:虎航": [item("a", "虎航限時開賣")]}))   # 沒有新消息就不記
+    assert len(state["sales_log"]) == 1

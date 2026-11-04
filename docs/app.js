@@ -265,6 +265,21 @@
     }).join("");
   }
 
+  // AI 團隊：四位助手的分工與即時狀態，只用公開資料（提示詞與設定不在網站上）。舊快取沒有 team 欄位時不顯示。
+  function renderTeam() {
+    const s = bundle.summary, t = s.team;
+    if (!t) { $("team-cards").innerHTML = ""; return; }
+    const hours = (Date.now() - Date.parse(s.generated_at)) / 3600000;
+    const light = hours > 18 ? "red" : hours > 8 ? "amber" : "green";
+    const label = {green: "正常", amber: "資料延遲", red: "需要處理"};
+    const watched = s.airline_sales?.enabled ? s.airline_sales.airlines.length : 0;
+    const members = [
+      ["🗼", "塔台", "總監", "收你的口述，複述確認後派工並驗收", t.report_date ? `最近團隊週報 ${md(t.report_date)}` : "團隊週報：每週一 09:00 後送出", "green"],
+      ["🧭", "領航員", "票價分析", "盯三條航線的含行李價、基準與推播品質", `近 7 天推播 ${t.alerts_7d} 則，有價組合 ${s.budget.tp_pairs} 組`, light],
+      ["🔭", "瞭望員", "促銷情報", `監看 ${watched} 家廉航的促銷消息與規則`, `近 7 天推出促銷消息 ${t.sales_7d} 則`, watched ? "green" : "amber"],
+      ["🛠️", "地勤", "維運", "排程掃描、失敗告警、看門狗與資安", hours > 8 ? `資料已 ${Math.floor(hours)} 小時沒更新，看門狗會自動補跑` : `已完成 ${t.runs} 輪掃描，最近 ${clock(s.generated_at)}`, light]];
+    $("team-cards").innerHTML = members.map(([icon, name, role, duty, now, state]) => `<article class="member"><div class="avatar" aria-hidden="true">${icon}</div><div class="member-body"><p class="member-head"><strong>${e(name)}</strong><span>${e(role)}</span><span class="light ${state}">${label[state]}</span></p><p class="muted small">${e(duty)}</p><p class="member-now">${e(now)}</p></div></article>`).join("");
+  }
   function renderSettings() {
     const s = bundle.summary, q = s.budget;
     $("settings-overview").innerHTML = s.routes.map(r => `<p><strong>${e(r.label)}</strong>　${modeText(r)}　${r.adults || 1} 位成人　${r.stay_nights.join("／")} 晚</p>`).join("") + `<p class="muted small">每天自動掃描 ${e(s.schedule.runs_per_day)} 次${s.schedule.promo_months?.length ? `，促銷月（${e(s.schedule.promo_months.join("、"))} 月）${e(s.schedule.promo_runs_per_day)} 次` : ""}</p>`;
@@ -284,7 +299,7 @@
     }
   }
 
-  function render() { renderHome(); renderSpend(); renderCalendar(); renderRecords(); renderMarket(); renderSettings(); status(); }
+  function render() { renderHome(); renderSpend(); renderCalendar(); renderRecords(); renderMarket(); renderTeam(); renderSettings(); status(); }
   async function fetchBundle() {
     for (let attempt = 0; attempt < 2; attempt++) {
       let fromCache = false;
