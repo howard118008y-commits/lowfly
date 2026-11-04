@@ -8,7 +8,7 @@
 | 項目 | 現況 | 重驗指令 |
 |---|---|---|
 | 程式 | 最新：`01ae4e1` security（權限拆分、SHA 釘選、CSP）、`17e6f09` 失敗告警＋無障礙、`0a5e876` 四項新功能 | `git log --oneline -8` |
-| 測試 | pytest 158 passed、node 30 pass、四份 JSON 合約檢查通過；pip-audit 無已知漏洞 | 見第 2 節「跑測試」 |
+| 測試 | pytest 158 passed、node 29 pass、四份 JSON 合約檢查通過；pip-audit 無已知漏洞 | 見第 2 節「跑測試」 |
 | 線上 PWA | v1.14.0（設定頁有 AI 團隊面板）；index 含 CSP meta、`skip-link`、`spend-input`；Lighthouse（v1.12 時）效能 96／無障礙 100／最佳實務 100／SEO 100 | `curl -s https://howard118008y-commits.github.io/lowfly/sw.js \| grep -o 'v1\.[0-9.]*'` |
 | 排程掃描 | `17 1,7,13,19 * * *`（台北 09:17／15:17／21:17／03:17）＋促銷月（5、6、11、12 月）`17 4,10,16,22 * 5,6,11,12 *`，11 月起每 3 小時一次 | `gh run list --workflow=scan.yml --limit 3` |
 | 監看 | `scan.yml` 任一 job 失敗→`alert` job 推 Telegram；`watchdog.yml` 每 2 小時看線上 summary.json，超過 7 小時沒更新自動補跑，滿 18 小時每天告警一次 | `gh run list --workflow=watchdog.yml --limit 3` |
