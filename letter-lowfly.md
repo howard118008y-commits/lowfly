@@ -8,8 +8,8 @@
 | 項目 | 現況 | 重驗指令 |
 |---|---|---|
 | 程式 | 最新：`01ae4e1` security（權限拆分、SHA 釘選、CSP）、`17e6f09` 失敗告警＋無障礙、`0a5e876` 四項新功能 | `git log --oneline -8` |
-| 測試 | pytest 154 passed、node 28 pass、四份 JSON 合約檢查通過；pip-audit 無已知漏洞 | 見第 2 節「跑測試」 |
-| 線上 PWA | v1.13.1；index 含 CSP meta、`skip-link`、`spend-input`；Lighthouse（v1.12 時）效能 96／無障礙 100／最佳實務 100／SEO 100 | `curl -s https://howard118008y-commits.github.io/lowfly/sw.js \| grep -o 'v1\.[0-9.]*'` |
+| 測試 | pytest 158 passed、node 30 pass、四份 JSON 合約檢查通過；pip-audit 無已知漏洞 | 見第 2 節「跑測試」 |
+| 線上 PWA | v1.14.0（設定頁有 AI 團隊面板）；index 含 CSP meta、`skip-link`、`spend-input`；Lighthouse（v1.12 時）效能 96／無障礙 100／最佳實務 100／SEO 100 | `curl -s https://howard118008y-commits.github.io/lowfly/sw.js \| grep -o 'v1\.[0-9.]*'` |
 | 排程掃描 | `17 1,7,13,19 * * *`（台北 09:17／15:17／21:17／03:17）＋促銷月（5、6、11、12 月）`17 4,10,16,22 * 5,6,11,12 *`，11 月起每 3 小時一次 | `gh run list --workflow=scan.yml --limit 3` |
 | 監看 | `scan.yml` 任一 job 失敗→`alert` job 推 Telegram；`watchdog.yml` 每 2 小時看線上 summary.json，超過 7 小時沒更新自動補跑，滿 18 小時每天告警一次 | `gh run list --workflow=watchdog.yml --limit 3` |
 | 資安設定 | 掃描 job 唯讀、只有 `publish` job 可寫且不裝套件；actions 全釘 SHA、只允許 GitHub 官方 action；main 禁止 force push／刪除；Dependabot、CodeQL、secret scanning＋push protection、私下回報漏洞都已開 | `gh api repos/howard118008y-commits/lowfly/rulesets` |
@@ -26,6 +26,7 @@
 - **改一天**：每則推播列出去／回前後挪一天裡最便宜的組合，比本票省或多多少（`_shift_one_day`，只看本次窗口內有價的組合）。
 - **預算模式**（首頁）：輸入含行李預算，列出所有航線、日期 ≤ 預算的組合，由便宜到貴；預算只存在手機 localStorage（`lowfly-spend-v1`）。
 - **廉航促銷消息**（`config.yaml airline_sales`，`lowfly/sources/airline_sales.py`）：每輪抓 Google 新聞 RSS（6 家）、PTT Japan_Travel 搜「虎航」、香港快運首頁促銷頁 slug；標題要有促銷字眼、不含排除字、提到該航空，48 小時內、沒推過的合成一則推播，每家最多 3 條，超過 4096 字自動少列。已推 id 存 `state.sales_seen` 30 天。11/4 首推：虎航 ITF 999 元起等 13 條。
+- **AI 團隊**：總監「塔台」＋領航員（票價）、瞭望員（促銷）、地勤（維運）。設定頁有「AI 團隊」面板（`summary.team`）；每週一 09:00 後推「團隊週報」（`lowfly/team_report.py`，`config.yaml team_report`）。提示詞、技能包與 Telegram 塔台的位置見 memory: `lowfly-ai-team`（不進公開 repo）。開新 session 說「接手 LowFly」即可，不用再貼交接範本。
 - **行情分頁**（第五個 tab）：過去 3／6 個月＝`state.market_daily` 每日含行李均價（自 11/2 起累積，保留 190 天）；未來 3／6 個月＝每天一次抓未來 6 個出發月份的 TP 快取（`state.market`）；外部參考只有 Kayak 過去 12 個月最便宜／最貴月份（`config.yaml market.reference`）。
 
 ## 2. 可複用資產與程序
@@ -72,6 +73,8 @@
 - 拼接讓基準樣本多了約 5 倍，基準價跟著變動：上線前後香港 7,791 → 8,035、澳門 6,803 → 6,782、東京 11,985 → 11,318。觀察幾天，看半價線是否變得太難或太容易觸發；好價線不受影響。
 
 ## 4. 等 Sir 本人處理
+
+- **啟用 Telegram 塔台**：終端機執行 `tmux attach -t lowfly-tower`，選「Yes, I trust this folder」，再按 Ctrl-b d 離開。之後在 Telegram 對 LowFly bot 說話就會由塔台回覆（auto mode 不准 Claude 代按這個確認）。
 
 - **GitHub 帳號設定**：Settings → Emails 勾「Block command line pushes that expose my email」。本 repo 之後的 commit 已改用 noreply 信箱，但 28 個舊 commit 的作者欄仍是 Gmail（改寫歷史要 force push，未做）。
 - **要不要換自訂網域**：LowFly 與同帳號其他 github.io 網站共用網域（localStorage 共用）。已加防護（離線快取含 HTML 字元就不採用），換網域才是根治，需購買網域。
