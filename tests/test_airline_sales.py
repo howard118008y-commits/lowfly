@@ -22,10 +22,19 @@ HKX = '<a href="/zh-tw/offers/promotions/twinbound_flashsale_20261020">x</a><a h
 
 class FakeResponse:
     def __init__(self, text):
-        self.text, self.content = text, text.encode()
+        self.body = text.encode()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
 
     def raise_for_status(self):
         pass
+
+    def iter_content(self, size):
+        return (self.body[i:i + size] for i in range(0, len(self.body), size))
 
 
 def test_parsers(monkeypatch):
@@ -136,3 +145,9 @@ def test_long_message_drops_items_to_fit(run_scan):
                  (("news:虎航", "虎航"), ("news:香港快運", "香港快運"), ("news:酷航", "酷航"), ("news:樂桃", "樂桃"), ("news:捷星", "捷星"))}
     [text] = sales_messages(run_scan(default_state(), sales_fn=feed(by_source)))
     assert len(text) <= 4096 and "另有" in text
+
+
+def test_oversized_response_is_rejected(monkeypatch):
+    monkeypatch.setattr(airline_sales.requests, "get", lambda url, **k: FakeResponse("x" * (airline_sales.MAX_BYTES + 1)))
+    with pytest.raises(ValueError, match="回應超過"):
+        airline_sales.fetch("hkexpress")

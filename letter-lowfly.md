@@ -48,7 +48,7 @@
   5. curl 線上檔案確認
 - **測試隔離**：`tests/conftest.py` 的 `cfg` 把既有測試固定在舊前提：託運 0kg、沒有好價線、30 天窗口、沒有促銷月、`market.months_ahead=0`、`one_way=False`、`new_low.days=0`、`airline_sales.enabled=False`（要連網）。新功能各自在 `test_baggage.py`、`test_deal_notices.py`、`test_scan_window.py`、`test_market.py`、`test_one_way.py`、`test_new_low.py`、`test_shift_day.py`、`test_airline_sales.py` 打開。
 - **所有數字都在 `config.yaml`**：好價線、須知、行李費表、均價天數、窗口、晚數、促銷月、行情月數，程式裡不寫死。改促銷月要同步改 `scan.yml` 第二條 cron 的月份欄（`test_workflow_contract` 會擋）。
-- **本機金鑰**（`~/.cx468/`，權限 600）：`lowfly_tp.key`（Travelpayouts，可本機直接實測 API）、`lowfly_telegram.key`（11/4 新 bot token）。收新金鑰一律用 mac-dialog 彈窗，不貼在對話裡。
+- **本機金鑰**：位置與檔名見 memory: `lowfly-token-rotation`（公開 repo 不寫路徑）。收新金鑰一律用 mac-dialog 彈窗，不貼在對話裡。
 - **單程實測方法**：`prices_for_dates` 帶 `one_way=true`，回程把 origin／destination 對調。11/4 實測數字見 memory: `lowfly-tp-cache-sparse`。
 - **不要提交**：`LowFly 競品分析 2026-11-02.md`、`LowFly 社群訂票心得 2026-11-02.md`、`.playwright-mcp/` 都已列在 `.git/info/exclude`。memory: `playwright-tmp-in-repo`
 - **查社群與官網**：PTT 可以直接 curl；Facebook 要 Sir 在 Chrome 登入；航空公司官網多數要 Playwright，香港航空對 headless 跳滑動驗證。memory: `community-research-channels`
@@ -70,5 +70,5 @@
 ## 4. 等 Sir 本人處理
 
 - **SerpApi 手機驗證**：屬於帳號真人驗證，Claude 不能代做。完成後由 Claude 用 mac-dialog 收 key → `gh secret set SERPAPI_API_KEY` → 跑一輪掃描驗證。選用，不處理也能運作。
-- **另外兩個外流的 bot**（hc_pm_radar、heycheng_office）待輪替：Sir 點頭後 Claude 可以經 Chrome 的 Telegram Web 代換，但要更新那兩個專案各自的設定。memory: `lowfly-token-rotation`
+- **其他專案的 bot token 輪替**：細節只寫在 memory: `lowfly-token-rotation`（公開 repo 不寫名稱）。
 - 手機上把 PWA 開關兩次，換成 v1.12.0。

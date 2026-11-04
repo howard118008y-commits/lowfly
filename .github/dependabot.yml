@@ -1,0 +1,13 @@
+# 依賴更新：pip 套件與 GitHub Actions（actions 已釘 commit SHA，由 Dependabot 提 PR 更新），每週一次。
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

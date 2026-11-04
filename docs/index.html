@@ -2,9 +2,13 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
+  <!-- GitHub Pages 無法自訂回應標頭，CSP 用 meta；style 屬性（航線色）需要 'unsafe-inline'，script 只允許本站檔案。 -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://pics.avs.io; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#E4E7EA">
   <meta name="description" content="桃園出發直飛來回機票雷達：好價格，低飛就看見。">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="低飛">
@@ -66,6 +70,7 @@
         <div id="settings-overview" class="settings-overview"></div>
         <details class="disclosure"><summary>價格參考與掃描狀態</summary><div id="baseline-card" class="baseline-card">正在取得價格參考…</div><div id="budget" class="budget-card"></div><p id="scan-time" class="muted small"></p></details>
         <details class="disclosure"><summary>掃描與通知規則</summary><div id="settings-values" class="settings-card"></div><a id="edit-config" class="btn plain" target="_blank" rel="noopener noreferrer">調整規則</a><p id="config-note" class="muted small"></p></details>
+        <details class="disclosure"><summary>隱私與資料來源</summary><div class="install-note"><p>本站不需登入、不收集個人資料，沒有追蹤或廣告程式。預算與離線資料只存在這支手機的瀏覽器。</p><p>航空公司標誌由 pics.avs.io 載入，對方會看到你的 IP 位址（不帶本站網址）。</p><p>票價來自 Travelpayouts（Aviasales）快取與 Google Flights，促銷消息來自 Google 新聞、PTT 與香港快運官網，僅供參考，以航空公司實際售價為準。</p><p>發現資安問題請到 <a href="https://github.com/howard118008y-commits/lowfly/security/advisories/new" target="_blank" rel="noopener noreferrer">GitHub 私下回報</a>。</p></div></details>
         <details class="disclosure"><summary>加入手機主畫面</summary><div class="install-note"><p>iPhone：用 Safari 開啟，點「分享」→「加入主畫面」。</p><p>Android：用 Chrome 開啟，點選單 →「安裝應用程式」。</p></div></details>
         <details class="disclosure"><summary>離線資料</summary><p>離線時顯示上次儲存的票價。</p><button id="clear-cache" class="secondary-button">清除離線快取</button><p id="cache-status" class="muted small" role="status"></p></details>
       </section>

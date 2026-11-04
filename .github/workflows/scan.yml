@@ -19,9 +19,8 @@ on:
         type: boolean
         default: true
 
-permissions:
-  contents: write
-  pages: write
+# 預設不給任何權限；只有 publish job 拿得到寫入權（見下）。
+permissions: {}
 
 concurrency:
   group: lowfly-scan
@@ -89,19 +88,25 @@ jobs:
           done
           exit 1
 
+  # 掃描 job 會安裝 PyPI 套件、讀第三方網頁：只給讀取權，checkout 也不留 token，
+  # 就算套件被投毒也推不了 main。結果打包成 artifact 交給 publish。
   scan:
     needs: preflight
     if: needs.preflight.outputs.ready == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+    outputs:
+      telegram_failed: ${{ steps.scan.outputs.telegram_failed }}
     env:
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: main
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
           cache: pip
@@ -149,9 +154,50 @@ jobs:
       - name: 檢查本次匯出
         if: inputs.mode == '' || inputs.mode == 'normal' || inputs.mode == 'force-digest'
         run: python scripts/check_exports.py
+      - name: 打包狀態與公開資料
+        if: inputs.mode == '' || inputs.mode == 'normal' || inputs.mode == 'force-digest'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: lowfly-data
+          path: |
+            data/
+            docs/data/
+          if-no-files-found: error
+          retention-days: 1
+      - name: 保留模擬預覽
+        if: inputs.mode == 'mock'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: lowfly-mock-preview
+          path: out/mock/
+          retention-days: 7
+
+  # 唯一有寫入權的 job：不裝任何套件、不跑專案程式（只用系統 python3 跑純標準庫的合約檢查），
+  # 只接受 data/、docs/data/ 的變更，再寫回 main 並請求 Pages 建置。
+  publish:
+    needs: scan
+    if: needs.scan.result == 'success' && (inputs.mode == '' || inputs.mode == 'normal' || inputs.mode == 'force-digest')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: lowfly-data
+      - name: 檢查資料
+        run: |
+          python3 scripts/check_exports.py
+          python3 -c "import json; json.load(open('data/state.json', encoding='utf-8'))"
+          outside=$(git status --porcelain | awk '$2 !~ /^(data|docs\/data)\// {print $2}')
+          if [[ -n "$outside" ]]; then echo "::error title=非預期變更::$outside" >&2; exit 1; fi
       - name: 儲存狀態與公開資料
         id: persist
-        if: inputs.mode == '' || inputs.mode == 'normal' || inputs.mode == 'force-digest'
         run: |
           git config user.name "lowfly-bot"
           git config user.email "lowfly-bot@users.noreply.github.com"
@@ -175,19 +221,18 @@ jobs:
         run: |
           gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds" \
             -H "Accept: application/vnd.github+json"
-      - name: 保留模擬預覽
-        if: inputs.mode == 'mock'
-        uses: actions/upload-artifact@v4
-        with:
-          name: lowfly-mock-preview
-          path: out/mock/
-          retention-days: 7
       - name: Telegram 推播失敗時標紅
-        if: steps.scan.outputs.telegram_failed == 'true'
+        if: needs.scan.outputs.telegram_failed == 'true'
         run: exit 1
-      # 任何一步失敗（測試、掃描、匯出檢查、寫回）都用 Telegram 告知；Telegram 本身壞掉時仍有 GitHub 的失敗通知信。
+
+  # 任何一個 job 失敗（測試、掃描、匯出檢查、寫回）都用 Telegram 告知；Telegram 本身壞掉時仍有 GitHub 的失敗通知信。
+  alert:
+    needs: [preflight, scan, publish]
+    if: failure()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
       - name: 失敗告警
-        if: failure()
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -197,5 +242,5 @@ jobs:
           if [[ -z "${TELEGRAM_BOT_TOKEN:-}" || -z "${TELEGRAM_CHAT_ID:-}" ]]; then exit 0; fi
           curl -fsS --max-time 20 -o /dev/null "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=⚠️ 低飛 LowFly 掃描失敗（${EVENT}）。資料沒有更新，請看執行紀錄：${RUN_URL}" \
+            --data-urlencode "text=⚠️ 低飛 LowFly 掃描失敗（${EVENT}）。資料可能沒有更新，請看執行紀錄：${RUN_URL}" \
             || echo "::warning::失敗告警也送不出去"

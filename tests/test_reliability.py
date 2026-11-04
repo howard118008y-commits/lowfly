@@ -93,12 +93,37 @@ def workflow(name):
 
 
 def test_scan_workflow_alerts_on_failure_and_retries_push():
-    steps = {step.get("name"): step for step in workflow("scan.yml")["jobs"]["scan"]["steps"]}
-    assert steps["失敗告警"]["if"] == "failure()" and "sendMessage" in steps["失敗告警"]["run"]
-    assert "for attempt in 1 2 3" in steps["儲存狀態與公開資料"]["run"]
-    assert "telegram_failed=true" in steps["執行掃描"]["run"] and steps["Telegram 推播失敗時標紅"]["run"] == "exit 1"
-    names = list(steps)
-    assert names.index("儲存狀態與公開資料") < names.index("Telegram 推播失敗時標紅") < names.index("失敗告警")
+    jobs = workflow("scan.yml")["jobs"]
+    alert = jobs["alert"]
+    assert alert["if"] == "failure()" and set(alert["needs"]) == {"preflight", "scan", "publish"}
+    assert "sendMessage" in alert["steps"][0]["run"]
+    publish = {step.get("name"): step for step in jobs["publish"]["steps"]}
+    assert "for attempt in 1 2 3" in publish["儲存狀態與公開資料"]["run"]
+    assert publish["Telegram 推播失敗時標紅"]["run"] == "exit 1"
+    assert "telegram_failed=true" in {step.get("name"): step for step in jobs["scan"]["steps"]}["執行掃描"]["run"]
+
+
+def test_only_publish_can_write_and_it_installs_nothing():
+    scan = workflow("scan.yml")
+    assert scan["permissions"] == {}
+    jobs = scan["jobs"]
+    assert jobs["scan"]["permissions"] == {"contents": "read"}
+    assert jobs["scan"]["steps"][0]["with"]["persist-credentials"] is False
+    assert jobs["publish"]["permissions"] == {"contents": "write", "pages": "write"}
+    for step in jobs["publish"]["steps"]:
+        assert "pip" not in step.get("run", "") and "setup-python" not in step.get("uses", "")
+        assert "python -m lowfly" not in step.get("run", "")
+    writers = [name for name, job in jobs.items() if "write" in (job.get("permissions") or {}).values()]
+    assert writers == ["publish"]
+
+
+def test_every_action_is_pinned_to_a_commit_sha():
+    import re
+    for name in ("scan.yml", "test.yml", "watchdog.yml"):
+        for job in workflow(name)["jobs"].values():
+            for step in job["steps"]:
+                if "uses" in step:
+                    assert re.fullmatch(r"actions/[a-z-]+@[0-9a-f]{40}", step["uses"]), f"{name}: {step['uses']} 沒有釘 SHA"
 
 
 def test_watchdog_is_least_privilege_and_has_no_inline_expressions():

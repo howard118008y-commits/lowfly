@@ -347,3 +347,18 @@ test('日曆格不只靠顏色：半價 ★、≤70% ▼，讀屏名稱以可見
   assert.doesNotMatch(fs.readFileSync(path.join(__dirname,'../docs/app.js'),'utf8'),/onerror=/);
   assert.match(fs.readFileSync(path.join(__dirname,'../docs/index.html'),'utf8'),/<a id="skip-link" class="skip-link" href="#main">跳到主要內容<\/a>/);
 });
+
+test('離線快取含 HTML 字元（同網域他站可寫 localStorage）就不採用；乾淨的快取照常顯示；頁面有 CSP', async () => {
+  const load=name=>JSON.parse(fs.readFileSync(path.join(__dirname,`fixtures/empty_data/${name}.json`)));
+  const bundle=Object.fromEntries(['summary','pairs','history','alerts'].map(name=>[name,load(name)]));
+  let nodes=await appHarness({},true,{},{'lowfly-bundle-v1':JSON.stringify(bundle)});
+  assert.match(nodes['connection'].textContent,/^離線，顯示 /);
+  assert.match(nodes['route-cards'].innerHTML,/桃園 ⇄ 香港/);
+  bundle.summary.routes[0].label='<img src=x onerror=alert(1)>';
+  nodes=await appHarness({},true,{},{'lowfly-bundle-v1':JSON.stringify(bundle)});
+  assert.equal(nodes['connection'].textContent,'目前無法讀取資料');
+  assert.doesNotMatch(nodes['route-cards'].innerHTML,/onerror/);
+  const html=fs.readFileSync(path.join(__dirname,'../docs/index.html'),'utf8');
+  assert.match(html,/<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';/);
+  assert.doesNotMatch(html,/<script>|\son[a-z]+="/);
+});

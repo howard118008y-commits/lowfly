@@ -329,7 +329,8 @@ def test_workflow_contract(cfg):
     promo = workflow["on"]["schedule"][1]["cron"].split()
     assert promo[3] == ",".join(str(m) for m in schedule["promo_months"])
     assert len(promo[1].split(",")) + schedule["runs_per_day"] == schedule["promo_runs_per_day"]
-    assert workflow["permissions"] == {"contents":"write", "pages":"write"}
+    assert workflow["permissions"] == {}   # 寫入權只給 publish job，見 test_reliability.py
+    assert workflow["jobs"]["publish"]["permissions"] == {"contents":"write", "pages":"write"}
     assert workflow["concurrency"]["group"] == "lowfly-scan"
     options = workflow["on"]["workflow_dispatch"]["inputs"]["mode"]["options"]
     assert options == ["normal","dry-run","test-telegram","force-digest","mock"]
