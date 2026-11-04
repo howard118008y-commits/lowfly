@@ -88,6 +88,16 @@ def validate_config(cfg: dict) -> None:
     suspect = (cfg.get("notices") or {}).get("suspect_error")
     if suspect and not 0 < float(suspect["ratio"]) <= 1:
         raise ValueError("suspect_error.ratio 須介於 0～1")
+    low = cfg.get("new_low") or {}
+    if not 0 <= int(low.get("days", 0)) <= int(cfg["baseline"]["lookback_days"]) or int(low.get("min_days", 1)) < 1:
+        raise ValueError("new_low.days 須介於 0～baseline.lookback_days，min_days 至少 1")
+    sales = cfg.get("airline_sales") or {}
+    if sales.get("enabled"):
+        if float(sales["max_age_hours"]) <= 0 or not sales.get("keywords"):
+            raise ValueError("airline_sales 須有 max_age_hours > 0 與 keywords")
+        for code, airline in sales["airlines"].items():
+            if not airline.get("match") or any(src.partition(":")[0] not in ("news", "ptt", "hkexpress") for src in airline["sources"]):
+                raise ValueError(f"airline_sales.airlines.{code} 須有 match，來源限 news:／ptt:／hkexpress")
     bag = cfg.get("baggage") or {}
     if float(bag.get("checked_kg", 0)) < 0 or int(bag.get("pieces_each_way", 1)) < 0 or float(bag.get("unknown_fee_twd", 0)) < 0:
         raise ValueError("baggage 設定不得為負數")

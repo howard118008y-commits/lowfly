@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 import math
 from dataclasses import replace
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from .baggage import bag_fee, bag_line
@@ -14,7 +14,7 @@ from .dates import date_pairs, fmt_date, google_url, months_covering, pair_key, 
 from .models import Offer, number
 from .notices import deal_notes, good_price
 from .notifier import Telegram, esc, fmt_money, fmt_pct, fmt_range, link
-from .sources import serpapi_flights, travelpayouts
+from .sources import airline_sales, serpapi_flights, travelpayouts
 from .state import prune_typical_ranges
 
 log = logging.getLogger(__name__)
@@ -23,15 +23,17 @@ log = logging.getLogger(__name__)
 class Scanner:
     def __init__(self, cfg: dict, secrets, state: dict, tg: Telegram, now_local: datetime,
                  serpapi_fn=None, tp_fn=None, force_digest: bool = False,
-                 output_dir: Path | None = None, render_images: bool = True):
+                 output_dir: Path | None = None, render_images: bool = True, sales_fn=None):
         self.cfg, self.secrets, self.state, self.tg, self.now = cfg, secrets, state, tg, now_local
         self.serpapi_fn = serpapi_fn or serpapi_flights.search_round_trip
         self.tp_fn = tp_fn or travelpayouts.fetch_month
+        self.sales_fn = sales_fn or airline_sales.fetch
         self.force_digest = force_digest
         self.output_dir = Path(output_dir or ROOT / "out")
         self.render_images = render_images
         self.routes = {route["id"]: route for route in cfg["routes"]}
         self.history_rows: list[dict] = []
+        self.route_lows: dict[str, dict] = {}
         self.summary = {"instant_alerts": 0, "digest_sent": False, "serpapi_calls": 0,
                         "tp_offers": 0, "candidates": [], "errors": []}
 
@@ -83,6 +85,7 @@ class Scanner:
         baselines = self._baselines()
         self.summary["baseline"] = {rid: b.value if b else None for rid, b in baselines.items()}
         self._evaluate(verified, tp_best, baselines, checked)
+        self._check_sales()
         self._maybe_digest(baselines, tp_best)
         st["stats"]["runs"] += 1
         st["last_run_at"] = self.now.isoformat(timespec="seconds")
@@ -274,6 +277,7 @@ class Scanner:
                      tp_flight=offer.flight_info())
         # TP 基準用的累積樣本：每組日期每天一筆（同日多次掃描只留最新），保留 lookback_days 天。
         samples = self.state.setdefault("tp_samples", {})
+        self.route_lows = self._route_lows(samples)
         for key, offer in best.items():
             samples[f"{key}|{self.now.date().isoformat()}"] = {
                 "route": offer.route_id, "price": offer.price, "basis": "total", "at": self.now.isoformat(timespec="seconds")}
@@ -350,15 +354,16 @@ class Scanner:
         at = self.now.isoformat(timespec="seconds")
         instant = self.cfg["thresholds"]["instant"]
         def ranked(offers):
-            # 依「離觸發線多深」排序（比例÷半價門檻、總價÷好價線取小），單 run 即時通知達上限時留下最好的。
-            # 沒有基準的航線只要有好價線也會進來（ratio 為 None）。
+            # 依「離觸發線多深」排序（比例÷半價門檻、總價÷好價線、總價÷航線前低取小），單 run 即時通知達上限時留下最好的。
+            # 沒有基準的航線只要有好價線或創新低也會進來（ratio 為 None）。
             rows = []
             for k, o in offers.items():
-                baseline, good = baselines.get(o.route_id), good_price(self.routes[o.route_id])
+                baseline, good, low = baselines.get(o.route_id), good_price(self.routes[o.route_id]), self._new_low(o)
                 ratio = baseline.ratio(o.price) if baseline else None
-                if ratio is None and good is None:
+                if ratio is None and good is None and not low:
                     continue
-                depth = min(ratio / instant if ratio is not None else math.inf, o.price / good if good else math.inf)
+                depth = min(ratio / instant if ratio is not None else math.inf, o.price / good if good else math.inf,
+                            o.price / low["price"] if low else math.inf)
                 rows.append((depth, k, ratio, o))
             return [(ratio, k, o) for _, k, ratio, o in sorted(rows, key=lambda row: row[:2])]
         for ratio, key, offer in ranked(verified):
@@ -386,11 +391,15 @@ class Scanner:
         thresholds = self.cfg["thresholds"]
         good = good_price(self.routes[offer.route_id])
         half = ratio is not None and ratio <= thresholds["instant"]
-        if (not (half or (good is not None and offer.price <= good))
+        low = self._new_low(offer)
+        if (not (half or (good is not None and offer.price <= good) or low)
                 or self.summary["instant_alerts"] >= int(thresholds.get("max_instant_per_run", 5))
                 or not self._should_alert(key, offer.price)):
             return
-        if self._send_instant(offer, baseline, ratio, verified):
+        if self._send_instant(offer, baseline, ratio, verified, low):
+            if low:   # 記下推過的新低：同航線同價的其他組合、同一天之後的掃描都不再重複推
+                self.route_lows[offer.route_id] = {**low, "price": offer.price}
+                self.state.setdefault("new_low_sent", {})[offer.route_id] = {"price": offer.price, "at": at}
             record = {"pair_key": key, "route_id": offer.route_id, "price": offer.price, "at": at,
                       "baseline_at_alert": baseline.value if baseline else None,
                       "ratio": ratio, "airline": offer.airline, "outbound": offer.outbound, "inbound": offer.inbound,
@@ -399,6 +408,32 @@ class Scanner:
             self.state["alert_history"].append(dict(record))
             self.state["stats"]["alerts_sent"] += 1
             self.summary["instant_alerts"] += 1
+
+    def _route_lows(self, samples: dict) -> dict[str, dict]:
+        """航線新低的比較基準：近 new_low.days 天（不含今天）該航線樣本最低價與有樣本的天數，再併入期間內推過的新低。
+        不看今天的樣本：本輪被上限擋下或送失敗的新低，下一輪仍能推；同一天重複推由 new_low_sent 擋。"""
+        days = int((self.cfg.get("new_low") or {}).get("days", 0) or 0)
+        if not days:
+            return {}
+        cutoff, today = self.now - timedelta(days=days), self.now.date().isoformat()
+        lows: dict[str, dict] = {}
+        for k, s in samples.items():
+            day = k.rsplit("|", 1)[1]
+            if s.get("basis") == "total" and day != today and parse_time(s["at"]) >= cutoff:
+                row = lows.setdefault(s["route"], {"price": math.inf, "dates": set()})
+                row["price"] = min(row["price"], s["price"])
+                row["dates"].add(day)
+        for rid, sent in self.state.get("new_low_sent", {}).items():
+            if rid in lows and parse_time(sent["at"]) >= cutoff:
+                lows[rid]["price"] = min(lows[rid]["price"], sent["price"])
+        return {rid: {"price": row["price"], "days": len(row["dates"])} for rid, row in lows.items()}
+
+    def _new_low(self, offer: Offer) -> dict | None:
+        """航線新低：比近 new_low.days 天該航線最低價再低 dedupe.min_drop_ratio 以上；紀錄未滿 min_days 天不算。"""
+        cfg, low = self.cfg.get("new_low") or {}, self.route_lows.get(offer.route_id)
+        if not low or low["days"] < int(cfg.get("min_days", 1)):
+            return None
+        return low if offer.price <= low["price"] * (1 - self.cfg["dedupe"]["min_drop_ratio"]) else None
 
     def _should_alert(self, key: str, price: float) -> bool:
         previous = self.state["alerts"].get(key)
@@ -424,12 +459,14 @@ class Scanner:
                 log.warning("圖片產生失敗（%s）；改送純文字", type(exc).__name__)
         return self.tg.send_photo(path, text)
 
-    def _send_instant(self, offer: Offer, baseline: Baseline | None, ratio: float | None, verified: bool = True) -> bool:
+    def _send_instant(self, offer: Offer, baseline: Baseline | None, ratio: float | None, verified: bool = True,
+                      low: dict | None = None) -> bool:
         # 標題先講航線與含行李總價，接著比基準、班次、日期、行李、須知，最後是來源與連結。
         cfg, route = self.cfg, self.routes[offer.route_id]
         level = self.state["pairs"].get(offer.pair_key, {}).get("price_level") or "—"
         half = ratio is not None and ratio <= cfg["thresholds"]["instant"]
         good = good_price(route)
+        kind = "神票" if half else "好價" if good is not None and offer.price <= good else "新低"
         with_bag = "含行李 " if float((cfg.get("baggage") or {}).get("checked_kg", 0) or 0) > 0 else ""
         compare = []
         if baseline:
@@ -442,16 +479,27 @@ class Scanner:
         flight = " ".join(part for part in (offer.airline, offer.flight_no) if part) or "航空公司未提供"
         if offer.depart_time and offer.arrive_time:
             flight += f"｜{offer.depart_time} → {offer.arrive_time}"
-        head = (f"✈️ <b>{'神票' if half else '好價'}｜{esc(route['label'])} {with_bag}{fmt_money(offer.price)}</b>\n"
+        head = (f"✈️ <b>{kind}｜{esc(route['label'])} {with_bag}{fmt_money(offer.price)}</b>\n"
                 f"{'｜'.join(compare)}\n"
                 f"{esc(flight)}\n"
                 f"去 {fmt_date(offer.outbound)} → 回 {fmt_date(offer.inbound)}，{offer.nights} 晚\n")
+        if low:
+            days = int(cfg["new_low"]["days"])
+            span = f"近 {days} 天" if low["days"] >= days else f"近 {days} 天（目前累積 {low['days']} 天紀錄）"
+            head += f"📉 {span}新低：前低 {fmt_money(low['price'])}，再便宜 {fmt_money(low['price'] - offer.price)}\n"
         if offer.split:
             head += "✂️ 兩張單程拼成：去回分開訂，退改與行李各依該航空規定\n"
         same, limit = self._same_price_dates(offer)
         if same:
             shown = "、".join(fmt_date(day) for day in same[:4]) + ("…" if len(same) > 4 else "")
             head += f"📅 同價位（≤{fmt_money(limit)}）還有 {len(same)} 個出發日：{shown}\n"
+        shift = self._shift_one_day(offer)
+        if shift:
+            label, out, back, price = shift
+            diff = price - offer.price
+            change = f"省 {fmt_money(-diff)}" if diff < 0 else f"多 {fmt_money(diff)}" if diff > 0 else "同價"
+            lead = "🔁 改一天" if diff < 0 else "🔁 改一天最便宜"
+            head += f"{lead}：{label}（{fmt_date(out)}→{fmt_date(back)}）{fmt_money(price)}，{change}\n"
         bag = bag_line(cfg, offer.fare, offer.bag_fee, offer.bag_estimated)
         if bag:
             head += esc(bag) + "\n"
@@ -483,6 +531,68 @@ class Scanner:
             if rid == offer.route_id and out != offer.outbound and price is not None and price <= limit:
                 days.add(out)
         return sorted(days), limit
+
+    SHIFTS = ((-1, -1, "整趟提早一天"), (1, 1, "整趟延後一天"), (-1, 0, "早一天出發"), (1, 0, "晚一天出發"),
+              (0, -1, "早一天回"), (0, 1, "晚一天回"))
+
+    def _shift_one_day(self, offer: Offer) -> tuple[str, str, str, float] | None:
+        """改一天：去或回前後挪一天（只看本次窗口內有價的組合），回傳最便宜的一個 (說明, 去, 回, 總價)。"""
+        keys, best = set(self.summary.get("pair_keys", [])), None
+        out, back = date.fromisoformat(offer.outbound), date.fromisoformat(offer.inbound)
+        for d_out, d_back, label in self.SHIFTS:
+            o, b = out + timedelta(days=d_out), back + timedelta(days=d_back)
+            key = pair_key(offer.route_id, o, b)
+            p = self.state["pairs"].get(key, {})
+            price = p.get("last_price") or p.get("tp_price")
+            if key in keys and price is not None and (best is None or price < best[3]):
+                best = (label, o.isoformat(), b.isoformat(), price)
+        return best
+
+    def _check_sales(self) -> None:
+        """廉航促銷消息：標題有促銷字眼、max_age_hours 內、沒推過的才推；同一輪合成一則，每家航空最多列 max_items_per_airline 條。"""
+        conf = self.cfg.get("airline_sales") or {}
+        if not conf.get("enabled"):
+            return
+        seen = self.state.setdefault("sales_seen", {})
+        fresh = self.now - timedelta(hours=float(conf["max_age_hours"]))
+        news: dict[str, list[dict]] = {}
+        picked: set[str] = set()
+        for code, airline in conf["airlines"].items():
+            for source in airline["sources"]:
+                try:
+                    items = self.sales_fn(source)
+                except Exception as exc:
+                    log.warning("促銷消息 %s 失敗（%s）", source, type(exc).__name__)
+                    continue
+                for item in items:
+                    if item["id"] in seen and not item["at"]:   # 沒有時間的（官網常駐頁）還掛著就續期，不會過期重推
+                        seen[item["id"]] = self.now.isoformat(timespec="seconds")
+                    if (item["id"] in seen or item["id"] in picked
+                            or (item["at"] and parse_time(item["at"]) < fresh) or not airline_sales.is_sale(conf, airline, item)):
+                        continue
+                    picked.add(item["id"])
+                    news.setdefault(code, []).append(item)
+        cutoff = self.now - timedelta(days=int(conf.get("keep_days", 30)))
+        for k in [k for k, at in seen.items() if parse_time(at) < cutoff]:
+            del seen[k]
+        self.summary["sales_news"] = sum(len(items) for items in news.values())
+        if not news:
+            return
+        # Google 新聞連結很長：超過 Telegram 單則 4096 字就每家少列一條，避免拆段送出後部分失敗整批重送。
+        for shown in range(int(conf.get("max_items_per_airline", 3)), 0, -1):
+            lines = ["🏷️ <b>廉航促銷消息</b>"]
+            for code, items in news.items():
+                lines.append(f"<b>{esc(conf['airlines'][code]['name'])}</b>")
+                for item in sorted(items, key=lambda item: item["at"] or "", reverse=True)[:shown]:
+                    when = f"，{parse_time(item['at']).astimezone(self.now.tzinfo).strftime('%m/%d %H:%M')}" if item["at"] else ""
+                    lines.append(f"• {esc(item['title'])}（{esc(item['source'])}{when}）{link(item['url'], '看消息')}")
+                if len(items) > shown:
+                    lines.append(f"　另有 {len(items) - shown} 則")
+            lines.append("官網限時促銷常在 Travelpayouts 快取更新前賣完，LowFly 的票價還看不到；有興趣請直接上官網查。")
+            if len("\n".join(lines)) <= 4096:
+                break
+        if self.tg.send("\n".join(lines)):   # 送失敗的下一輪重送
+            seen.update({item["id"]: self.now.isoformat(timespec="seconds") for items in news.values() for item in items})
 
     def _maybe_digest(self, baselines: dict[str, Baseline | None], tp_best: dict) -> None:
         cfg, st, today = self.cfg, self.state, self.now.date()

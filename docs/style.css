@@ -117,6 +117,8 @@ h1,h2,h3,p{margin:0}
 .disclosure>p,.disclosure>div>p{font-size:13px;color:var(--muted);margin-bottom:12px}
 .deal-row .disclosure{margin-top:8px}
 .record-stats{margin-bottom:14px;font-size:13px;color:var(--muted)}.record-stats strong{color:var(--ink)}
+.spend-field{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border-radius:14px;padding:10px 16px;margin-bottom:10px;font-size:14px}
+.spend-field input{width:9em;min-height:44px;border:1px solid var(--line);border-radius:8px;padding:0 10px;font:16px var(--num);color:var(--ink);background:#fff;text-align:right}
 .empty{text-align:center;padding:32px 18px;border:1px dashed var(--line);border-radius:14px;background:var(--paper)}
 .empty p{font-size:13px;color:var(--muted);margin-top:6px}
 

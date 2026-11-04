@@ -35,6 +35,8 @@ def cfg():
     config["schedule"].pop("promo_months", None)
     config["sources"]["travelpayouts"]["one_way"] = False   # 單程拼接另見 test_one_way.py
     config["market"]["months_ahead"] = 0   # 行情每天另抓 6 個月 TP；既有測試不計這些呼叫，行情見 test_market.py
+    config["new_low"]["days"] = 0   # 航線新低另見 test_new_low.py
+    config["airline_sales"]["enabled"] = False   # 廉航促銷消息要連網；另見 test_airline_sales.py
     return config
 
 

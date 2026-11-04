@@ -109,6 +109,29 @@ market:
 digest:
   hour_local: 9
   top_n: 5
+# 航線新低：本輪最低價比近 days 天（該航線所有出發日）看過的最低價再低 dedupe.min_drop_ratio 以上就推播，不論基準與好價線。
+# 樣本來自 tp_samples（自 2026-11-02 起每天每組一筆），days 不可大於 baseline.lookback_days；紀錄未滿 min_days 天不推，避免剛啟動時天天「新低」。
+new_low:
+  days: 30
+  min_days: 7
+# 廉航促銷消息：官網限時促銷先開賣、Travelpayouts 快取抓不到，改看新聞與 PTT 標題，有新的就推一則。
+# 來源字串：news:<Google 新聞關鍵字>（自動加「促銷 OR 開賣 OR 優惠」與近 3 天）、ptt:<板名>:<標題關鍵字>、hkexpress（香港快運首頁促銷頁）。
+# 2026-11-04 實測：虎航／酷航／樂桃／捷星／ZIPAIR 官網需 JS 或擋爬蟲；PTT 沒有 AirTicket 板，虎航促銷多在 Japan_Travel 有 [資訊] 整理文。
+# 標題要含 keywords 之一、不含 exclude、並提到 match 之一（官網來源免）；預期仍有約 3 成誤報（旅展懶人包、轉載舊文）。
+airline_sales:
+  enabled: true
+  max_age_hours: 48
+  keep_days: 30
+  max_items_per_airline: 3
+  keywords: [促銷, 開賣, 開搶, 限時, 快閃, 優惠, 元起, 折, 旅展, 特價, sale, flash]
+  exclude: [信用卡, 刷卡, 股, 營收, 外資, 懶人包, 飯店, 酒店, 里數]
+  airlines:
+    IT: {name: "台灣虎航", match: [虎航, Tigerair], sources: ["news:虎航", "ptt:Japan_Travel:虎航"]}
+    UO: {name: "香港快運", match: [香港快運, HK Express], sources: ["news:香港快運", "hkexpress"]}
+    TR: {name: "酷航", match: [酷航, Scoot], sources: ["news:酷航"]}
+    MM: {name: "樂桃航空", match: [樂桃, Peach], sources: ["news:樂桃"]}
+    GK: {name: "捷星日本", match: [捷星, Jetstar], sources: ["news:捷星"]}
+    ZG: {name: "ZIPAIR", match: [ZIPAIR], sources: ["news:ZIPAIR"]}
 dedupe:
   min_drop_ratio: 0.03
   cooldown_hours: 48

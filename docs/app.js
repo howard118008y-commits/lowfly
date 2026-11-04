@@ -152,6 +152,26 @@
     $("budget").innerHTML = `<div><span>SerpAPI 本月用量</span><strong>${q.serpapi_used_month}<small> / ${q.serpapi_quota}</small></strong><progress max="${q.serpapi_quota}" value="${q.serpapi_used_month}" aria-label="本月 SerpAPI 用量"></progress></div><div class="budget-bottom"><span>今日 <b>${q.serpapi_used_day} / ${q.serpapi_daily_budget}</b></span><span>快取資料 <b>${q.tp_pairs} 組</b></span></div>`;
   }
 
+  // 預算模式：所有航線、所有出發日裡，含行李總價不超過預算的組合，由便宜到貴；預算只存在這支手機。
+  const spendKey = "lowfly-spend-v1";
+  function renderSpend() {
+    const value = Number($("spend-input").value);
+    const budget = Number.isFinite(value) && value > 0 ? value : null;
+    const routes = new Map(bundle.summary.routes.map(r => [r.id, r]));
+    const priced = bundle.pairs.pairs.filter(p => p.price != null && routes.has(p.route_id));
+    const hits = budget == null ? [] : priced.filter(p => p.price <= budget).sort((a, b) => a.price - b.price || a.outbound.localeCompare(b.outbound));
+    const city = id => AIRPORT_ZH[routes.get(id).destination] || routes.get(id).label;
+    const row = p => `<article class="deal-row" style="--route:${e(routeColor(routes.get(p.route_id)))}"><div class="deal-line"><strong>${e(routes.get(p.route_id).label)}</strong><span>${e(dayLabel(p.outbound))}–${e(md(p.inbound))}　${p.nights} 晚</span></div><div class="deal-price"><span class="amount">${e(fmtMoney(p.price))}</span><span class="discount">剩 ${e(fmtMoney(budget - p.price))}</span></div><div class="deal-bottom"><span class="muted small">${e(p.airline || "航空公司未提供")}　${p.verified ? "Google 已驗證" : "快取價，未經驗證"}${p.split ? "　兩張單程" : ""}</span>${externalLink(p.google_flights_url, "去訂票")}</div></article>`;
+    const counts = [...routes.keys()].map(id => [id, hits.filter(p => p.route_id === id).length]).filter(([, n]) => n);
+    $("spend-count").textContent = budget == null ? "輸入預算，看哪些日期去得成" : `${hits.length} 組日期${counts.length ? `（${counts.map(([id, n]) => `${city(id)} ${n}`).join("、")}）` : ""}`;
+    const cheapest = priced.reduce((low, p) => !low || p.price < low.price ? p : low, null);
+    $("spend-list").innerHTML = budget == null ? "" : hits.length ? hits.slice(0, 3).map(row).join("") :
+      `<p class="muted small">預算內沒有組合${cheapest ? `；目前最便宜是${e(city(cheapest.route_id))} ${e(md(cheapest.outbound))} 出發 ${e(fmtMoney(cheapest.price))}` : ""}。</p>`;
+    $("spend-rest").innerHTML = hits.slice(3).map(row).join("");
+    $("spend-more").hidden = hits.length <= 3;
+    $("spend-more-label").textContent = `再看 ${Math.max(0, hits.length - 3)} 組日期`;
+  }
+
   function routeHeatmap(r, only) {
     const pairs = bundle.pairs.pairs.filter(p => p.route_id === r.id);
     const dates = [...new Set(pairs.map(p => p.outbound))];
@@ -252,7 +272,7 @@
     }
   }
 
-  function render() { renderHome(); renderCalendar(); renderRecords(); renderMarket(); renderSettings(); status(); }
+  function render() { renderHome(); renderSpend(); renderCalendar(); renderRecords(); renderMarket(); renderSettings(); status(); }
   async function fetchBundle() {
     for (let attempt = 0; attempt < 2; attempt++) {
       let fromCache = false;
@@ -302,6 +322,11 @@
   }
   $("refresh").addEventListener("click", load);
   $("deals-only").addEventListener("change", () => bundle && renderCalendar());
+  try { $("spend-input").value = localStorage.getItem(spendKey) || ""; } catch { /* 無法讀取本機儲存時預算留空。 */ }
+  $("spend-input").addEventListener("input", () => {
+    try { localStorage.setItem(spendKey, $("spend-input").value); } catch { /* 無法儲存時只在本次顯示。 */ }
+    if (bundle) renderSpend();
+  });
   $("close-dialog").addEventListener("click", () => $("pair-dialog").close());
   $("pair-dialog").addEventListener("close", () => previousFocus?.focus());
   $("pair-dialog").addEventListener("click", event => { if (event.target === $("pair-dialog")) $("pair-dialog").close(); });

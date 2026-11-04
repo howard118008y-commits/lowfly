@@ -36,6 +36,12 @@
           <div id="deals" class="deal-list"></div>
           <details id="more-deals" class="disclosure" hidden><summary id="more-deals-label">更多日期</summary><div id="remaining-deals" class="deal-list"></div></details>
         </section>
+        <section id="spend-section" aria-labelledby="spend-title">
+          <div class="section-heading"><h2 id="spend-title">預算模式</h2><span id="spend-count" class="subtle-label"></span></div>
+          <label class="spend-field"><span>含行李來回預算 NT$</span><input id="spend-input" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 6000"></label>
+          <div id="spend-list" class="deal-list"></div>
+          <details id="spend-more" class="disclosure" hidden><summary id="spend-more-label">更多日期</summary><div id="spend-rest" class="deal-list"></div></details>
+        </section>
       </section>
       <section id="calendar" class="view" aria-labelledby="calendar-title" hidden>
         <div class="page-heading"><h1 id="calendar-title">出發日曆</h1><p class="muted">每格是該出發日、該晚數的來回價。</p></div>

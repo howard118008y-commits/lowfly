@@ -102,7 +102,7 @@ test("Service Worker 首次離線沒有資料時回 503", async () => {
   assert.equal((await h.request("https://example.test/repo/data/pairs.json")).status,503);
 });
 
-async function appHarness(overrides = {}, offline = false, extra = {}) {
+async function appHarness(overrides = {}, offline = false, extra = {}, storage = {}) {
   const html = fs.readFileSync(path.join(__dirname, '../docs/index.html'), 'utf8');
   const makeElement = () => ({innerHTML:'', textContent:'', hidden:false, checked:false, dataset:{}, attributes:{},
     classList:{add(){},remove(){},toggle(){}}, setAttribute(k,v){this.attributes[k]=v;}, removeAttribute(k){delete this.attributes[k];},
@@ -116,7 +116,7 @@ async function appHarness(overrides = {}, offline = false, extra = {}) {
     querySelectorAll(selector){return selector === '.view' ? ['home','calendar','records','market','settings'].map(id=>Object.assign(nodes[id],{id})) : [];}};
   const context = {document,window:{LowFly:U,LOWFLY_CONFIG:{owner:'',repo:'',branch:'main'},addEventListener(){}},
     location:{hash:'',hostname:'example.test',pathname:'/lowfly/',href:'https://example.test/lowfly/'},navigator:{onLine:!offline},
-    localStorage:{setItem(){},getItem(){return null;}},setInterval(){},AbortSignal,URL,console,
+    localStorage:{setItem(){},getItem(k){return storage[k] ?? null;}},setInterval(){},AbortSignal,URL,console,
     fetch:async url=>{if(offline)throw Error('offline');return {ok:true,headers:{get(){return null;}},json:async()=>payload[url.match(/(\w+)\.json/)[1]]};}};
   vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../docs/app.js'),'utf8'),context);
   await new Promise(resolve=>setImmediate(resolve));
@@ -304,4 +304,23 @@ test('兩張單程拼成的票根標「兩張單程」；一般來回仍是「�
   assert.match(split,/<span class="t-tag">兩張單程<\/span>/);
   const normal=(await withItem(ticketItem()))['route-cards'].innerHTML;
   assert.doesNotMatch(normal,/兩張單程/);
+});
+
+test('預算模式：列出所有航線含行李總價 ≤ 預算的組合，由便宜到貴；沒有時告訴最便宜的一組', async () => {
+  const pair=(route_id,outbound,inbound,price,extra={})=>({pair_key:`${route_id}:${outbound}_${inbound}`,route_id,outbound,inbound,nights:3,price,total:price,verified:false,airline:'台灣虎航',google_flights_url:'https://www.google.com/travel/flights',...extra});
+  const pairs={generated_at:'2026-11-02T15:15:20+08:00',baseline:{},pairs:[pair('MFM','2026-11-20','2026-11-23',5900),pair('HKG','2026-11-14','2026-11-17',5200,{split:true}),pair('TYO','2026-11-15','2026-11-18',6100),pair('HKG','2026-11-21','2026-11-24',5900),pair('HKG','2026-11-22','2026-11-25',null)]};
+  let nodes=await appHarness({},false,{pairs},{'lowfly-spend-v1':'6000'});
+  assert.equal(nodes['spend-count'].textContent,'3 組日期（香港 2、澳門 1）');
+  const html=nodes['spend-list'].innerHTML;
+  assert.deepEqual([...html.matchAll(/<span class="amount">NT\$ ([\d,]+)<\/span><span class="discount">剩 NT\$ ([\d,]+)</g)].map(m=>[m[1],m[2]]),[['5,200','800'],['5,900','100'],['5,900','100']]);
+  assert.ok(html.indexOf('桃園 ⇄ 香港')<html.indexOf('桃園 ⇄ 澳門'));   // 同價依出發日
+  assert.match(html,/兩張單程/);
+  assert.doesNotMatch(html,/桃園 ⇄ 東京/);
+  assert.equal(nodes['spend-more'].hidden,true);
+  nodes=await appHarness({},false,{pairs},{'lowfly-spend-v1':'5000'});
+  assert.equal(nodes['spend-count'].textContent,'0 組日期');
+  assert.match(nodes['spend-list'].innerHTML,/預算內沒有組合；目前最便宜是香港 11\/14 出發 NT\$ 5,200。/);
+  nodes=await appHarness({},false,{pairs});
+  assert.equal(nodes['spend-count'].textContent,'輸入預算，看哪些日期去得成');
+  assert.equal(nodes['spend-list'].innerHTML,'');
 });
