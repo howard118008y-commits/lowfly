@@ -73,11 +73,10 @@
 
 ## 4. 等 Sir 本人處理
 
-- **另兩個 bot token 輪替**（資安 High，不屬於 LowFly）：細節見 memory: `lowfly-token-rotation`。revoke 後那兩個專案要同步換設定，Sir 點頭才做。
 - **GitHub 帳號設定**：Settings → Emails 勾「Block command line pushes that expose my email」。本 repo 之後的 commit 已改用 noreply 信箱，但 28 個舊 commit 的作者欄仍是 Gmail（改寫歷史要 force push，未做）。
 - **要不要換自訂網域**：LowFly 與同帳號其他 github.io 網站共用網域（localStorage 共用）。已加防護（離線快取含 HTML 字元就不採用），換網域才是根治，需購買網域。
 - `docs/data/alerts.json` 公開了推播過的出發日期（是好價日期，不是訂票紀錄）。介意的話可改成不匯出日期。
 
 - **SerpApi 手機驗證**：屬於帳號真人驗證，Claude 不能代做。完成後由 Claude 用 mac-dialog 收 key → `gh secret set SERPAPI_API_KEY` → 跑一輪掃描驗證。選用，不處理也能運作。
-- **其他專案的 bot token 輪替**：細節只寫在 memory: `lowfly-token-rotation`（公開 repo 不寫名稱）。
+- **bot token 輪替**：11/2 外流的三個 token 已於 11/4 全部輪替，舊 token 皆失效。各 bot 的設定位置見 memory: `lowfly-token-rotation`（公開 repo 不寫名稱）。
 - 手機上把 PWA 開關兩次，換成 v1.12.0。
