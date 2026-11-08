@@ -12,7 +12,7 @@
       "tp_price": 7374.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2511HKG1?t=UO17956182001795625700000125TPEHKG_832488f527b8322478178df9dd4b2740_4806&search_date=08112026&expected_price_uuid=01a1b93c-69a1-8031-21db-266814f3a213&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1923",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4574.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -33,7 +33,7 @@
       "tp_price": 8022.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1011HKG1?t=UO17943222001794329700000125TPEHKG_482ab1137fd6bff6c42187a310dc9037_6331&search_date=06112026&expected_price_uuid=01a1aed8-d9e8-8031-6325-cddbd361c11a&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2548",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5222.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -54,7 +54,7 @@
       "tp_price": 7356.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1911HKG23111?t=UO17950998001795107300000125TPEHKG17954358001795442100000105HKGTPE_b16ea399db8d247fd28269f0862cf148_11389&search_date=07112026&expected_price_uuid=01a1b409-1c17-8031-28e9-9fc194f0c13d&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=Y1cCMnxCDv4pTVc9INCVFg&expected_price_source=share&expected_price_currency=twd&expected_price=4556",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4556.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -75,7 +75,7 @@
       "tp_price": 9571.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE2711TYO01121?t=GK17957895001795804200000185TPENRT17961639001796175000000245NRTTPE_18b4d387d89d3bb40cf25941500c7953_19111&search_date=04112026&expected_price_uuid=01a1a59b-3202-8040-a4fd-f6b8f3f00138&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=vEbqiSUN9xAI8eKCEWR8oA&expected_price_source=share&expected_price_currency=twd&expected_price=7691",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 7691.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -96,7 +96,7 @@
       "tp_price": 10264.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE2511TYO29111?t=GK17956167001795631400000185TPENRT17959911001796002200000245NRTTPE_5c94a27052ae535c0686a5634370a876_20638&search_date=01112026&expected_price_uuid=01a1968f-86e2-8040-2fc8-cb4471b3960a&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=vEbqiSUN9xAI8eKCEWR8oA&expected_price_source=share&expected_price_currency=twd&expected_price=8384",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8384.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -117,7 +117,7 @@
       "tp_price": 11353.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE1511TYO19111?t=IT17947254001794740100000185TPENRT17950875001795099500000260NRTTPE_a48676d324616f6cf1da9d8bc69efdd4_23679&search_date=08112026&expected_price_uuid=01a1b929-86af-8031-25c8-bbc33160f7b2&static_fare_key=TY%7CP0%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=6aK2MRwMWnq_Qdrej7R4Uw&expected_price_source=share&expected_price_currency=twd&expected_price=9473",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9473.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -134,33 +134,13 @@
         "airline_code": "TR"
       }
     },
-    "TYO:2026-11-21_2026-11-25": {
-      "tp_price": 12352.0,
-      "tp_airline": "酷航",
-      "tp_url": "https://www.aviasales.com/search/TPE2111TYO25111?t=TR17952711001795285800000185TPENRT17956086001795619700000245NRTTPE_230e48fb977dc27810ef2cbca840e880_25777&search_date=01112026&expected_price_uuid=01a1958e-a31e-8040-6fad-7ea82be00199&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=ysd9WUoXlqltMG0lPfoCGg&expected_price_source=share&expected_price_currency=twd&expected_price=10472",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 10472.0,
-      "tp_bag_fee": 1880.0,
-      "tp_bag_estimated": false,
-      "tp_flight": {
-        "flight_no": "TR 874",
-        "depart_time": "14:25",
-        "arrive_time": "18:30",
-        "return_depart_time": "12:10",
-        "origin_airport": "TPE",
-        "destination_airport": "NRT",
-        "duration_to": 185,
-        "duration_back": 245,
-        "split": null,
-        "airline_code": "TR"
-      }
-    },
+    "TYO:2026-11-21_2026-11-25": {},
     "TYO:2026-11-23_2026-11-27": {},
     "TYO:2026-11-28_2026-12-04": {
       "tp_price": 11582.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE2811TYO04121?t=IT17958486001795863300000185TPENRT17963892001796401500000265NRTTPE_9fa6de75636c351312e80c988a893a3b_24250&search_date=07112026&expected_price_uuid=01a1b537-a31f-8040-60d4-ee6e36eddda8&static_fare_key=TY%7CP1%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=7d3-NSzlFPWSpNz5jx8OIQ&expected_price_source=share&expected_price_currency=twd&expected_price=9702",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9702.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -182,7 +162,7 @@
       "tp_price": 11926.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE2211TYO26111?t=IT17953575001795372200000185TPENRT17956692001795679700000235HNDTPE_a5fd4939e4a14876441a7c33332ce03f_24958&search_date=06112026&expected_price_uuid=01a1af71-2961-8030-a62e-6de8ce00b3aa&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=P0AW5tTnUxVFqyeWR5sO8A&expected_price_source=share&expected_price_currency=twd&expected_price=10046",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 10046.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -207,7 +187,7 @@
       "tp_price": 13878.0,
       "tp_airline": "SL",
       "tp_url": "https://www.aviasales.com/search/TPE2911TYO04121?t=MM17959542001795969500000195TPENRT17963631001796374500000250HNDTPE_089d4277a439e58a7d5f521f187af218_27063&search_date=03112026&expected_price_uuid=01a1a3cd-3b21-8040-6200-f9319362ab2c&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=gL83h5HROOu15Zci5aGUug&expected_price_source=share&expected_price_currency=twd&expected_price=10878",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 10878.0,
       "tp_bag_fee": 3000.0,
       "tp_bag_estimated": true,
@@ -232,7 +212,7 @@
       "tp_price": 10576.0,
       "tp_airline": "台灣虎航／酷航",
       "tp_url": "https://www.aviasales.com/search/TPE2912TYO1?t=IT17985261001798540500000180TPENRT_ed4bd0367fae18b73b1f28cede725ddf_9035&search_date=05112026&expected_price_uuid=01a1abf4-e471-8030-e1b5-acd965795603&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=cPmD9A231M4_FFVRwbRKaA&expected_price_source=share&expected_price_currency=twd&expected_price=3658",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8686.0,
       "tp_bag_fee": 1890.0,
       "tp_bag_estimated": false,
@@ -254,7 +234,7 @@
       "tp_price": 18236.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE2312TYO27121?t=MM17980359001798050600000185TPENRT17984091001798421100000260NRTTPE_b19d00c6058b23635e6f0abed1fce770_40491&search_date=05112026&expected_price_uuid=01a1a970-87e5-8031-60fa-71f00f58e1ee&static_fare_key=TY%7CP0%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=u0APCZe45pF7qWZxAOVTFA&expected_price_source=share&expected_price_currency=twd&expected_price=16356",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 16356.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -275,7 +255,7 @@
       "tp_price": 7548.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2711HKG1?t=UO17957877001795795200000125TPEHKG_eb5cbc3da5607dd8ce012e1d4990f56e_5220&search_date=06112026&expected_price_uuid=01a1b00e-459d-8030-6206-438d44687049&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2097",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4748.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -293,11 +273,11 @@
       }
     },
     "HKG:2026-12-12_2026-12-14": {
-      "tp_price": 7656.0,
+      "tp_price": 7609.0,
       "tp_airline": "香港快運",
-      "tp_url": "https://www.aviasales.com/search/TPE1212HKG1?t=UO17970837001797091200000125TPEHKG_20082ca527497305be564079ec7d2e4d_5090&search_date=05112026&expected_price_uuid=01a1abdc-8d22-8030-6c94-9eb3fb3fb796&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2061",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 4856.0,
+      "tp_url": "https://www.aviasales.com/search/TPE1212HKG1?t=UO17970837001797091200000125TPEHKG_20082ca527497305be564079ec7d2e4d_5033&search_date=08112026&expected_price_uuid=01a1b9ab-578b-8030-6c18-7c263bbac1d1&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2014",
+      "tp_at": "2026-11-08T15:26:01+08:00",
+      "tp_fare": 4809.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
       "tp_flight": {
@@ -317,7 +297,7 @@
       "tp_price": 7347.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0412HKG06121?t=UO17963958001796403300000125TPEHKG17965590001796565300000105HKGTPE_8060fc920ab6a63635342fedb0ae691c_11365&search_date=07112026&expected_price_uuid=01a1b4ae-ade6-8030-2708-3f1dce471ea3&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=4_iNJZ0NflqCpjao8kQPtA&expected_price_source=share&expected_price_currency=twd&expected_price=4547",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4547.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -340,7 +320,7 @@
       "tp_price": 6761.0,
       "tp_airline": "澳門航空",
       "tp_url": "https://www.aviasales.com/search/TPE0612MFM10121?t=NX17965878001796594700000115TPEMFM17968896001796895300000095MFMTPE_fbb58b719575c402a6f9766073c288eb_16828&search_date=03112026&expected_price_uuid=01a1a2e3-ffff-8040-67b6-a6e0d6dde169&static_fare_key=TY%7CP0%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=HUZTMf0KA9bWdGRg_jaAAQ&expected_price_source=share&expected_price_currency=twd&expected_price=6761",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6761.0,
       "tp_bag_fee": 0.0,
       "tp_bag_estimated": false,
@@ -362,7 +342,7 @@
       "tp_price": 12082.0,
       "tp_airline": "捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE2211TYO24111?t=GK17953146001795329300000185TPENRT17955591001795570200000245NRTTPE_ed54d3e4b71b3057e73c8bcbc07069a1_25310&search_date=01112026&expected_price_uuid=01a1987c-51a7-8040-a927-77e6b12f9628&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=m-rXVqIRSHjuR2KS9KPgTA&expected_price_source=share&expected_price_currency=twd&expected_price=10282",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 10282.0,
       "tp_bag_fee": 1800.0,
       "tp_bag_estimated": false,
@@ -383,7 +363,7 @@
       "tp_price": 10945.0,
       "tp_airline": "捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE1212TYO13121?t=IT17970798001797094500000185TPENRT17971380001797148500000235HNDTPE_7e7ab146e150b3f66e4a722e3c19cb72_22830&search_date=06112026&expected_price_uuid=01a1b1af-7f04-8040-2351-55ea82de7680&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=vHIc5b9qqi3bO41d2ARc9w&expected_price_source=share&expected_price_currency=twd&expected_price=9145",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9145.0,
       "tp_bag_fee": 1800.0,
       "tp_bag_estimated": false,
@@ -404,7 +384,7 @@
       "tp_price": 7686.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1511HKG17111?t=UO17947509001794758400000125TPEHKG17949408001794947100000105HKGTPE_d9db02764016ddbec787a9ddf22c7679_12139&search_date=03112026&expected_price_uuid=01a1a1ca-a1ce-8040-22ed-8f2f929f28cf&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=DK6RnDoYdh09qzCwPZc9bw&expected_price_source=share&expected_price_currency=twd&expected_price=4886",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4886.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -425,7 +405,7 @@
       "tp_price": 7179.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0312HKG07121?t=UO17963196001796327100000125TPEHKG17966427001796649000000105HKGTPE_e271ab855d8b4feed782d8b50d8989f8_10947&search_date=07112026&expected_price_uuid=01a1b669-0e07-8040-6e8a-c420789e3db0&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=3Aam8n3jC9QVqMLGq1RcxQ&expected_price_source=share&expected_price_currency=twd&expected_price=4379",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4379.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -446,7 +426,7 @@
       "tp_price": 7185.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0212HKG06121?t=UO17962230001796230500000125TPEHKG17965590001796565300000105HKGTPE_4e3152fc852f8058732a6167e791ea32_10913&search_date=03112026&expected_price_uuid=01a1a2da-19b2-8040-a787-241447753c0c&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=Y1cCMnxCDv4pTVc9INCVFg&expected_price_source=share&expected_price_currency=twd&expected_price=4385",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4385.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -467,7 +447,7 @@
       "tp_price": 7230.0,
       "tp_airline": "星宇航空",
       "tp_url": "https://www.aviasales.com/search/TPE0412MFM08121?t=JX17964051001796412300000120TPEMFM17967300001796736600000110MFMTPE_c50e835d76ca399fbb63fbdbd45b9230_17995&search_date=03112026&expected_price_uuid=01a1a2e4-37af-8040-ab2e-ba57035f3550&static_fare_key=TY%7CP0%7CH1%7CL1_1_23%7CCH0%7CR0%7CTBC1&itinerary_key=SWSYlzEFSh4JHS-qmmZAJA&expected_price_source=share&expected_price_currency=twd&expected_price=7230",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 7230.0,
       "tp_bag_fee": 0.0,
       "tp_bag_estimated": false,
@@ -488,7 +468,7 @@
       "tp_price": 11085.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE2212TYO24121?t=IT17979222001797936900000185TPENRT17980884001798098900000235HNDTPE_e4c18837b14d2bcfba89d9dc8a33a8a3_22910&search_date=03112026&expected_price_uuid=01a1a2d5-6e50-8040-a878-0179f0a30687&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=NcL9gQldo_Apul213d8Obg&expected_price_source=share&expected_price_currency=twd&expected_price=9205",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9205.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -509,7 +489,7 @@
       "tp_price": 14131.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE2212TYO28121?t=GK17979498001797964200000180TPENRT17984967001798507800000245NRTTPE_26bbaf373a2e453c4fe23745166726e4_30491&search_date=03112026&expected_price_uuid=01a1a2d3-4799-8040-620c-637fdf8aae85&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=v3OmuGSd_OfXmouDyA8v8g&expected_price_source=share&expected_price_currency=twd&expected_price=12251",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 12251.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -530,7 +510,7 @@
       "tp_price": 17746.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE2212TYO26121?t=GK17979498001797964200000180TPENRT17983239001798335000000245NRTTPE_91f3798dae933afdb488d7be7d2311d7_39488&search_date=03112026&expected_price_uuid=01a1a2d6-58eb-8040-6e52-001d252f22e7&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=AX4IOEe9vsN0MXpMZGgBXg&expected_price_source=share&expected_price_currency=twd&expected_price=15866",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 15866.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -561,7 +541,7 @@
       "tp_price": 7985.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1011HKG1?t=UO17943222001794329700000125TPEHKG_482ab1137fd6bff6c42187a310dc9037_6331&search_date=06112026&expected_price_uuid=01a1aed8-d9e8-8031-6325-cddbd361c11a&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2548",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5185.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -582,7 +562,7 @@
       "tp_price": 8407.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1011HKG1?t=UO17943222001794329700000125TPEHKG_482ab1137fd6bff6c42187a310dc9037_6331&search_date=06112026&expected_price_uuid=01a1aed8-d9e8-8031-6325-cddbd361c11a&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2548",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5607.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -603,7 +583,7 @@
       "tp_price": 8065.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1011HKG1?t=UO17943222001794329700000125TPEHKG_482ab1137fd6bff6c42187a310dc9037_6331&search_date=06112026&expected_price_uuid=01a1aed8-d9e8-8031-6325-cddbd361c11a&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2548",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5265.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -625,7 +605,7 @@
       "tp_price": 8662.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1111HKG1?t=UO17944086001794416100000125TPEHKG_e1b3e556825198ab1f51fa2352e22547_7007&search_date=07112026&expected_price_uuid=01a1b638-6e00-8031-208e-188e237e155b&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2803",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5862.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -646,7 +626,7 @@
       "tp_price": 8320.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1111HKG1?t=UO17944086001794416100000125TPEHKG_e1b3e556825198ab1f51fa2352e22547_7007&search_date=07112026&expected_price_uuid=01a1b638-6e00-8031-208e-188e237e155b&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2803",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5520.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -667,7 +647,7 @@
       "tp_price": 8277.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1111HKG1?t=UO17944086001794416100000125TPEHKG_e1b3e556825198ab1f51fa2352e22547_7007&search_date=07112026&expected_price_uuid=01a1b638-6e00-8031-208e-188e237e155b&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2803",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5477.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -689,7 +669,7 @@
       "tp_price": 7485.0,
       "tp_airline": "香港快運／星宇航空",
       "tp_url": "https://www.aviasales.com/search/TPE1111HKG1?t=UO17944086001794416100000125TPEHKG_e1b3e556825198ab1f51fa2352e22547_7007&search_date=07112026&expected_price_uuid=01a1b638-6e00-8031-208e-188e237e155b&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2803",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6085.0,
       "tp_bag_fee": 1400.0,
       "tp_bag_estimated": false,
@@ -710,7 +690,7 @@
       "tp_price": 7441.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1211HKG1?t=UO17945181001794525900000130TPEHKG_04ce332237c5ca7a15042eb54a42a5eb_4802&search_date=06112026&expected_price_uuid=01a1b0b1-d927-8031-66db-7f3e98045b6c&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1924",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4641.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -731,7 +711,7 @@
       "tp_price": 7398.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1211HKG1?t=UO17945181001794525900000130TPEHKG_04ce332237c5ca7a15042eb54a42a5eb_4802&search_date=06112026&expected_price_uuid=01a1b0b1-d927-8031-66db-7f3e98045b6c&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1924",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4598.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -753,7 +733,7 @@
       "tp_price": 6606.0,
       "tp_airline": "香港快運／星宇航空",
       "tp_url": "https://www.aviasales.com/search/TPE1211HKG1?t=UO17945181001794525900000130TPEHKG_04ce332237c5ca7a15042eb54a42a5eb_4802&search_date=06112026&expected_price_uuid=01a1b0b1-d927-8031-66db-7f3e98045b6c&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1924",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5206.0,
       "tp_bag_fee": 1400.0,
       "tp_bag_estimated": false,
@@ -774,7 +754,7 @@
       "tp_price": 7361.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1211HKG1?t=UO17945181001794525900000130TPEHKG_04ce332237c5ca7a15042eb54a42a5eb_4802&search_date=06112026&expected_price_uuid=01a1b0b1-d927-8031-66db-7f3e98045b6c&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1924",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4561.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -795,7 +775,7 @@
       "tp_price": 7519.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1311HKG1?t=UO17946045001794612300000130TPEHKG_1bd3b892fc3ad2912db0b6e802e424b2_5106&search_date=06112026&expected_price_uuid=01a1b09a-f911-8031-6e1c-b8423fc97965&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=2045",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4719.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -817,7 +797,7 @@
       "tp_price": 6727.0,
       "tp_airline": "香港快運／星宇航空",
       "tp_url": "https://www.aviasales.com/search/TPE1311HKG1?t=UO17946045001794612300000130TPEHKG_1bd3b892fc3ad2912db0b6e802e424b2_5106&search_date=06112026&expected_price_uuid=01a1b09a-f911-8031-6e1c-b8423fc97965&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=2045",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5327.0,
       "tp_bag_fee": 1400.0,
       "tp_bag_estimated": false,
@@ -838,7 +818,7 @@
       "tp_price": 7482.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1311HKG1?t=UO17946045001794612300000130TPEHKG_1bd3b892fc3ad2912db0b6e802e424b2_5106&search_date=06112026&expected_price_uuid=01a1b09a-f911-8031-6e1c-b8423fc97965&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=2045",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4682.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -860,7 +840,7 @@
       "tp_price": 7030.0,
       "tp_airline": "香港快運／星宇航空",
       "tp_url": "https://www.aviasales.com/search/TPE1411HKG1?t=UO17946645001794672000000125TPEHKG_982100f57b59b31b2fddc7a260859ffb_5835&search_date=02112026&expected_price_uuid=01a19c33-887e-8031-6bf6-3b6f9bde4234&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2348",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5630.0,
       "tp_bag_fee": 1400.0,
       "tp_bag_estimated": false,
@@ -881,7 +861,7 @@
       "tp_price": 7785.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1411HKG1?t=UO17946645001794672000000125TPEHKG_982100f57b59b31b2fddc7a260859ffb_5835&search_date=02112026&expected_price_uuid=01a19c33-887e-8031-6bf6-3b6f9bde4234&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2348",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4985.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -902,7 +882,7 @@
       "tp_price": 8085.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1411HKG1?t=UO17946645001794672000000125TPEHKG_982100f57b59b31b2fddc7a260859ffb_5835&search_date=02112026&expected_price_uuid=01a19c33-887e-8031-6bf6-3b6f9bde4234&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2348",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5285.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -926,7 +906,7 @@
       "tp_price": 7908.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1611HKG1?t=UO17948406001794848100000125TPEHKG_1ab8bffb4c9de5dca9470e26817a12ea_6177&search_date=07112026&expected_price_uuid=01a1b638-8451-8030-e04a-e40168abb7be&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2471",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5108.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -947,7 +927,7 @@
       "tp_price": 8208.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1611HKG1?t=UO17948406001794848100000125TPEHKG_1ab8bffb4c9de5dca9470e26817a12ea_6177&search_date=07112026&expected_price_uuid=01a1b638-8451-8030-e04a-e40168abb7be&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2471",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5408.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -968,7 +948,7 @@
       "tp_price": 7368.0,
       "tp_airline": "香港快運／星宇航空",
       "tp_url": "https://www.aviasales.com/search/TPE1611HKG1?t=UO17948406001794848100000125TPEHKG_1ab8bffb4c9de5dca9470e26817a12ea_6177&search_date=07112026&expected_price_uuid=01a1b638-8451-8030-e04a-e40168abb7be&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2471",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5968.0,
       "tp_bag_fee": 1400.0,
       "tp_bag_estimated": false,
@@ -989,7 +969,7 @@
       "tp_price": 7704.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1711HKG1?t=UO17949270001794934500000125TPEHKG_eeae4374859eb2fb61d7f9c3eeffb2dc_4870&search_date=05112026&expected_price_uuid=01a1a9b5-7732-8030-2949-13d5e0a704b2&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1967",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4904.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1010,7 +990,7 @@
       "tp_price": 6864.0,
       "tp_airline": "香港快運／星宇航空",
       "tp_url": "https://www.aviasales.com/search/TPE1711HKG1?t=UO17949270001794934500000125TPEHKG_eeae4374859eb2fb61d7f9c3eeffb2dc_4870&search_date=05112026&expected_price_uuid=01a1a9b5-7732-8030-2949-13d5e0a704b2&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1967",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5464.0,
       "tp_bag_fee": 1400.0,
       "tp_bag_estimated": false,
@@ -1031,7 +1011,7 @@
       "tp_price": 7570.0,
       "tp_airline": "香港快運／大灣區航空",
       "tp_url": "https://www.aviasales.com/search/TPE1711HKG1?t=UO17949270001794934500000125TPEHKG_eeae4374859eb2fb61d7f9c3eeffb2dc_4870&search_date=05112026&expected_price_uuid=01a1a9b5-7732-8030-2949-13d5e0a704b2&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1967",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4650.0,
       "tp_bag_fee": 2920.0,
       "tp_bag_estimated": false,
@@ -1052,7 +1032,7 @@
       "tp_price": 7691.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1811HKG1?t=UO17950101001795017600000125TPEHKG_3def38f4825074d12f6ac0fccf27bdd1_4884&search_date=07112026&expected_price_uuid=01a1b3df-77c0-8030-ee4a-b67e19ae7f36&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1954",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4891.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1073,7 +1053,7 @@
       "tp_price": 6851.0,
       "tp_airline": "香港快運／星宇航空",
       "tp_url": "https://www.aviasales.com/search/TPE1811HKG1?t=UO17950101001795017600000125TPEHKG_3def38f4825074d12f6ac0fccf27bdd1_4884&search_date=07112026&expected_price_uuid=01a1b3df-77c0-8030-ee4a-b67e19ae7f36&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1954",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5451.0,
       "tp_bag_fee": 1400.0,
       "tp_bag_estimated": false,
@@ -1094,7 +1074,7 @@
       "tp_price": 7557.0,
       "tp_airline": "香港快運／大灣區航空",
       "tp_url": "https://www.aviasales.com/search/TPE1811HKG1?t=UO17950101001795017600000125TPEHKG_3def38f4825074d12f6ac0fccf27bdd1_4884&search_date=07112026&expected_price_uuid=01a1b3df-77c0-8030-ee4a-b67e19ae7f36&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1954",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4637.0,
       "tp_bag_fee": 2920.0,
       "tp_bag_estimated": false,
@@ -1115,7 +1095,7 @@
       "tp_price": 7614.0,
       "tp_airline": "香港快運／大灣區航空",
       "tp_url": "https://www.aviasales.com/search/TPE2011HKG1?t=UO17952093001795217100000130TPEHKG_2e0c08622ef946412acb6012af028e89_5027&search_date=08112026&expected_price_uuid=01a1b8b8-b10a-8030-2c1d-127542154d50&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=2011",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4694.0,
       "tp_bag_fee": 2920.0,
       "tp_bag_estimated": false,
@@ -1136,7 +1116,7 @@
       "tp_price": 7614.0,
       "tp_airline": "香港快運／大灣區航空",
       "tp_url": "https://www.aviasales.com/search/TPE2111HKG1?t=UO17952957001795303500000130TPEHKG_9ced198ad0157b430ff95ffe8e7b08de_5027&search_date=07112026&expected_price_uuid=01a1b3d9-9876-8031-6934-6ac66247c058&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=2011",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4694.0,
       "tp_bag_fee": 2920.0,
       "tp_bag_estimated": false,
@@ -1157,7 +1137,7 @@
       "tp_price": 7447.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2111HKG1?t=UO17952957001795303500000130TPEHKG_9ced198ad0157b430ff95ffe8e7b08de_5027&search_date=07112026&expected_price_uuid=01a1b3d9-9876-8031-6934-6ac66247c058&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=2011",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4647.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1178,7 +1158,7 @@
       "tp_price": 8238.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2211HKG1?t=UO17953557001795363200000125TPEHKG_3dacf66010eac3db07c5264c975d503d_7004&search_date=06112026&expected_price_uuid=01a1b21a-23ed-8031-251b-e6994dc79a72&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2802",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5438.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1199,7 +1179,7 @@
       "tp_price": 8639.0,
       "tp_airline": "香港快運／大灣區航空",
       "tp_url": "https://www.aviasales.com/search/TPE2211HKG1?t=UO17953557001795363200000125TPEHKG_3dacf66010eac3db07c5264c975d503d_7004&search_date=06112026&expected_price_uuid=01a1b21a-23ed-8031-251b-e6994dc79a72&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2802",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5719.0,
       "tp_bag_fee": 2920.0,
       "tp_bag_estimated": false,
@@ -1220,7 +1200,7 @@
       "tp_price": 7310.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2311HKG1?t=UO17954421001795449600000125TPEHKG_16725da1b8fcc3b5289c6a3bfcc5185e_4662&search_date=03112026&expected_price_uuid=01a1a213-022e-8030-25ac-f56bc75db38f&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1874",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4510.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1241,7 +1221,7 @@
       "tp_price": 7711.0,
       "tp_airline": "香港快運／大灣區航空",
       "tp_url": "https://www.aviasales.com/search/TPE2311HKG1?t=UO17954421001795449600000125TPEHKG_16725da1b8fcc3b5289c6a3bfcc5185e_4662&search_date=03112026&expected_price_uuid=01a1a213-022e-8030-25ac-f56bc75db38f&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1874",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4791.0,
       "tp_bag_fee": 2920.0,
       "tp_bag_estimated": false,
@@ -1262,7 +1242,7 @@
       "tp_price": 7376.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2811HKG1?t=UO17958741001795881600000125TPEHKG_5690a7b3b8c60e0af6dc9771cdf4f072_4801&search_date=04112026&expected_price_uuid=01a1a63b-6d9e-8030-a703-df418975e0ed&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1925",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4576.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1279,32 +1259,12 @@
         "airline_code": "UO"
       }
     },
-    "HKG:2026-11-28_2026-11-30": {
-      "tp_price": 7298.0,
-      "tp_airline": "香港快運",
-      "tp_url": "https://www.aviasales.com/search/TPE2811HKG1?t=UO17958741001795881600000125TPEHKG_5690a7b3b8c60e0af6dc9771cdf4f072_4801&search_date=04112026&expected_price_uuid=01a1a63b-6d9e-8030-a703-df418975e0ed&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1925",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 4498.0,
-      "tp_bag_fee": 2800.0,
-      "tp_bag_estimated": false,
-      "tp_flight": {
-        "flight_no": "UO 111／UO 112",
-        "depart_time": "13:55",
-        "arrive_time": "16:00",
-        "return_depart_time": "12:10",
-        "origin_airport": "TPE",
-        "destination_airport": "HKG",
-        "duration_to": 125,
-        "duration_back": 105,
-        "split": true,
-        "airline_code": "UO"
-      }
-    },
+    "HKG:2026-11-28_2026-11-30": {},
     "HKG:2026-11-28_2026-12-01": {
       "tp_price": 7369.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2811HKG1?t=UO17958741001795881600000125TPEHKG_5690a7b3b8c60e0af6dc9771cdf4f072_4801&search_date=04112026&expected_price_uuid=01a1a63b-6d9e-8030-a703-df418975e0ed&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1925",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4569.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1325,7 +1285,7 @@
       "tp_price": 7362.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2811HKG1?t=UO17958741001795881600000125TPEHKG_5690a7b3b8c60e0af6dc9771cdf4f072_4801&search_date=04112026&expected_price_uuid=01a1a63b-6d9e-8030-a703-df418975e0ed&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1925",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4562.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1343,32 +1303,12 @@
       }
     },
     "HKG:2026-11-28_2026-12-03": {},
-    "HKG:2026-11-29_2026-11-30": {
-      "tp_price": 8613.0,
-      "tp_airline": "香港快運",
-      "tp_url": "https://www.aviasales.com/search/TPE2911HKG1?t=UO17959605001795968000000125TPEHKG_539bb8ad836b86830725964125436857_8051&search_date=04112026&expected_price_uuid=01a1a427-5409-8031-6158-f57a19393890&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=3240",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 5813.0,
-      "tp_bag_fee": 2800.0,
-      "tp_bag_estimated": false,
-      "tp_flight": {
-        "flight_no": "UO 111／UO 112",
-        "depart_time": "13:55",
-        "arrive_time": "16:00",
-        "return_depart_time": "12:10",
-        "origin_airport": "TPE",
-        "destination_airport": "HKG",
-        "duration_to": 125,
-        "duration_back": 105,
-        "split": true,
-        "airline_code": "UO"
-      }
-    },
+    "HKG:2026-11-29_2026-11-30": {},
     "HKG:2026-11-29_2026-12-01": {
       "tp_price": 8684.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2911HKG1?t=UO17959605001795968000000125TPEHKG_539bb8ad836b86830725964125436857_8051&search_date=04112026&expected_price_uuid=01a1a427-5409-8031-6158-f57a19393890&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=3240",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5884.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1389,7 +1329,7 @@
       "tp_price": 8677.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2911HKG1?t=UO17959605001795968000000125TPEHKG_539bb8ad836b86830725964125436857_8051&search_date=04112026&expected_price_uuid=01a1a427-5409-8031-6158-f57a19393890&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=3240",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5877.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1411,7 +1351,7 @@
       "tp_price": 7932.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE3011HKG1?t=UO17960469001796054400000125TPEHKG_d91b8661cd175589ac5ce4fe802847e9_6159&search_date=05112026&expected_price_uuid=01a1a998-d4c2-8031-2a8c-7dcbc8a9b4c8&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2488",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5132.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1432,7 +1372,7 @@
       "tp_price": 7925.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE3011HKG1?t=UO17960469001796054400000125TPEHKG_d91b8661cd175589ac5ce4fe802847e9_6159&search_date=05112026&expected_price_uuid=01a1a998-d4c2-8031-2a8c-7dcbc8a9b4c8&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2488",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5125.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1454,7 +1394,7 @@
       "tp_price": 7858.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE3011HKG1?t=UO17960469001796054400000125TPEHKG_d91b8661cd175589ac5ce4fe802847e9_6159&search_date=05112026&expected_price_uuid=01a1a998-d4c2-8031-2a8c-7dcbc8a9b4c8&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2488",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5058.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1475,7 +1415,7 @@
       "tp_price": 7345.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0112HKG1?t=UO17961366001796144100000125TPEHKG_23cb3745c01b01a7ce191e781d2b196e_4748&search_date=06112026&expected_price_uuid=01a1b00d-e2be-8030-e370-d522d2e6e22d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1908",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4545.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1497,7 +1437,7 @@
       "tp_price": 6983.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0112HKG05121?t=UO17961333001796140800000125TPEHKG17964828001796489100000105HKGTPE_f4dd53959c21b89f871bb4d72e3449a4_10443&search_date=06112026&expected_price_uuid=01a1b14a-21b4-8040-689d-7994065990ed&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=hrY6AcigiEy85gjHMDPjlQ&expected_price_source=share&expected_price_currency=twd&expected_price=4183",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4183.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1519,7 +1459,7 @@
       "tp_price": 7304.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0212HKG1?t=UO17962197001796227200000125TPEHKG_01b683682eeaaf7426c3b83b3f8f29c2_4806&search_date=06112026&expected_price_uuid=01a1af4e-98bf-8030-2532-e6cd33179789&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1934",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4504.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1540,7 +1480,7 @@
       "tp_price": 7297.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0312HKG1?t=UO17963094001796316900000125TPEHKG_a4c34c8aa4f43bdb0dd7053fa8501f6f_4794&search_date=02112026&expected_price_uuid=01a19cf8-4fe2-8030-2130-8f115a85b6c2&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1927",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4497.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1561,7 +1501,7 @@
       "tp_price": 7379.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0312HKG1?t=UO17963094001796316900000125TPEHKG_a4c34c8aa4f43bdb0dd7053fa8501f6f_4794&search_date=02112026&expected_price_uuid=01a19cf8-4fe2-8030-2130-8f115a85b6c2&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1927",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4579.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1582,7 +1522,7 @@
       "tp_price": 7422.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0412HKG1?t=UO17963925001796400000000125TPEHKG_44186dfa7ccc6e68031eb9b73b44a3b2_5103&search_date=02112026&expected_price_uuid=01a19cec-5e31-8030-aad6-c812561f637d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2052",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4622.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1603,7 +1543,7 @@
       "tp_price": 7504.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0412HKG1?t=UO17963925001796400000000125TPEHKG_44186dfa7ccc6e68031eb9b73b44a3b2_5103&search_date=02112026&expected_price_uuid=01a19cec-5e31-8030-aad6-c812561f637d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2052",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4704.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1623,11 +1563,11 @@
     "HKG:2026-12-09_2026-12-11": {},
     "HKG:2026-12-10_2026-12-11": {},
     "HKG:2026-12-10_2026-12-15": {
-      "tp_price": 7276.0,
+      "tp_price": 7271.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1012HKG1?t=UO17969373001796945100000130TPEHKG_7aa8b0fac890e6b0eeb04eeacac07d4d_4571&search_date=04112026&expected_price_uuid=01a1a4ed-28ad-8040-60e9-89853d02c955&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1839",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 4476.0,
+      "tp_at": "2026-11-08T15:26:01+08:00",
+      "tp_fare": 4471.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
       "tp_flight": {
@@ -1644,11 +1584,11 @@
       }
     },
     "HKG:2026-12-11_2026-12-15": {
-      "tp_price": 7348.0,
+      "tp_price": 7343.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1112HKG1?t=UO17970006001797008100000125TPEHKG_7b7a8f086765f2fe9426c295bbefe946_4745&search_date=03112026&expected_price_uuid=01a1a0f9-f552-8031-6225-3251476db7aa&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1911",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 4548.0,
+      "tp_at": "2026-11-08T15:26:01+08:00",
+      "tp_fare": 4543.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
       "tp_flight": {
@@ -1665,18 +1605,18 @@
       }
     },
     "HKG:2026-12-11_2026-12-16": {
-      "tp_price": 7375.0,
+      "tp_price": 7348.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1112HKG1?t=UO17970006001797008100000125TPEHKG_7b7a8f086765f2fe9426c295bbefe946_4745&search_date=03112026&expected_price_uuid=01a1a0f9-f552-8031-6225-3251476db7aa&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1911",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 4575.0,
+      "tp_at": "2026-11-08T15:26:01+08:00",
+      "tp_fare": 4548.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
       "tp_flight": {
-        "flight_no": "UO 113／UO 114",
+        "flight_no": "UO 113／UO 112",
         "depart_time": "14:50",
         "arrive_time": "16:55",
-        "return_depart_time": "15:00",
+        "return_depart_time": "12:10",
         "origin_airport": "TPE",
         "destination_airport": "HKG",
         "duration_to": 125,
@@ -1686,11 +1626,11 @@
       }
     },
     "HKG:2026-12-12_2026-12-15": {
-      "tp_price": 7498.0,
+      "tp_price": 7446.0,
       "tp_airline": "香港快運",
-      "tp_url": "https://www.aviasales.com/search/TPE1212HKG1?t=UO17970837001797091200000125TPEHKG_20082ca527497305be564079ec7d2e4d_5090&search_date=05112026&expected_price_uuid=01a1abdc-8d22-8030-6c94-9eb3fb3fb796&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2061",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 4698.0,
+      "tp_url": "https://www.aviasales.com/search/TPE1212HKG1?t=UO17970837001797091200000125TPEHKG_20082ca527497305be564079ec7d2e4d_5033&search_date=08112026&expected_price_uuid=01a1b9ab-578b-8030-6c18-7c263bbac1d1&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2014",
+      "tp_at": "2026-11-08T15:26:01+08:00",
+      "tp_fare": 4646.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
       "tp_flight": {
@@ -1707,18 +1647,18 @@
       }
     },
     "HKG:2026-12-12_2026-12-16": {
-      "tp_price": 7525.0,
+      "tp_price": 7451.0,
       "tp_airline": "香港快運",
-      "tp_url": "https://www.aviasales.com/search/TPE1212HKG1?t=UO17970837001797091200000125TPEHKG_20082ca527497305be564079ec7d2e4d_5090&search_date=05112026&expected_price_uuid=01a1abdc-8d22-8030-6c94-9eb3fb3fb796&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2061",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 4725.0,
+      "tp_url": "https://www.aviasales.com/search/TPE1212HKG1?t=UO17970837001797091200000125TPEHKG_20082ca527497305be564079ec7d2e4d_5033&search_date=08112026&expected_price_uuid=01a1b9ab-578b-8030-6c18-7c263bbac1d1&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2014",
+      "tp_at": "2026-11-08T15:26:01+08:00",
+      "tp_fare": 4651.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
       "tp_flight": {
-        "flight_no": "UO 111／UO 114",
+        "flight_no": "UO 111／UO 112",
         "depart_time": "13:55",
         "arrive_time": "16:00",
-        "return_depart_time": "15:00",
+        "return_depart_time": "12:10",
         "origin_airport": "TPE",
         "destination_airport": "HKG",
         "duration_to": 125,
@@ -1728,18 +1668,18 @@
       }
     },
     "HKG:2026-12-15_2026-12-16": {
-      "tp_price": 7262.0,
+      "tp_price": 7235.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1512HKG1?t=UO17973429001797350400000125TPEHKG_372b1c33969ac932180b51b85026deb0_4451&search_date=03112026&expected_price_uuid=01a19eb7-c254-8030-2fc4-6fecba147402&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1798",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 4462.0,
+      "tp_at": "2026-11-08T15:26:01+08:00",
+      "tp_fare": 4435.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
       "tp_flight": {
-        "flight_no": "UO 111／UO 114",
+        "flight_no": "UO 111／UO 112",
         "depart_time": "13:55",
         "arrive_time": "16:00",
-        "return_depart_time": "15:00",
+        "return_depart_time": "12:10",
         "origin_airport": "TPE",
         "destination_airport": "HKG",
         "duration_to": 125,
@@ -1752,7 +1692,7 @@
       "tp_price": 9350.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1512HKG1?t=UO17973429001797350400000125TPEHKG_372b1c33969ac932180b51b85026deb0_4451&search_date=03112026&expected_price_uuid=01a19eb7-c254-8030-2fc4-6fecba147402&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1798",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6550.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1773,7 +1713,7 @@
       "tp_price": 8527.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1512HKG1?t=UO17973429001797350400000125TPEHKG_372b1c33969ac932180b51b85026deb0_4451&search_date=03112026&expected_price_uuid=01a19eb7-c254-8030-2fc4-6fecba147402&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1798",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5727.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1794,7 +1734,7 @@
       "tp_price": 9463.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1612HKG1?t=UO17974557001797463500000130TPEHKG_7b188ad9aa7cfcb5de91cb08a6989031_4747&search_date=02112026&expected_price_uuid=01a19bca-53df-8031-6703-e71eaa993191&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1911",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6663.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1815,7 +1755,7 @@
       "tp_price": 8640.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1612HKG1?t=UO17974557001797463500000130TPEHKG_7b188ad9aa7cfcb5de91cb08a6989031_4747&search_date=02112026&expected_price_uuid=01a19bca-53df-8031-6703-e71eaa993191&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1911",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5840.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1836,7 +1776,7 @@
       "tp_price": 7428.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1612HKG1?t=UO17974557001797463500000130TPEHKG_7b188ad9aa7cfcb5de91cb08a6989031_4747&search_date=02112026&expected_price_uuid=01a19bca-53df-8031-6703-e71eaa993191&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1911",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4628.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1857,7 +1797,7 @@
       "tp_price": 9342.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1712HKG1?t=UO17975157001797523200000125TPEHKG_8a34a4932fc54872dc2909db134e5c64_4407&search_date=01112026&expected_price_uuid=01a197e2-07e0-8030-6330-a116d600a683&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1790",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6542.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1878,7 +1818,7 @@
       "tp_price": 8519.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1712HKG1?t=UO17975157001797523200000125TPEHKG_8a34a4932fc54872dc2909db134e5c64_4407&search_date=01112026&expected_price_uuid=01a197e2-07e0-8030-6330-a116d600a683&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1790",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5719.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1899,7 +1839,7 @@
       "tp_price": 7307.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1712HKG1?t=UO17975157001797523200000125TPEHKG_8a34a4932fc54872dc2909db134e5c64_4407&search_date=01112026&expected_price_uuid=01a197e2-07e0-8030-6330-a116d600a683&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1790",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4507.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1920,7 +1860,7 @@
       "tp_price": 8560.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1712HKG1?t=UO17975157001797523200000125TPEHKG_8a34a4932fc54872dc2909db134e5c64_4407&search_date=01112026&expected_price_uuid=01a197e2-07e0-8030-6330-a116d600a683&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1790",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5760.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1941,7 +1881,7 @@
       "tp_price": 9237.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2112HKG1?t=UO17978613001797868800000125TPEHKG_a72da5d615e488e2205fc011b5bd47d2_6149&search_date=02112026&expected_price_uuid=01a19d2a-9757-8031-6164-43d4bada2804&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2467",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6437.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1962,7 +1902,7 @@
       "tp_price": 9237.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2112HKG1?t=UO17978613001797868800000125TPEHKG_a72da5d615e488e2205fc011b5bd47d2_6149&search_date=02112026&expected_price_uuid=01a19d2a-9757-8031-6164-43d4bada2804&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2467",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6437.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -1984,7 +1924,7 @@
       "tp_price": 9666.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2112HKG1?t=UO17978613001797868800000125TPEHKG_a72da5d615e488e2205fc011b5bd47d2_6149&search_date=02112026&expected_price_uuid=01a19d2a-9757-8031-6164-43d4bada2804&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2467",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6866.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2005,27 +1945,7 @@
     "HKG:2026-12-31_2027-01-05": {},
     "HKG:2027-01-01_2027-01-05": {},
     "HKG:2027-01-02_2027-01-05": {},
-    "HKG:2027-01-02_2027-01-07": {
-      "tp_price": 9387.0,
-      "tp_airline": "香港快運",
-      "tp_url": "https://www.aviasales.com/search/TPE0201HKG1?t=UO17988981001798905600000125TPEHKG_22549c4f8d4c87ac9e7148a6d5983250_9724&search_date=01112026&expected_price_uuid=01a195df-0d4d-8031-6238-38259c59ebc1&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=3950",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 6587.0,
-      "tp_bag_fee": 2800.0,
-      "tp_bag_estimated": false,
-      "tp_flight": {
-        "flight_no": "UO 111／UO 116",
-        "depart_time": "13:55",
-        "arrive_time": "16:00",
-        "return_depart_time": "18:40",
-        "origin_airport": "TPE",
-        "destination_airport": "HKG",
-        "duration_to": 125,
-        "duration_back": 105,
-        "split": true,
-        "airline_code": "UO"
-      }
-    },
+    "HKG:2027-01-02_2027-01-07": {},
     "HKG:2027-01-03_2027-01-05": {},
     "HKG:2027-01-03_2027-01-07": {},
     "HKG:2027-01-03_2027-01-08": {},
@@ -2036,7 +1956,7 @@
       "tp_price": 9857.0,
       "tp_airline": "酷航／樂桃航空",
       "tp_url": "https://www.aviasales.com/search/TPE1011TYO1?t=TR17942934001794308100000185TPENRT_e0e1e6ce90d295d6ef42d4c8a8a8a489_11482&search_date=04112026&expected_price_uuid=01a1a48a-a7a1-8031-6a34-88e513ddb5f4&static_fare_key=TY%7CP0%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=e6mqHTfu8NLSJJHs6jdH8A&expected_price_source=share&expected_price_currency=twd&expected_price=4621",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 7987.0,
       "tp_bag_fee": 1870.0,
       "tp_bag_estimated": false,
@@ -2057,7 +1977,7 @@
       "tp_price": 10563.0,
       "tp_airline": "酷航／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE1011TYO1?t=TR17942934001794308100000185TPENRT_e0e1e6ce90d295d6ef42d4c8a8a8a489_11482&search_date=04112026&expected_price_uuid=01a1a48a-a7a1-8031-6a34-88e513ddb5f4&static_fare_key=TY%7CP0%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=e6mqHTfu8NLSJJHs6jdH8A&expected_price_source=share&expected_price_currency=twd&expected_price=4621",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8673.0,
       "tp_bag_fee": 1890.0,
       "tp_bag_estimated": false,
@@ -2081,7 +2001,7 @@
       "tp_price": 9204.0,
       "tp_airline": "星宇航空／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE1111TYO1?t=JX17944092001794423600000180TPENRT_6150ccccb091777d1ea1f6cdcb1311f2_9268&search_date=03112026&expected_price_uuid=01a1a0cf-6107-8031-65f1-4177b4d11093&static_fare_key=TY%7CP1%7CH0%7CL1_1_20%7CCH0%7CR0%7CTBC1&itinerary_key=FxzumK5zRm_mgp9WuE302w&expected_price_source=share&expected_price_currency=twd&expected_price=3732",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8304.0,
       "tp_bag_fee": 900.0,
       "tp_bag_estimated": false,
@@ -2108,7 +2028,7 @@
       "tp_price": 11882.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE2311TYO1?t=TR17954166001795431300000185TPENRT_55f003d3aee7a3cfdb66f9ccddbd2d6e_14692&search_date=04112026&expected_price_uuid=01a1a64d-d9de-8030-2858-d6b46f97535a&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=e6mqHTfu8NLSJJHs6jdH8A&expected_price_source=share&expected_price_currency=twd&expected_price=5891",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 10002.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -2129,7 +2049,7 @@
       "tp_price": 11503.0,
       "tp_airline": "酷航／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE2311TYO1?t=TR17954166001795431300000185TPENRT_55f003d3aee7a3cfdb66f9ccddbd2d6e_14692&search_date=04112026&expected_price_uuid=01a1a64d-d9de-8030-2858-d6b46f97535a&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=e6mqHTfu8NLSJJHs6jdH8A&expected_price_source=share&expected_price_currency=twd&expected_price=5891",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9613.0,
       "tp_bag_fee": 1890.0,
       "tp_bag_estimated": false,
@@ -2152,7 +2072,7 @@
       "tp_price": 10637.0,
       "tp_airline": "酷航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE0512TYO1?t=TR17964807001796495400000185TPENRT_4d186b2a5fef6181256b43b4192e97f5_12213&search_date=03112026&expected_price_uuid=01a1a021-fabc-8040-6ab8-c0f9369e665f&static_fare_key=TY%7CP0%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxA1qBqye38gX0hGl_y53w&expected_price_source=share&expected_price_currency=twd&expected_price=4933",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8797.0,
       "tp_bag_fee": 1840.0,
       "tp_bag_estimated": false,
@@ -2173,7 +2093,7 @@
       "tp_price": 10353.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE0512TYO1?t=TR17964807001796495400000185TPENRT_4d186b2a5fef6181256b43b4192e97f5_12213&search_date=03112026&expected_price_uuid=01a1a021-fabc-8040-6ab8-c0f9369e665f&static_fare_key=TY%7CP0%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxA1qBqye38gX0hGl_y53w&expected_price_source=share&expected_price_currency=twd&expected_price=4933",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8473.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -2194,7 +2114,7 @@
       "tp_price": 11228.0,
       "tp_airline": "酷航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE1112TYO1?t=TR17969991001797013800000185TPENRT_7ee9c4dc4aad25ffffd3b1117f36be92_12695&search_date=01112026&expected_price_uuid=01a1962f-3a07-8031-68b0-16f8dc90d2e6&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxA1qBqye38gX0hGl_y53w&expected_price_source=share&expected_price_currency=twd&expected_price=5157",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9388.0,
       "tp_bag_fee": 1840.0,
       "tp_bag_estimated": false,
@@ -2215,7 +2135,7 @@
       "tp_price": 10851.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE1512TYO1?t=TR17973450001797359400000180TPENRT_8c1dc2baa5ad37f57e13ac2cff49494c_11499&search_date=04112026&expected_price_uuid=01a1a45f-0b23-8040-680f-5ae7b4642d16&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=84kBNeQOG4M9D1Y07itpcw&expected_price_source=share&expected_price_currency=twd&expected_price=4627",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8971.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -2236,7 +2156,7 @@
       "tp_price": 10194.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE1512TYO1?t=TR17973450001797359400000180TPENRT_8c1dc2baa5ad37f57e13ac2cff49494c_11499&search_date=04112026&expected_price_uuid=01a1a45f-0b23-8040-680f-5ae7b4642d16&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=84kBNeQOG4M9D1Y07itpcw&expected_price_source=share&expected_price_currency=twd&expected_price=4627",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8314.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -2257,7 +2177,7 @@
       "tp_price": 10737.0,
       "tp_airline": "酷航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE1512TYO1?t=TR17973450001797359400000180TPENRT_8c1dc2baa5ad37f57e13ac2cff49494c_11499&search_date=04112026&expected_price_uuid=01a1a45f-0b23-8040-680f-5ae7b4642d16&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=84kBNeQOG4M9D1Y07itpcw&expected_price_source=share&expected_price_currency=twd&expected_price=4627",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8897.0,
       "tp_bag_fee": 1840.0,
       "tp_bag_estimated": false,
@@ -2278,7 +2198,7 @@
       "tp_price": 11395.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE1712TYO1?t=TR17975175001797532200000185TPENRT_8be72cf44062c63d836f9e8334a44509_12849&search_date=04112026&expected_price_uuid=01a1a58f-319a-8030-22b3-4a36fd911322&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxA1qBqye38gX0hGl_y53w&expected_price_source=share&expected_price_currency=twd&expected_price=5171",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9515.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -2299,7 +2219,7 @@
       "tp_price": 11281.0,
       "tp_airline": "酷航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE1712TYO1?t=TR17975175001797532200000185TPENRT_8be72cf44062c63d836f9e8334a44509_12849&search_date=04112026&expected_price_uuid=01a1a58f-319a-8030-22b3-4a36fd911322&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxA1qBqye38gX0hGl_y53w&expected_price_source=share&expected_price_currency=twd&expected_price=5171",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9441.0,
       "tp_bag_fee": 1840.0,
       "tp_bag_estimated": false,
@@ -2320,7 +2240,7 @@
       "tp_price": 10995.0,
       "tp_airline": "酷航／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE1712TYO1?t=TR17975175001797532200000185TPENRT_8be72cf44062c63d836f9e8334a44509_12849&search_date=04112026&expected_price_uuid=01a1a58f-319a-8030-22b3-4a36fd911322&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxA1qBqye38gX0hGl_y53w&expected_price_source=share&expected_price_currency=twd&expected_price=5171",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9105.0,
       "tp_bag_fee": 1890.0,
       "tp_bag_estimated": false,
@@ -2341,7 +2261,7 @@
       "tp_price": 11274.0,
       "tp_airline": "台灣虎航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE2012TYO1?t=IT17977809001797795300000180TPENRT_a07f2e42c6fb0d4ccc41df4d45035843_12688&search_date=01112026&expected_price_uuid=01a1960d-a4a5-8030-2685-46ea5a6f0e4a&static_fare_key=TY%7CP1%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=KbgvR5sO3ONeeKTSH4Xafw&expected_price_source=share&expected_price_currency=twd&expected_price=5154",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9424.0,
       "tp_bag_fee": 1850.0,
       "tp_bag_estimated": false,
@@ -2363,7 +2283,7 @@
       "tp_price": 10722.0,
       "tp_airline": "酷航／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE2612TYO1?t=TR17982951001798309800000185TPENRT_29841c6dc0f5839969d394261fd24206_10339&search_date=07112026&expected_price_uuid=01a1b5f1-c14a-8030-648f-ba19cb48e7e7&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxA1qBqye38gX0hGl_y53w&expected_price_source=share&expected_price_currency=twd&expected_price=4136",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8832.0,
       "tp_bag_fee": 1890.0,
       "tp_bag_estimated": false,
@@ -2384,7 +2304,7 @@
       "tp_price": 9566.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1812HKG1?t=UO17976054001797612900000125TPEHKG_fc357e8195eee4271d7707630e46e713_5033&search_date=07112026&expected_price_uuid=01a1b62b-a304-8030-a580-5b3f303f413d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2014",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6766.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2405,7 +2325,7 @@
       "tp_price": 8380.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1812HKG20121?t=UO17976054001797612900000125TPEHKG17977686001797774900000105HKGTPE_f81e8a8af8e2438751d098bf7ab5fa13_13947&search_date=07112026&expected_price_uuid=01a1b62c-470a-8030-2b9b-fe28a3b39f8b&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=4_iNJZ0NflqCpjao8kQPtA&expected_price_source=share&expected_price_currency=twd&expected_price=5580",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5580.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2426,7 +2346,7 @@
       "tp_price": 7531.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1812HKG1?t=UO17976054001797612900000125TPEHKG_fc357e8195eee4271d7707630e46e713_5033&search_date=07112026&expected_price_uuid=01a1b62b-a304-8030-a580-5b3f303f413d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2014",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4731.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2447,7 +2367,7 @@
       "tp_price": 8784.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1812HKG1?t=UO17976054001797612900000125TPEHKG_fc357e8195eee4271d7707630e46e713_5033&search_date=07112026&expected_price_uuid=01a1b62b-a304-8030-a580-5b3f303f413d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2014",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5984.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2468,7 +2388,7 @@
       "tp_price": 8784.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1812HKG1?t=UO17976054001797612900000125TPEHKG_fc357e8195eee4271d7707630e46e713_5033&search_date=07112026&expected_price_uuid=01a1b62b-a304-8030-a580-5b3f303f413d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2014",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5984.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2489,7 +2409,7 @@
       "tp_price": 8748.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1912HKG1?t=UO17976885001797696000000125TPEHKG_8a0177e928ece04f3b2d15023ebef661_5047&search_date=07112026&expected_price_uuid=01a1b497-1c4e-8030-e908-f6d50ddf921f&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2019",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5948.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2510,7 +2430,7 @@
       "tp_price": 7536.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1912HKG1?t=UO17976885001797696000000125TPEHKG_8a0177e928ece04f3b2d15023ebef661_5047&search_date=07112026&expected_price_uuid=01a1b497-1c4e-8030-e908-f6d50ddf921f&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2019",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4736.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2531,7 +2451,7 @@
       "tp_price": 8789.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1912HKG1?t=UO17976885001797696000000125TPEHKG_8a0177e928ece04f3b2d15023ebef661_5047&search_date=07112026&expected_price_uuid=01a1b497-1c4e-8030-e908-f6d50ddf921f&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2019",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5989.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2552,7 +2472,7 @@
       "tp_price": 8789.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1912HKG1?t=UO17976885001797696000000125TPEHKG_8a0177e928ece04f3b2d15023ebef661_5047&search_date=07112026&expected_price_uuid=01a1b497-1c4e-8030-e908-f6d50ddf921f&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2019",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5989.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2574,7 +2494,7 @@
       "tp_price": 11038.0,
       "tp_airline": "樂桃航空／酷航",
       "tp_url": "https://www.aviasales.com/search/TPE1911TYO1?t=MM17951085001795123800000195TPENRT_bfbbf15c9dddd8fa93990ee8c65e30f9_12568&search_date=04112026&expected_price_uuid=01a1a45d-dbe6-8040-ae22-c50d3c5fccfb&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=se5362UWlwVgXoxk6QgGdQ&expected_price_source=share&expected_price_currency=twd&expected_price=5057",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9168.0,
       "tp_bag_fee": 1870.0,
       "tp_bag_estimated": false,
@@ -2595,7 +2515,7 @@
       "tp_price": 6827.0,
       "tp_airline": "香港快運／星宇航空",
       "tp_url": "https://www.aviasales.com/search/TPE1911HKG1?t=UO17950998001795107300000125TPEHKG_ae4724777724b66bab09dcaf25df2ccb_4810&search_date=04112026&expected_price_uuid=01a1a5fc-7c86-8030-6378-e4f8831b8450&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1930",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5427.0,
       "tp_bag_fee": 1400.0,
       "tp_bag_estimated": false,
@@ -2616,7 +2536,7 @@
       "tp_price": 7533.0,
       "tp_airline": "香港快運／大灣區航空",
       "tp_url": "https://www.aviasales.com/search/TPE1911HKG1?t=UO17950998001795107300000125TPEHKG_ae4724777724b66bab09dcaf25df2ccb_4810&search_date=04112026&expected_price_uuid=01a1a5fc-7c86-8030-6378-e4f8831b8450&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1930",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4613.0,
       "tp_bag_fee": 2920.0,
       "tp_bag_estimated": false,
@@ -2637,7 +2557,7 @@
       "tp_price": 11016.0,
       "tp_airline": "酷航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE1511TYO1?t=TR17947254001794740100000185TPENRT_a9886e8f04bbf5e38ae48fb1b5104fa9_11482&search_date=04112026&expected_price_uuid=01a1a64d-4d3d-8030-a7f4-a125c3f57461&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=e6mqHTfu8NLSJJHs6jdH8A&expected_price_source=share&expected_price_currency=twd&expected_price=4604",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9176.0,
       "tp_bag_fee": 1840.0,
       "tp_bag_estimated": false,
@@ -2659,7 +2579,7 @@
       "tp_price": 10179.0,
       "tp_airline": "酷航／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE1011TYO1?t=TR17942934001794308100000185TPENRT_e0e1e6ce90d295d6ef42d4c8a8a8a489_11482&search_date=04112026&expected_price_uuid=01a1a48a-a7a1-8031-6a34-88e513ddb5f4&static_fare_key=TY%7CP0%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=e6mqHTfu8NLSJJHs6jdH8A&expected_price_source=share&expected_price_currency=twd&expected_price=4621",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8289.0,
       "tp_bag_fee": 1890.0,
       "tp_bag_estimated": false,
@@ -2680,7 +2600,7 @@
       "tp_price": 8350.0,
       "tp_airline": "星宇航空／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE1111TYO1?t=JX17944092001794423600000180TPENRT_6150ccccb091777d1ea1f6cdcb1311f2_9268&search_date=03112026&expected_price_uuid=01a1a0cf-6107-8031-65f1-4177b4d11093&static_fare_key=TY%7CP1%7CH0%7CL1_1_20%7CCH0%7CR0%7CTBC1&itinerary_key=FxzumK5zRm_mgp9WuE302w&expected_price_source=share&expected_price_currency=twd&expected_price=3732",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 7400.0,
       "tp_bag_fee": 950.0,
       "tp_bag_estimated": false,
@@ -2702,7 +2622,7 @@
       "tp_price": 8946.0,
       "tp_airline": "星宇航空／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE1211TYO1?t=JX17944956001794510000000180TPENRT_63b362ea110776466853d06ed39f446f_9835&search_date=04112026&expected_price_uuid=01a1a67f-4d79-8031-201e-51d57c7cc845&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxzumK5zRm_mgp9WuE302w&expected_price_source=share&expected_price_currency=twd&expected_price=3944",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 7996.0,
       "tp_bag_fee": 950.0,
       "tp_bag_estimated": false,
@@ -2723,7 +2643,7 @@
       "tp_price": 9416.0,
       "tp_airline": "星宇航空／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE1211TYO1?t=JX17944956001794510000000180TPENRT_63b362ea110776466853d06ed39f446f_9835&search_date=04112026&expected_price_uuid=01a1a67f-4d79-8031-201e-51d57c7cc845&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxzumK5zRm_mgp9WuE302w&expected_price_source=share&expected_price_currency=twd&expected_price=3944",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8516.0,
       "tp_bag_fee": 900.0,
       "tp_bag_estimated": false,
@@ -2744,7 +2664,7 @@
       "tp_price": 7330.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0812HKG12121?t=UO17967381001796745600000125TPEHKG17970876001797093900000105HKGTPE_5a3aa1861fffde0cc72258d18fbc8b5b_11281&search_date=04112026&expected_price_uuid=01a1a6fc-6d35-8040-a7ad-d3d0b7102a3e&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=hrY6AcigiEy85gjHMDPjlQ&expected_price_source=share&expected_price_currency=twd&expected_price=4530",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4530.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2765,7 +2685,7 @@
       "tp_price": 14113.0,
       "tp_airline": "台灣虎航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE0401TYO1?t=IT17990445001799058900000180TPENRT_946e221f6927193be7ab30097164042d_19663&search_date=01112026&expected_price_uuid=01a196d8-9ea1-8030-aab5-525e26b5569f&static_fare_key=TY%7CP1%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=cPmD9A231M4_FFVRwbRKaA&expected_price_source=share&expected_price_currency=twd&expected_price=7988",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 12263.0,
       "tp_bag_fee": 1850.0,
       "tp_bag_estimated": false,
@@ -2786,7 +2706,7 @@
       "tp_price": 7447.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2711HKG01121?t=UO17957877001795795200000125TPEHKG17961504001796156700000105HKGTPE_464fce25fffd737c4f0d9fcee8012f6d_11565&search_date=04112026&expected_price_uuid=01a1a783-fc66-8040-2039-e092c72f1a2d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=t1a1kSiu2crxATNsAxrtjA&expected_price_source=share&expected_price_currency=twd&expected_price=4647",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4647.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2807,7 +2727,7 @@
       "tp_price": 7908.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1611HKG1?t=UO17948406001794848100000125TPEHKG_1ab8bffb4c9de5dca9470e26817a12ea_6177&search_date=07112026&expected_price_uuid=01a1b638-8451-8030-e04a-e40168abb7be&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=2471",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5108.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2828,7 +2748,7 @@
       "tp_price": 7404.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1711HKG1?t=UO17949270001794934500000125TPEHKG_eeae4374859eb2fb61d7f9c3eeffb2dc_4870&search_date=05112026&expected_price_uuid=01a1a9b5-7732-8030-2949-13d5e0a704b2&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1967",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4604.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2849,7 +2769,7 @@
       "tp_price": 7391.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1811HKG1?t=UO17950101001795017600000125TPEHKG_3def38f4825074d12f6ac0fccf27bdd1_4884&search_date=07112026&expected_price_uuid=01a1b3df-77c0-8030-ee4a-b67e19ae7f36&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1954",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4591.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2870,7 +2790,7 @@
       "tp_price": 7367.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1911HKG1?t=UO17950998001795107300000125TPEHKG_ae4724777724b66bab09dcaf25df2ccb_4810&search_date=04112026&expected_price_uuid=01a1a5fc-7c86-8030-6378-e4f8831b8450&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1930",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4567.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2891,7 +2811,7 @@
       "tp_price": 7448.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2011HKG1?t=UO17952093001795217100000130TPEHKG_2e0c08622ef946412acb6012af028e89_5027&search_date=08112026&expected_price_uuid=01a1b8b8-b10a-8030-2c1d-127542154d50&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=2011",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4648.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -2913,7 +2833,7 @@
       "tp_price": 10471.0,
       "tp_airline": "酷航",
       "tp_url": "https://www.aviasales.com/search/TPE1712TYO22121?t=IT17975175001797532200000185TPENRT17979156001797926100000235HNDTPE_4420b32f9d64265c9bfef7d01fdf333c_21222&search_date=05112026&expected_price_uuid=01a1ab7c-7d77-8040-acb1-9d184d3785c6&static_fare_key=TY%7CP1%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=ivDP0KATiMHmJ5Zcx6iH_w&expected_price_source=share&expected_price_currency=twd&expected_price=8591",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8591.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -2935,7 +2855,7 @@
       "tp_price": 10513.0,
       "tp_airline": "酷航／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE1811TYO1?t=TR17949846001794999300000185TPENRT_8fcb1ee1ebdf038a004f1a3af9e26dfd_10834&search_date=03112026&expected_price_uuid=01a1a1bb-2b35-8040-22db-e6dd6838c380&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=e6mqHTfu8NLSJJHs6jdH8A&expected_price_source=share&expected_price_currency=twd&expected_price=4361",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8623.0,
       "tp_bag_fee": 1890.0,
       "tp_bag_estimated": false,
@@ -2956,7 +2876,7 @@
       "tp_price": 11199.0,
       "tp_airline": "樂桃航空／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE1911TYO1?t=MM17951085001795123800000195TPENRT_bfbbf15c9dddd8fa93990ee8c65e30f9_12568&search_date=04112026&expected_price_uuid=01a1a45d-dbe6-8040-ae22-c50d3c5fccfb&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=se5362UWlwVgXoxk6QgGdQ&expected_price_source=share&expected_price_currency=twd&expected_price=5057",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9319.0,
       "tp_bag_fee": 1880.0,
       "tp_bag_estimated": false,
@@ -2978,7 +2898,7 @@
       "tp_price": 11088.0,
       "tp_airline": "星宇航空／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE2211TYO1?t=JX17953596001795374000000180TPENRT_c8e3528c28aedc7c7a9e6300d30655b7_14688&search_date=07112026&expected_price_uuid=01a1b85d-99ae-8030-a380-bde840fa4e82&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxzumK5zRm_mgp9WuE302w&expected_price_source=share&expected_price_currency=twd&expected_price=5876",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 10138.0,
       "tp_bag_fee": 950.0,
       "tp_bag_estimated": false,
@@ -2999,7 +2919,7 @@
       "tp_price": 10929.0,
       "tp_airline": "星宇航空／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE2211TYO1?t=JX17953596001795374000000180TPENRT_c8e3528c28aedc7c7a9e6300d30655b7_14688&search_date=07112026&expected_price_uuid=01a1b85d-99ae-8030-a380-bde840fa4e82&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxzumK5zRm_mgp9WuE302w&expected_price_source=share&expected_price_currency=twd&expected_price=5876",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9979.0,
       "tp_bag_fee": 950.0,
       "tp_bag_estimated": false,
@@ -3020,7 +2940,7 @@
       "tp_price": 11884.0,
       "tp_airline": "酷航／台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE2311TYO1?t=TR17954166001795431300000185TPENRT_55f003d3aee7a3cfdb66f9ccddbd2d6e_14692&search_date=04112026&expected_price_uuid=01a1a64d-d9de-8030-2858-d6b46f97535a&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=e6mqHTfu8NLSJJHs6jdH8A&expected_price_source=share&expected_price_currency=twd&expected_price=5891",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9994.0,
       "tp_bag_fee": 1890.0,
       "tp_bag_estimated": false,
@@ -3041,7 +2961,7 @@
       "tp_price": 10254.0,
       "tp_airline": "台灣虎航",
       "tp_url": "https://www.aviasales.com/search/TPE2912TYO1?t=IT17985261001798540500000180TPENRT_ed4bd0367fae18b73b1f28cede725ddf_9035&search_date=05112026&expected_price_uuid=01a1abf4-e471-8030-e1b5-acd965795603&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=cPmD9A231M4_FFVRwbRKaA&expected_price_source=share&expected_price_currency=twd&expected_price=3658",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8354.0,
       "tp_bag_fee": 1900.0,
       "tp_bag_estimated": false,
@@ -3062,7 +2982,7 @@
       "tp_price": 10748.0,
       "tp_airline": "台灣虎航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE2912TYO1?t=IT17985261001798540500000180TPENRT_ed4bd0367fae18b73b1f28cede725ddf_9035&search_date=05112026&expected_price_uuid=01a1abf4-e471-8030-e1b5-acd965795603&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=cPmD9A231M4_FFVRwbRKaA&expected_price_source=share&expected_price_currency=twd&expected_price=3658",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8898.0,
       "tp_bag_fee": 1850.0,
       "tp_bag_estimated": false,
@@ -3083,7 +3003,7 @@
       "tp_price": 14677.0,
       "tp_airline": "捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE0201TYO1?t=GK17988570001798871700000185TPENRT_bfbbf4e3ae9f6d540a85c765bf6b9468_18866&search_date=05112026&expected_price_uuid=01a1abf5-79ee-8030-261d-7fc85a33b1dc&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=F0k9xPsLRtCXZwnC3Gh0kw&expected_price_source=share&expected_price_currency=twd&expected_price=7637",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 12877.0,
       "tp_bag_fee": 1800.0,
       "tp_bag_estimated": false,
@@ -3108,7 +3028,7 @@
       "tp_price": 13364.0,
       "tp_airline": "酷航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE1511TYO1?t=TR17947254001794740100000185TPENRT_a9886e8f04bbf5e38ae48fb1b5104fa9_11482&search_date=04112026&expected_price_uuid=01a1a64d-4d3d-8030-a7f4-a125c3f57461&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=e6mqHTfu8NLSJJHs6jdH8A&expected_price_source=share&expected_price_currency=twd&expected_price=4604",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 11524.0,
       "tp_bag_fee": 1840.0,
       "tp_bag_estimated": false,
@@ -3130,7 +3050,7 @@
       "tp_price": 13807.0,
       "tp_airline": "樂桃航空／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE1911TYO1?t=MM17951085001795123800000195TPENRT_bfbbf15c9dddd8fa93990ee8c65e30f9_12568&search_date=04112026&expected_price_uuid=01a1a45d-dbe6-8040-ae22-c50d3c5fccfb&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=se5362UWlwVgXoxk6QgGdQ&expected_price_source=share&expected_price_currency=twd&expected_price=5057",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 11977.0,
       "tp_bag_fee": 1830.0,
       "tp_bag_estimated": false,
@@ -3151,7 +3071,7 @@
       "tp_price": 9492.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE3012HKG02011?t=UO17986653001798673100000130TPEHKG17989152001798921500000105HKGTPE_7a3cb7897a35caf48af118db45a57657_16708&search_date=06112026&expected_price_uuid=01a1b1ac-7d25-8040-6837-0ba5b53619fe&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=72dExUfgWa_ZbWP7JdpubA&expected_price_source=share&expected_price_currency=twd&expected_price=6692",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6692.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3172,7 +3092,7 @@
       "tp_price": 8440.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0401HKG08011?t=UO17990973001799105100000130TPEHKG17994336001799439900000105HKGTPE_6e65f3f8aca42b18d5af101f2790cd00_14013&search_date=06112026&expected_price_uuid=01a1afa3-e383-8030-26c6-c9cf66950bf5&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=F3UBBb7_VoLZmFo0iD6vhQ&expected_price_source=share&expected_price_currency=twd&expected_price=5640",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5640.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3193,7 +3113,7 @@
       "tp_price": 7438.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2711HKG30111?t=UO17957910001795798500000125TPEHKG17960508001796057100000105HKGTPE_0964802b09b1a507fa41b7afee4c5b39_11593&search_date=07112026&expected_price_uuid=01a1b42a-6810-8040-2438-f08c960ae673&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=U0XZSuocYMwmdS5g6_gyJw&expected_price_source=share&expected_price_currency=twd&expected_price=4638",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4638.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3214,7 +3134,7 @@
       "tp_price": 7534.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2711HKG1?t=UO17957877001795795200000125TPEHKG_eb5cbc3da5607dd8ce012e1d4990f56e_5220&search_date=06112026&expected_price_uuid=01a1b00e-459d-8030-6206-438d44687049&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2097",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4734.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3235,7 +3155,7 @@
       "tp_price": 7274.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0601HKG1?t=UO17992701001799277900000130TPEHKG_ba10605d9799ce802c8d9c2ca1b56d73_4564&search_date=06112026&expected_price_uuid=01a1af3d-437d-8040-a394-a261cf7d6b02&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1837",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4474.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3256,7 +3176,7 @@
       "tp_price": 7403.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0601HKG1?t=UO17992701001799277900000130TPEHKG_ba10605d9799ce802c8d9c2ca1b56d73_4564&search_date=06112026&expected_price_uuid=01a1af3d-437d-8040-a394-a261cf7d6b02&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1837",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4603.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3277,7 +3197,7 @@
       "tp_price": 7536.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0601HKG1?t=UO17992701001799277900000130TPEHKG_ba10605d9799ce802c8d9c2ca1b56d73_4564&search_date=06112026&expected_price_uuid=01a1af3d-437d-8040-a394-a261cf7d6b02&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1837",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4736.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3298,7 +3218,7 @@
       "tp_price": 7290.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0601HKG1?t=UO17992701001799277900000130TPEHKG_ba10605d9799ce802c8d9c2ca1b56d73_4564&search_date=06112026&expected_price_uuid=01a1af3d-437d-8040-a394-a261cf7d6b02&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1837",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4490.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3319,7 +3239,7 @@
       "tp_price": 7247.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0601HKG1?t=UO17992701001799277900000130TPEHKG_ba10605d9799ce802c8d9c2ca1b56d73_4564&search_date=06112026&expected_price_uuid=01a1af3d-437d-8040-a394-a261cf7d6b02&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1837",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4447.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3340,7 +3260,7 @@
       "tp_price": 11879.0,
       "tp_airline": "酷航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE0601TYO1?t=TR17992455001799260200000185TPENRT_6f7ce70bf42533eb0c275ad4f3ddfb81_14319&search_date=03112026&expected_price_uuid=01a1a18a-99a8-8031-2f1d-4af359ce17f7&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxA1qBqye38gX0hGl_y53w&expected_price_source=share&expected_price_currency=twd&expected_price=5764",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 10039.0,
       "tp_bag_fee": 1840.0,
       "tp_bag_estimated": false,
@@ -3361,7 +3281,7 @@
       "tp_price": 11018.0,
       "tp_airline": "酷航／捷星日本",
       "tp_url": "https://www.aviasales.com/search/TPE0601TYO1?t=TR17992455001799260200000185TPENRT_6f7ce70bf42533eb0c275ad4f3ddfb81_14319&search_date=03112026&expected_price_uuid=01a1a18a-99a8-8031-2f1d-4af359ce17f7&static_fare_key=TY%7CP1_JW%7CH1%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=FxA1qBqye38gX0hGl_y53w&expected_price_source=share&expected_price_currency=twd&expected_price=5764",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 9178.0,
       "tp_bag_fee": 1840.0,
       "tp_bag_estimated": false,
@@ -3382,7 +3302,7 @@
       "tp_price": 7419.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2111HKG25111?t=UO17952957001795303500000130TPEHKG17956320001795638300000105HKGTPE_be8c5decf854b9dd0849b69e4939b01b_11546&search_date=07112026&expected_price_uuid=01a1b42a-8dc5-8040-ab75-5eb73b1ea8f9&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=F3UBBb7_VoLZmFo0iD6vhQ&expected_price_source=share&expected_price_currency=twd&expected_price=4619",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4619.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3403,7 +3323,7 @@
       "tp_price": 7441.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2111HKG23111?t=UO17952693001795276800000125TPEHKG17954358001795442100000105HKGTPE_c3eef31b466446eb087a2653437ba096_11601&search_date=07112026&expected_price_uuid=01a1b42c-8083-8040-6a09-b8fdd44e99f0&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=TavMzZvpYfsuv8896huTlg&expected_price_source=share&expected_price_currency=twd&expected_price=4641",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4641.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3426,7 +3346,7 @@
       "tp_price": 10377.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2512HKG1?t=UO17982204001798227900000125TPEHKG_8f8b617770137cc0ead95b2c259643ad_7945&search_date=07112026&expected_price_uuid=01a1b5a0-cf2d-8040-2b6c-c1abc9d5260b&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=EppBax3SyixbHuAoFsftLw&expected_price_source=share&expected_price_currency=twd&expected_price=3178",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 7577.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3447,7 +3367,7 @@
       "tp_price": 9186.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2512HKG1?t=UO17982204001798227900000125TPEHKG_8f8b617770137cc0ead95b2c259643ad_7945&search_date=07112026&expected_price_uuid=01a1b5a0-cf2d-8040-2b6c-c1abc9d5260b&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=EppBax3SyixbHuAoFsftLw&expected_price_source=share&expected_price_currency=twd&expected_price=3178",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6386.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3468,7 +3388,7 @@
       "tp_price": 10226.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2912HKG1?t=UO17985558001798563300000125TPEHKG_1792902c601f909ede9111942062701a_10384&search_date=01112026&expected_price_uuid=01a19704-8d2e-8031-26dd-9c80b4df9bbc&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=4218",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 7426.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3489,7 +3409,7 @@
       "tp_price": 9884.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE3112HKG1?t=UO17987517001798759500000130TPEHKG_9896fd332ec76abe22b9e53b4a2477ce_9541&search_date=01112026&expected_price_uuid=01a196ba-2614-8030-22aa-9f545194b1a1&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=3876",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 7084.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3510,7 +3430,7 @@
       "tp_price": 9456.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0101HKG1?t=UO17988381001798845900000130TPEHKG_84e9d57dd26472d2cd9246620d2e4fc5_8618&search_date=06112026&expected_price_uuid=01a1b24f-cf51-8030-e57a-5b2bc83ea8e6&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=3448",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 6656.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3531,7 +3451,7 @@
       "tp_price": 8768.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2911HKG1?t=UO17959605001795968000000125TPEHKG_539bb8ad836b86830725964125436857_8051&search_date=04112026&expected_price_uuid=01a1a427-5409-8031-6158-f57a19393890&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=3240",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5968.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3552,7 +3472,7 @@
       "tp_price": 8016.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE3011HKG1?t=UO17960469001796054400000125TPEHKG_d91b8661cd175589ac5ce4fe802847e9_6159&search_date=05112026&expected_price_uuid=01a1a998-d4c2-8031-2a8c-7dcbc8a9b4c8&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2488",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5216.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3573,7 +3493,7 @@
       "tp_price": 7436.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0112HKG1?t=UO17961366001796144100000125TPEHKG_23cb3745c01b01a7ce191e781d2b196e_4748&search_date=06112026&expected_price_uuid=01a1b00d-e2be-8030-e370-d522d2e6e22d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1908",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4636.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3594,7 +3514,7 @@
       "tp_price": 7462.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0212HKG1?t=UO17962197001796227200000125TPEHKG_01b683682eeaaf7426c3b83b3f8f29c2_4806&search_date=06112026&expected_price_uuid=01a1af4e-98bf-8030-2532-e6cd33179789&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1934",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4662.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3615,7 +3535,7 @@
       "tp_price": 7455.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0312HKG1?t=UO17963094001796316900000125TPEHKG_a4c34c8aa4f43bdb0dd7053fa8501f6f_4794&search_date=02112026&expected_price_uuid=01a19cf8-4fe2-8030-2130-8f115a85b6c2&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1927",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4655.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3636,7 +3556,7 @@
       "tp_price": 11292.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2412HKG27121?t=UO17981205001798128000000125TPEHKG17983707001798377000000105HKGTPE_03b6be64cbdeaf71cc998f9733304ed1_21226&search_date=07112026&expected_price_uuid=01a1b66f-0b6c-8040-2724-a77f2be1c725&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=ri-chGQWM7-Bt0fIOmL1zw&expected_price_source=share&expected_price_currency=twd&expected_price=8492",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 8492.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3657,7 +3577,7 @@
       "tp_price": 7486.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0412HKG1?t=UO17963925001796400000000125TPEHKG_44186dfa7ccc6e68031eb9b73b44a3b2_5103&search_date=02112026&expected_price_uuid=01a19cec-5e31-8030-aad6-c812561f637d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2052",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4686.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3678,7 +3598,7 @@
       "tp_price": 7718.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0701HKG1?t=UO17993301001799337600000125TPEHKG_7b46e52d02cee858cb54dd1322069ec2_5379&search_date=07112026&expected_price_uuid=01a1b58d-2436-8031-63d3-45006d965bec&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2152",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4918.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3699,7 +3619,7 @@
       "tp_price": 7851.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0701HKG1?t=UO17993301001799337600000125TPEHKG_7b46e52d02cee858cb54dd1322069ec2_5379&search_date=07112026&expected_price_uuid=01a1b58d-2436-8031-63d3-45006d965bec&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2152",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 5051.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3720,7 +3640,7 @@
       "tp_price": 7605.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0701HKG1?t=UO17993301001799337600000125TPEHKG_7b46e52d02cee858cb54dd1322069ec2_5379&search_date=07112026&expected_price_uuid=01a1b58d-2436-8031-63d3-45006d965bec&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2152",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4805.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3741,7 +3661,7 @@
       "tp_price": 7562.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0701HKG1?t=UO17993301001799337600000125TPEHKG_7b46e52d02cee858cb54dd1322069ec2_5379&search_date=07112026&expected_price_uuid=01a1b58d-2436-8031-63d3-45006d965bec&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=2152",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4762.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3762,7 +3682,7 @@
       "tp_price": 7531.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE0912HKG1?t=UO17968245001796832000000125TPEHKG_1a99db4d31ef8729ecce0272e761c202_4766&search_date=01112026&expected_price_uuid=01a1961a-a38c-8030-6838-a24d513da056&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1936",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4731.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3783,7 +3703,7 @@
       "tp_price": 7434.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1012HKG1?t=UO17969373001796945100000130TPEHKG_7aa8b0fac890e6b0eeb04eeacac07d4d_4571&search_date=04112026&expected_price_uuid=01a1a4ed-28ad-8040-60e9-89853d02c955&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1839",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4634.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3804,7 +3724,7 @@
       "tp_price": 7506.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE1112HKG1?t=UO17970006001797008100000125TPEHKG_7b7a8f086765f2fe9426c295bbefe946_4745&search_date=03112026&expected_price_uuid=01a1a0f9-f552-8031-6225-3251476db7aa&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1911",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4706.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3825,7 +3745,7 @@
       "tp_price": 7359.0,
       "tp_airline": "香港快運",
       "tp_url": "https://www.aviasales.com/search/TPE2511HKG1?t=UO17956182001795625700000125TPEHKG_832488f527b8322478178df9dd4b2740_4806&search_date=08112026&expected_price_uuid=01a1b93c-69a1-8031-21db-266814f3a213&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1923",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4559.0,
       "tp_bag_fee": 2800.0,
       "tp_bag_estimated": false,
@@ -3846,7 +3766,7 @@
       "tp_price": 7760.0,
       "tp_airline": "香港快運／大灣區航空",
       "tp_url": "https://www.aviasales.com/search/TPE2511HKG1?t=UO17956182001795625700000125TPEHKG_832488f527b8322478178df9dd4b2740_4806&search_date=08112026&expected_price_uuid=01a1b93c-69a1-8031-21db-266814f3a213&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1923",
-      "tp_at": "2026-11-08T12:51:19+08:00",
+      "tp_at": "2026-11-08T15:26:01+08:00",
       "tp_fare": 4840.0,
       "tp_bag_fee": 2920.0,
       "tp_bag_estimated": false,
@@ -3863,27 +3783,7 @@
         "airline_code": "UO"
       }
     },
-    "HKG:2026-11-25_2026-11-30": {
-      "tp_price": 7296.0,
-      "tp_airline": "香港快運",
-      "tp_url": "https://www.aviasales.com/search/TPE2511HKG1?t=UO17956182001795625700000125TPEHKG_832488f527b8322478178df9dd4b2740_4806&search_date=08112026&expected_price_uuid=01a1b93c-69a1-8031-21db-266814f3a213&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=CUHECzBqkdvAhq_gf_qPTg&expected_price_source=share&expected_price_currency=twd&expected_price=1923",
-      "tp_at": "2026-11-08T12:51:19+08:00",
-      "tp_fare": 4496.0,
-      "tp_bag_fee": 2800.0,
-      "tp_bag_estimated": false,
-      "tp_flight": {
-        "flight_no": "UO 113／UO 112",
-        "depart_time": "14:50",
-        "arrive_time": "16:55",
-        "return_depart_time": "12:10",
-        "origin_airport": "TPE",
-        "destination_airport": "HKG",
-        "duration_to": 125,
-        "duration_back": 105,
-        "split": true,
-        "airline_code": "UO"
-      }
-    }
+    "HKG:2026-11-25_2026-11-30": {}
   },
   "tp_samples": {
     "HKG:2026-11-26_2026-11-30|2026-11-02": {
@@ -9326,97 +9226,97 @@
       "route": "HKG",
       "price": 7356.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-21_2026-11-25|2026-11-08": {
       "route": "HKG",
       "price": 7419.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-27_2026-11-30|2026-11-08": {
       "route": "HKG",
       "price": 7438.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-21_2026-11-23|2026-11-08": {
       "route": "HKG",
       "price": 7441.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-27_2026-12-01|2026-11-08": {
       "route": "HKG",
       "price": 7447.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-15_2026-11-17|2026-11-08": {
       "route": "HKG",
       "price": 7686.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-27_2026-11-29|2026-11-08": {
       "route": "HKG",
       "price": 7548.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-01_2026-12-05|2026-11-08": {
       "route": "HKG",
       "price": 6983.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-03_2026-12-07|2026-11-08": {
       "route": "HKG",
       "price": 7179.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-02_2026-12-06|2026-11-08": {
       "route": "HKG",
       "price": 7185.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-08_2026-12-12|2026-11-08": {
       "route": "HKG",
       "price": 7330.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-04_2026-12-06|2026-11-08": {
       "route": "HKG",
       "price": 7347.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-18_2026-12-20|2026-11-08": {
       "route": "HKG",
       "price": 8380.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-30_2027-01-02|2026-11-08": {
       "route": "HKG",
       "price": 9492.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-24_2026-12-27|2026-11-08": {
       "route": "HKG",
       "price": 11292.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-04_2027-01-08|2026-11-08": {
       "route": "HKG",
       "price": 8440.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "MFM:2026-11-12_2026-11-16|2026-11-08": {
       "route": "MFM",
@@ -9428,43 +9328,43 @@
       "route": "MFM",
       "price": 6761.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "MFM:2026-12-04_2026-12-08|2026-11-08": {
       "route": "MFM",
       "price": 7230.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-27_2026-12-01|2026-11-08": {
       "route": "TYO",
       "price": 9571.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-25_2026-11-29|2026-11-08": {
       "route": "TYO",
       "price": 10264.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-28_2026-12-04|2026-11-08": {
       "route": "TYO",
       "price": 11582.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-22_2026-11-26|2026-11-08": {
       "route": "TYO",
       "price": 11926.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-22_2026-11-24|2026-11-08": {
       "route": "TYO",
       "price": 12082.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-21_2026-11-25|2026-11-08": {
       "route": "TYO",
@@ -9476,19 +9376,19 @@
       "route": "TYO",
       "price": 11353.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-29_2026-12-04|2026-11-08": {
       "route": "TYO",
       "price": 13878.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-17_2026-12-22|2026-11-08": {
       "route": "TYO",
       "price": 10471.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-01_2026-12-05|2026-11-08": {
       "route": "TYO",
@@ -9500,145 +9400,145 @@
       "route": "TYO",
       "price": 10945.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-29_2027-01-02|2026-11-08": {
       "route": "TYO",
       "price": 10576.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-22_2026-12-24|2026-11-08": {
       "route": "TYO",
       "price": 11085.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-22_2026-12-28|2026-11-08": {
       "route": "TYO",
       "price": 14131.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-22_2026-12-26|2026-11-08": {
       "route": "TYO",
       "price": 17746.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-23_2026-12-27|2026-11-08": {
       "route": "TYO",
       "price": 18236.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-10_2026-11-11|2026-11-08": {
       "route": "HKG",
       "price": 7985.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-10_2026-11-12|2026-11-08": {
       "route": "HKG",
       "price": 8407.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-10_2026-11-13|2026-11-08": {
       "route": "HKG",
       "price": 8065.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-10_2026-11-14|2026-11-08": {
       "route": "HKG",
       "price": 8022.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-11_2026-11-12|2026-11-08": {
       "route": "HKG",
       "price": 8662.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-11_2026-11-13|2026-11-08": {
       "route": "HKG",
       "price": 8320.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-11_2026-11-14|2026-11-08": {
       "route": "HKG",
       "price": 8277.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-11_2026-11-16|2026-11-08": {
       "route": "HKG",
       "price": 7485.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-12_2026-11-13|2026-11-08": {
       "route": "HKG",
       "price": 7441.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-12_2026-11-14|2026-11-08": {
       "route": "HKG",
       "price": 7398.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-12_2026-11-16|2026-11-08": {
       "route": "HKG",
       "price": 6606.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-12_2026-11-17|2026-11-08": {
       "route": "HKG",
       "price": 7361.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-13_2026-11-14|2026-11-08": {
       "route": "HKG",
       "price": 7519.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-13_2026-11-16|2026-11-08": {
       "route": "HKG",
       "price": 6727.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-13_2026-11-17|2026-11-08": {
       "route": "HKG",
       "price": 7482.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-14_2026-11-16|2026-11-08": {
       "route": "HKG",
       "price": 7030.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-14_2026-11-17|2026-11-08": {
       "route": "HKG",
       "price": 7785.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-14_2026-11-19|2026-11-08": {
       "route": "HKG",
       "price": 8085.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-15_2026-11-16|2026-11-08": {
       "route": "HKG",
@@ -9662,151 +9562,151 @@
       "route": "HKG",
       "price": 7908.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-16_2026-11-19|2026-11-08": {
       "route": "HKG",
       "price": 8208.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-16_2026-11-20|2026-11-08": {
       "route": "HKG",
       "price": 7368.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-16_2026-11-21|2026-11-08": {
       "route": "HKG",
       "price": 7908.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-17_2026-11-19|2026-11-08": {
       "route": "HKG",
       "price": 7704.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-17_2026-11-20|2026-11-08": {
       "route": "HKG",
       "price": 6864.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-17_2026-11-21|2026-11-08": {
       "route": "HKG",
       "price": 7404.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-17_2026-11-22|2026-11-08": {
       "route": "HKG",
       "price": 7570.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-18_2026-11-19|2026-11-08": {
       "route": "HKG",
       "price": 7691.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-18_2026-11-20|2026-11-08": {
       "route": "HKG",
       "price": 6851.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-18_2026-11-21|2026-11-08": {
       "route": "HKG",
       "price": 7391.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-18_2026-11-22|2026-11-08": {
       "route": "HKG",
       "price": 7557.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-19_2026-11-20|2026-11-08": {
       "route": "HKG",
       "price": 6827.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-19_2026-11-21|2026-11-08": {
       "route": "HKG",
       "price": 7367.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-19_2026-11-22|2026-11-08": {
       "route": "HKG",
       "price": 7533.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-20_2026-11-21|2026-11-08": {
       "route": "HKG",
       "price": 7448.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-20_2026-11-22|2026-11-08": {
       "route": "HKG",
       "price": 7614.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-21_2026-11-22|2026-11-08": {
       "route": "HKG",
       "price": 7614.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-21_2026-11-26|2026-11-08": {
       "route": "HKG",
       "price": 7447.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-22_2026-11-26|2026-11-08": {
       "route": "HKG",
       "price": 8238.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-22_2026-11-27|2026-11-08": {
       "route": "HKG",
       "price": 8639.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-23_2026-11-26|2026-11-08": {
       "route": "HKG",
       "price": 7310.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-23_2026-11-27|2026-11-08": {
       "route": "HKG",
       "price": 7711.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-27_2026-12-02|2026-11-08": {
       "route": "HKG",
       "price": 7534.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-28_2026-11-29|2026-11-08": {
       "route": "HKG",
       "price": 7376.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-28_2026-11-30|2026-11-08": {
       "route": "HKG",
@@ -9818,13 +9718,13 @@
       "route": "HKG",
       "price": 7369.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-28_2026-12-02|2026-11-08": {
       "route": "HKG",
       "price": 7362.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-28_2026-12-03|2026-11-08": {
       "route": "HKG",
@@ -9842,13 +9742,13 @@
       "route": "HKG",
       "price": 8684.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-29_2026-12-02|2026-11-08": {
       "route": "HKG",
       "price": 8677.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-29_2026-12-03|2026-11-08": {
       "route": "HKG",
@@ -9860,19 +9760,19 @@
       "route": "HKG",
       "price": 8768.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-30_2026-12-01|2026-11-08": {
       "route": "HKG",
       "price": 7932.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-30_2026-12-02|2026-11-08": {
       "route": "HKG",
       "price": 7925.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-30_2026-12-03|2026-11-08": {
       "route": "HKG",
@@ -9884,19 +9784,19 @@
       "route": "HKG",
       "price": 8016.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-30_2026-12-05|2026-11-08": {
       "route": "HKG",
       "price": 7858.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-01_2026-12-02|2026-11-08": {
       "route": "HKG",
       "price": 7345.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-01_2026-12-03|2026-11-08": {
       "route": "HKG",
@@ -9908,7 +9808,7 @@
       "route": "HKG",
       "price": 7436.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-02_2026-12-03|2026-11-08": {
       "route": "HKG",
@@ -9920,235 +9820,235 @@
       "route": "HKG",
       "price": 7462.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-02_2026-12-05|2026-11-08": {
       "route": "HKG",
       "price": 7304.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-03_2026-12-04|2026-11-08": {
       "route": "HKG",
       "price": 7455.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-03_2026-12-05|2026-11-08": {
       "route": "HKG",
       "price": 7297.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-03_2026-12-08|2026-11-08": {
       "route": "HKG",
       "price": 7379.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-04_2026-12-05|2026-11-08": {
       "route": "HKG",
       "price": 7422.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-04_2026-12-08|2026-11-08": {
       "route": "HKG",
       "price": 7504.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-04_2026-12-09|2026-11-08": {
       "route": "HKG",
       "price": 7486.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-10_2026-12-15|2026-11-08": {
       "route": "HKG",
-      "price": 7276.0,
+      "price": 7271.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-11_2026-12-15|2026-11-08": {
       "route": "HKG",
-      "price": 7348.0,
+      "price": 7343.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-11_2026-12-16|2026-11-08": {
       "route": "HKG",
-      "price": 7375.0,
+      "price": 7348.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-12_2026-12-15|2026-11-08": {
       "route": "HKG",
-      "price": 7498.0,
+      "price": 7446.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-12_2026-12-16|2026-11-08": {
       "route": "HKG",
-      "price": 7525.0,
+      "price": 7451.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-15_2026-12-16|2026-11-08": {
       "route": "HKG",
-      "price": 7262.0,
+      "price": 7235.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-15_2026-12-19|2026-11-08": {
       "route": "HKG",
       "price": 9350.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-15_2026-12-20|2026-11-08": {
       "route": "HKG",
       "price": 8527.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-16_2026-12-19|2026-11-08": {
       "route": "HKG",
       "price": 9463.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-16_2026-12-20|2026-11-08": {
       "route": "HKG",
       "price": 8640.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-16_2026-12-21|2026-11-08": {
       "route": "HKG",
       "price": 7428.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-17_2026-12-19|2026-11-08": {
       "route": "HKG",
       "price": 9342.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-17_2026-12-20|2026-11-08": {
       "route": "HKG",
       "price": 8519.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-17_2026-12-21|2026-11-08": {
       "route": "HKG",
       "price": 7307.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-17_2026-12-22|2026-11-08": {
       "route": "HKG",
       "price": 8560.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-18_2026-12-19|2026-11-08": {
       "route": "HKG",
       "price": 9566.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-18_2026-12-21|2026-11-08": {
       "route": "HKG",
       "price": 7531.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-18_2026-12-22|2026-11-08": {
       "route": "HKG",
       "price": 8784.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-18_2026-12-23|2026-11-08": {
       "route": "HKG",
       "price": 8784.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-19_2026-12-20|2026-11-08": {
       "route": "HKG",
       "price": 8748.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-19_2026-12-21|2026-11-08": {
       "route": "HKG",
       "price": 7536.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-19_2026-12-22|2026-11-08": {
       "route": "HKG",
       "price": 8789.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-19_2026-12-23|2026-11-08": {
       "route": "HKG",
       "price": 8789.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-21_2026-12-22|2026-11-08": {
       "route": "HKG",
       "price": 9237.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-21_2026-12-23|2026-11-08": {
       "route": "HKG",
       "price": 9237.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-21_2026-12-26|2026-11-08": {
       "route": "HKG",
       "price": 9666.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-25_2026-12-26|2026-11-08": {
       "route": "HKG",
       "price": 10377.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-25_2026-12-29|2026-11-08": {
       "route": "HKG",
       "price": 9186.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-29_2027-01-02|2026-11-08": {
       "route": "HKG",
       "price": 10226.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-31_2027-01-02|2026-11-08": {
       "route": "HKG",
       "price": 9884.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-01_2027-01-02|2026-11-08": {
       "route": "HKG",
       "price": 9456.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-02_2027-01-07|2026-11-08": {
       "route": "HKG",
@@ -10160,73 +10060,73 @@
       "route": "HKG",
       "price": 7274.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-06_2027-01-08|2026-11-08": {
       "route": "HKG",
       "price": 7403.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-06_2027-01-09|2026-11-08": {
       "route": "HKG",
       "price": 7536.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-06_2027-01-10|2026-11-08": {
       "route": "HKG",
       "price": 7290.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-06_2027-01-11|2026-11-08": {
       "route": "HKG",
       "price": 7247.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-07_2027-01-08|2026-11-08": {
       "route": "HKG",
       "price": 7718.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-07_2027-01-09|2026-11-08": {
       "route": "HKG",
       "price": 7851.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-07_2027-01-10|2026-11-08": {
       "route": "HKG",
       "price": 7605.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2027-01-07_2027-01-11|2026-11-08": {
       "route": "HKG",
       "price": 7562.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-10_2026-11-11|2026-11-08": {
       "route": "TYO",
       "price": 9857.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-10_2026-11-12|2026-11-08": {
       "route": "TYO",
       "price": 10179.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-10_2026-11-14|2026-11-08": {
       "route": "TYO",
       "price": 10563.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-10_2026-11-15|2026-11-08": {
       "route": "TYO",
@@ -10238,7 +10138,7 @@
       "route": "TYO",
       "price": 8350.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-11_2026-11-15|2026-11-08": {
       "route": "TYO",
@@ -10250,85 +10150,85 @@
       "route": "TYO",
       "price": 9204.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-12_2026-11-14|2026-11-08": {
       "route": "TYO",
       "price": 8946.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-12_2026-11-17|2026-11-08": {
       "route": "TYO",
       "price": 9416.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-15_2026-11-17|2026-11-08": {
       "route": "TYO",
       "price": 11016.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-15_2026-11-21|2026-11-08": {
       "route": "TYO",
       "price": 13364.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-18_2026-11-23|2026-11-08": {
       "route": "TYO",
       "price": 10513.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-19_2026-11-21|2026-11-08": {
       "route": "TYO",
       "price": 13807.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-19_2026-11-23|2026-11-08": {
       "route": "TYO",
       "price": 11199.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-19_2026-11-25|2026-11-08": {
       "route": "TYO",
       "price": 11038.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-22_2026-11-23|2026-11-08": {
       "route": "TYO",
       "price": 11088.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-22_2026-11-28|2026-11-08": {
       "route": "TYO",
       "price": 10929.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-23_2026-11-25|2026-11-08": {
       "route": "TYO",
       "price": 11882.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-23_2026-11-28|2026-11-08": {
       "route": "TYO",
       "price": 11884.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-11-23_2026-11-29|2026-11-08": {
       "route": "TYO",
       "price": 11503.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-01_2026-12-02|2026-11-08": {
       "route": "TYO",
@@ -10340,145 +10240,145 @@
       "route": "TYO",
       "price": 10637.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-05_2026-12-10|2026-11-08": {
       "route": "TYO",
       "price": 10353.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-11_2026-12-15|2026-11-08": {
       "route": "TYO",
       "price": 11228.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-15_2026-12-19|2026-11-08": {
       "route": "TYO",
       "price": 10851.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-15_2026-12-20|2026-11-08": {
       "route": "TYO",
       "price": 10194.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-15_2026-12-21|2026-11-08": {
       "route": "TYO",
       "price": 10737.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-17_2026-12-19|2026-11-08": {
       "route": "TYO",
       "price": 11395.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-17_2026-12-21|2026-11-08": {
       "route": "TYO",
       "price": 11281.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-17_2026-12-23|2026-11-08": {
       "route": "TYO",
       "price": 10995.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-20_2026-12-21|2026-11-08": {
       "route": "TYO",
       "price": 11274.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-26_2026-12-31|2026-11-08": {
       "route": "TYO",
       "price": 10722.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-29_2026-12-31|2026-11-08": {
       "route": "TYO",
       "price": 10254.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2026-12-29_2027-01-04|2026-11-08": {
       "route": "TYO",
       "price": 10748.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2027-01-02_2027-01-04|2026-11-08": {
       "route": "TYO",
       "price": 14677.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2027-01-04_2027-01-10|2026-11-08": {
       "route": "TYO",
       "price": 14113.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2027-01-06_2027-01-10|2026-11-08": {
       "route": "TYO",
       "price": 11879.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "TYO:2027-01-06_2027-01-11|2026-11-08": {
       "route": "TYO",
       "price": 11018.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-09_2026-12-14|2026-11-08": {
       "route": "HKG",
       "price": 7531.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-10_2026-12-14|2026-11-08": {
       "route": "HKG",
       "price": 7434.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-11_2026-12-14|2026-11-08": {
       "route": "HKG",
       "price": 7506.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-12-12_2026-12-14|2026-11-08": {
       "route": "HKG",
-      "price": 7656.0,
+      "price": 7609.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-25_2026-11-26|2026-11-08": {
       "route": "HKG",
       "price": 7359.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-25_2026-11-27|2026-11-08": {
       "route": "HKG",
       "price": 7760.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-25_2026-11-29|2026-11-08": {
       "route": "HKG",
       "price": 7374.0,
       "basis": "total",
-      "at": "2026-11-08T12:51:19+08:00"
+      "at": "2026-11-08T15:26:01+08:00"
     },
     "HKG:2026-11-25_2026-11-30|2026-11-08": {
       "route": "HKG",
@@ -10634,10 +10534,10 @@
   "stats": {
     "alerts_sent": 6,
     "digests_sent": 7,
-    "runs": 73
+    "runs": 74
   },
-  "last_run_at": "2026-11-08T12:51:19+08:00",
-  "last_tp_count": 181,
+  "last_run_at": "2026-11-08T15:26:01+08:00",
+  "last_tp_count": 176,
   "market_daily": {
     "2026-11-02": {
       "HKG": {
@@ -10726,7 +10626,7 @@
     "2026-11-08": {
       "HKG": {
         "n": 137,
-        "sum": 1083583.0
+        "sum": 1083346.0
       },
       "MFM": {
         "n": 3,
@@ -10843,7 +10743,7 @@
     "ptt:/bbs/Japan_Travel/M.1793613790.A.58B.html": "2026-11-04T09:35:27+08:00",
     "ptt:/bbs/Japan_Travel/M.1793599723.A.2B4.html": "2026-11-04T09:35:27+08:00",
     "news:CBMimgNBVV95cUxQOXR3UzRreldDVlR1Q3h0UEY2RjN0TU9MN29qclVKTm9QSGVaMHlJQWtKbzJyNVRtSHZBdVc2Ylp4VE5ZXzRWVEl0MnNOczlnSE0wTjh6LXpGaTBZdjl0bXFuUHVFaTBCR1djbFhIYXVQcWdGSHRURVlRNzdsVUZ1ZjJvTDB0SHZOZDYwTDFvT0hGTmNTVEtma3FNaDZFTHdJbEl6V0pCYnRtT3MyTzk2bnNxRFBCVEp2N2JleTdYRm44Z09qb21zQllsUzI3OTU1TjFNSzdSd01TckY5MVNha1pLWXg1eGpBc19yaGp6MTJ5dG5oRFBVNGpqbXZ1aTNudFRfcXBiMkNQVEQzblRUajFHbDhOQXpZOE5nLVF6dFN1cVVlZy1teG00LV9tYWpfYjMxNW5qZ2FhOGxfT3lLallqOTFqZm1ieExURkJWLVB3X2ljYXliMFVBRlowZnJYdEMyMk93d2czWUFYNlhkWXpRb194bDNxOWUydklKMUZiRmhIcnVYa2FYejE4Zm14VDdoelh0QU5MQQ": "2026-11-04T09:35:27+08:00",
-    "hkexpress:twinbound_flashsale_20261020": "2026-11-08T12:51:19+08:00",
+    "hkexpress:twinbound_flashsale_20261020": "2026-11-08T15:26:01+08:00",
     "news:CBMiZEFVX3lxTE5rVXRob2VBT29iQi1IS0E5MnN4Z2ptOVYzYVNfS1hEeV9TSU5GX0MtY3ZNanBld2dLT0NHV3J1UWJfUk50d1AyX3hKVU5qdHk3MlZMbktmMjB3a0JOazVJOGxoQnU": "2026-11-04T10:10:34+08:00",
     "news:CBMiiAFBVV95cUxNYnZHVFQ0OTRxVnFoOG9RTW9hbzE5MVB5VTNHZ3lXZjdqT1dfTzVsbFBRS3FLRGtHZm84R2dtN2o0OUlfLW1lY1F1alVrb1JTQ3JSNTlPa1dpRk5LR2F4bGNuRFZLOXNxcVVxbUNiUmtXc3lmTjZfczc5bHlCcG9fSHBKM3pCOGls": "2026-11-04T10:10:34+08:00",
     "news:CBMiTEFVX3lxTE9ENDdIZFlDN0UyT29ibjNjZWMtLVJ0WExhb1V5NmEydWVmS200T21kX3R3R3g5OUIxM3VPdVZlRU5uT3g4UlBNWUVsVTHSAVJBVV95cUxQTGNnTWxZRDlXblBNR1VyN1YwYkdoODMzbGVGMUtsVHkzcW1aZFhuai1lbWdUUHlWSVF4eWEybEpqZW9MMk9WSUxrNEVzb29EU1lB": "2026-11-04T14:33:22+08:00",
