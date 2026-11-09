@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T15:50:57+08:00",
+  "generated_at": "2026-11-09T16:00:52+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -135,10 +135,10 @@
         "airline_code": "JX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-09T15:50:57+08:00",
+        "checked_at": "2026-11-09T16:00:52+08:00",
         "price_level": null,
         "tp_price": 6260.0,
-        "tp_at": "2026-11-09T15:50:57+08:00",
+        "tp_at": "2026-11-09T16:00:52+08:00",
         "url": "https://www.aviasales.com/search/TPE1211HKG1?t=JX17945004001794508200000130TPEHKG_32d7309347476fde4310ef3c16f5e7b2_7436&search_date=09112026&expected_price_uuid=01a1bdea-42e5-8031-6760-279e28395de5&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=Fh1CFaqCscLMVXSvGWMlmw&expected_price_source=share&expected_price_currency=twd&expected_price=2978",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+HKG+2026-11-12+return+2026-11-16+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -276,10 +276,10 @@
         "airline_code": "NX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-09T15:50:57+08:00",
+        "checked_at": "2026-11-09T16:00:52+08:00",
         "price_level": null,
         "tp_price": 6761.0,
-        "tp_at": "2026-11-09T15:50:57+08:00",
+        "tp_at": "2026-11-09T16:00:52+08:00",
         "url": "https://www.aviasales.com/search/TPE0612MFM10121?t=NX17965878001796594700000115TPEMFM17968896001796895300000095MFMTPE_fbb58b719575c402a6f9766073c288eb_16828&search_date=03112026&expected_price_uuid=01a1a2e3-ffff-8040-67b6-a6e0d6dde169&static_fare_key=TY%7CP0%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=HUZTMf0KA9bWdGRg_jaAAQ&expected_price_source=share&expected_price_currency=twd&expected_price=6761",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+MFM+2026-12-06+return+2026-12-10+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -417,10 +417,10 @@
         "airline_code": "JX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-09T15:50:57+08:00",
+        "checked_at": "2026-11-09T16:00:52+08:00",
         "price_level": null,
         "tp_price": 8350.0,
-        "tp_at": "2026-11-09T15:50:57+08:00",
+        "tp_at": "2026-11-09T16:00:52+08:00",
         "url": "https://www.aviasales.com/search/TPE1111TYO1?t=JX17944092001794423600000180TPENRT_6150ccccb091777d1ea1f6cdcb1311f2_9268&search_date=03112026&expected_price_uuid=01a1a0cf-6107-8031-65f1-4177b4d11093&static_fare_key=TY%7CP1%7CH0%7CL1_1_20%7CCH0%7CR0%7CTBC1&itinerary_key=FxzumK5zRm_mgp9WuE302w&expected_price_source=share&expected_price_currency=twd&expected_price=3732",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+TYO+2026-11-11+return+2026-11-12+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -462,7 +462,7 @@
   "stats": {
     "alerts_sent": 10,
     "digests_sent": 8,
-    "runs": 86
+    "runs": 87
   },
   "schedule": {
     "runs_per_day": 4,
@@ -487,7 +487,7 @@
     "alerts_7d": 10,
     "sales_7d": 8,
     "sample_days": 8,
-    "runs": 86
+    "runs": 87
   },
   "airline_sales": {
     "enabled": true,
