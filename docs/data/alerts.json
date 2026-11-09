@@ -1,6 +1,21 @@
 {
-  "generated_at": "2026-11-09T09:44:26+08:00",
+  "generated_at": "2026-11-09T12:51:03+08:00",
   "alerts": [
+    {
+      "pair_key": "TYO:2026-11-12_2026-11-14",
+      "route_id": "TYO",
+      "route_label": "桃園 ⇄ 東京",
+      "alerted_at": "2026-11-09T12:51:03+08:00",
+      "price_at_alert": 8946.0,
+      "baseline_at_alert": 11016.0,
+      "ratio_at_alert": 0.8120915032679739,
+      "airline": "星宇航空／台灣虎航",
+      "latest_price": 8946.0,
+      "min_price_after": 8946.0,
+      "outbound": "2026-11-12",
+      "inbound": "2026-11-14",
+      "verdict": "持平"
+    },
     {
       "pair_key": "HKG:2026-11-12_2026-11-16",
       "route_id": "HKG",
