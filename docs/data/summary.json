@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-11T00:50:58+08:00",
+  "generated_at": "2026-11-11T03:50:58+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -19,30 +19,30 @@
       "color": "#B0124F",
       "good_price": 4500.0,
       "baseline": {
-        "value": 7839.0,
+        "value": 7836.0,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
         "lookback_days": 45,
         "source": "travelpayouts",
-        "samples": 1048,
+        "samples": 1055,
         "min_samples": 15
       },
       "average": {
-        "value": 8026,
-        "samples": 1048,
+        "value": 8025,
+        "samples": 1055,
         "days": 30
       },
       "market": {
         "updated_at": "2026-11-11T00:50:58+08:00",
         "past_3m": {
-          "total": 8026,
-          "n": 1048,
+          "total": 8025,
+          "n": 1055,
           "days": 10
         },
         "past_6m": {
-          "total": 8026,
-          "n": 1048,
+          "total": 8025,
+          "n": 1055,
           "days": 10
         },
         "months": [
@@ -121,7 +121,7 @@
         "fare": 5327.0,
         "bag_fee": 1400.0,
         "bag_estimated": false,
-        "ratio": 0.8581451715780074,
+        "ratio": 0.8584737110770801,
         "airline": "香港快運／星宇航空",
         "flight_no": "UO 117／JX 234",
         "depart_time": "21:15",
@@ -137,10 +137,10 @@
           "手提＋隨身物品合計 7kg，腰包也算一件"
         ],
         "verified": false,
-        "checked_at": "2026-11-11T00:50:58+08:00",
+        "checked_at": "2026-11-11T03:50:58+08:00",
         "price_level": null,
         "tp_price": 6727.0,
-        "tp_at": "2026-11-11T00:50:58+08:00",
+        "tp_at": "2026-11-11T03:50:58+08:00",
         "url": "https://www.aviasales.com/search/TPE1311HKG1?t=UO17946045001794612300000130TPEHKG_1bd3b892fc3ad2912db0b6e802e424b2_5106&search_date=06112026&expected_price_uuid=01a1b09a-f911-8031-6e1c-b8423fc97965&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=2045",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+HKG+2026-11-13+return+2026-11-16+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -258,13 +258,13 @@
         "outbound": "2027-01-05",
         "inbound": "2027-01-09",
         "nights": 4,
-        "price": 6363.0,
+        "price": 6377.0,
         "source": "travelpayouts",
-        "total": 6363.0,
-        "fare": 6363.0,
+        "total": 6377.0,
+        "fare": 6377.0,
         "bag_fee": 0.0,
         "bag_estimated": false,
-        "ratio": 0.9357352941176471,
+        "ratio": 0.9377941176470588,
         "airline": "澳門航空",
         "flight_no": "NX 621",
         "depart_time": "21:30",
@@ -278,11 +278,11 @@
         "airline_code": "NX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-11T00:50:58+08:00",
+        "checked_at": "2026-11-11T03:50:58+08:00",
         "price_level": null,
-        "tp_price": 6363.0,
-        "tp_at": "2026-11-11T00:50:58+08:00",
-        "url": "https://www.aviasales.com/search/TPE0501MFM09011?t=NX17991846001799191500000115TPEMFM17994960001799502000000100MFMTPE_af837c9a189034908c5a44616ac6e347_16020&search_date=10112026&expected_price_uuid=01a1c623-3636-8030-e65a-f6ea6f141965&static_fare_key=TY%7CP1%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=IBjkUC5LEAJjR7vLkuW71g&expected_price_source=share&expected_price_currency=twd&expected_price=6363",
+        "tp_price": 6377.0,
+        "tp_at": "2026-11-11T03:50:58+08:00",
+        "url": "https://www.aviasales.com/search/TPE0501MFM09011?t=NX17991846001799191500000115TPEMFM17994960001799502000000100MFMTPE_af837c9a189034908c5a44616ac6e347_16020&search_date=10112026&expected_price_uuid=01a1c623-3636-8030-e65a-f6ea6f141965&static_fare_key=TY%7CP1%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=IBjkUC5LEAJjR7vLkuW71g&expected_price_source=share&expected_price_currency=twd&expected_price=6377",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+MFM+2027-01-05+return+2027-01-09+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
     },
@@ -313,19 +313,19 @@
         "min_samples": 15
       },
       "average": {
-        "value": 11439,
+        "value": 11440,
         "samples": 483,
         "days": 30
       },
       "market": {
         "updated_at": "2026-11-11T00:50:58+08:00",
         "past_3m": {
-          "total": 11439,
+          "total": 11440,
           "n": 483,
           "days": 10
         },
         "past_6m": {
-          "total": 11439,
+          "total": 11440,
           "n": 483,
           "days": 10
         },
@@ -419,10 +419,10 @@
         "airline_code": "TR",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-11T00:50:58+08:00",
+        "checked_at": "2026-11-11T03:50:58+08:00",
         "price_level": null,
         "tp_price": 9571.0,
-        "tp_at": "2026-11-11T00:50:58+08:00",
+        "tp_at": "2026-11-11T03:50:58+08:00",
         "url": "https://www.aviasales.com/search/TPE2711TYO01121?t=GK17957895001795804200000185TPENRT17961639001796175000000245NRTTPE_18b4d387d89d3bb40cf25941500c7953_19111&search_date=04112026&expected_price_uuid=01a1a59b-3202-8040-a4fd-f6b8f3f00138&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=vEbqiSUN9xAI8eKCEWR8oA&expected_price_source=share&expected_price_currency=twd&expected_price=7691",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+TYO+2026-11-27+return+2026-12-01+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -459,12 +459,12 @@
     "monthly_safety": 10,
     "reserve_for_candidates": 3,
     "reverify_hours": 12,
-    "tp_pairs": 147
+    "tp_pairs": 150
   },
   "stats": {
     "alerts_sent": 10,
     "digests_sent": 9,
-    "runs": 103
+    "runs": 104
   },
   "schedule": {
     "runs_per_day": 4,
@@ -489,7 +489,7 @@
     "alerts_7d": 10,
     "sales_7d": 10,
     "sample_days": 10,
-    "runs": 103
+    "runs": 104
   },
   "airline_sales": {
     "enabled": true,
