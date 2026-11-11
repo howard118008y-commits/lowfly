@@ -1,6 +1,6 @@
 # 低飛 LowFly
 
-桃園 TPE ⇄ 香港 HKG／東京 TYO／澳門 MFM 三條航線（依 `config.yaml` 的 `routes:` 清單順序即優先序），直飛來回、1 位成人、TWD。航線可覆寫 `stay_nights`，東京另以 `serpapi_arrival: "NRT,HND"` 同時查成田與羽田；SerpAPI 額度三條航線共用：半價候選優先，其餘在航線間輪流。GitHub Actions 每天掃描四次；≤基準 50% 且經 Google Flights 驗證即以 Telegram 圖文通知，≤70% 收進每日摘要。PWA 放在 GitHub Pages 的 `main /docs`，免登入、免後端。
+桃園出發的四種行程：香港來回、澳門來回、香港去澳門回、澳門去香港回。每段直飛，1 位成人，以新台幣計價。跨城行程以 Travelpayouts 的兩張單程快取票配對，香港與澳門之間交通另行安排，價格不含跨城交通。SerpAPI 精查與未來月份行情適用同城來回。
 
 ## 專案內容
 

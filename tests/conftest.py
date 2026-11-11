@@ -27,6 +27,10 @@ def block_network(monkeypatch):
 @pytest.fixture
 def cfg():
     config = load_config()
+    # 保留原有三航線案例，覆蓋輪流排程與東京多機場查價。
+    config["routes"] = [route for route in config["routes"] if not route.get("return_origin")]
+    config["routes"].append(dict(id="TYO", origin="TPE", destination="TYO", serpapi_arrival="NRT,HND",
+                                 label="桃園 ⇄ 東京", direct_only=True, adults=1, stay_nights=[1, 2, 4, 5, 6]))
     config["baggage"]["checked_kg"] = 0   # 既有測試以票價＝總價為前提；行李另見 test_baggage.py
     for route in config["routes"]:
         route.pop("good_price_twd", None)   # 既有測試只驗比例門檻；好價線另見 test_deal_notices.py

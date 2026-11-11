@@ -53,6 +53,8 @@ class Scanner:
         tp_best: dict[str, Offer] = {}
         if cfg["sources"]["travelpayouts"].get("enabled", True) and self.secrets.travelpayouts_token:
             for rid, route in self.routes.items():
+                if route.get("return_origin"):
+                    continue
                 for month in months_covering(route_pairs[rid]):
                     try:
                         offers = self.tp_fn(route["origin"], route["destination"], month,
@@ -63,7 +65,7 @@ class Scanner:
                                     tp_best[offer.pair_key] = offer
                     except Exception as exc:
                         self._error(f"Travelpayouts {rid} {month} 失敗（{type(exc).__name__}）")
-            if cfg["sources"]["travelpayouts"].get("one_way"):
+            if cfg["sources"]["travelpayouts"].get("one_way") or any(r.get("return_origin") for r in self.routes.values()):
                 self._splice_one_way(route_pairs, tp_best)
         self.summary["tp_offers"] = len(tp_best)
         self._record_tp(tp_best)
@@ -110,6 +112,8 @@ class Scanner:
         months = [f"{today.year + (today.month - 1 + i) // 12}-{(today.month - 1 + i) % 12 + 1:02d}" for i in range(months_ahead)]
         routes = {}
         for rid, route in self.routes.items():
+            if route.get("return_origin"):
+                continue
             routes[rid] = {}
             for month in months:
                 try:
@@ -132,16 +136,22 @@ class Scanner:
 
     def _splice_one_way(self, route_pairs: dict, tp_best: dict[str, Offer]) -> None:
         """兩張單程拼來回：去程、回程各取每天最低價；比來回快取便宜（或來回沒有）就採用。廉航來回本來就是兩段相加。"""
+        monthly = {}
         for rid, route in self.routes.items():
+            if not route.get("return_origin") and not self.cfg["sources"]["travelpayouts"].get("one_way"):
+                continue
             legs: dict[str, dict[str, Offer]] = {"out": {}, "back": {}}
             for direction, origin, destination, days in (
                     ("out", route["origin"], route["destination"], [o for o, _ in route_pairs[rid]]),
-                    ("back", route["destination"], route["origin"], [b for _, b in route_pairs[rid]])):
+                    ("back", route.get("return_origin", route["destination"]), route["origin"], [b for _, b in route_pairs[rid]])):
                 best = legs[direction]
                 for month in sorted({day.strftime("%Y-%m") for day in days}):
                     try:
-                        found = self.tp_fn(origin, destination, month, self.secrets.travelpayouts_token,
-                                           self.cfg["currency"], route["direct_only"], one_way=True)
+                        request = (origin, destination, month, self.secrets.travelpayouts_token,
+                                   self.cfg["currency"], route["direct_only"])
+                        if request not in monthly:
+                            monthly[request] = list(self.tp_fn(*request, one_way=True))
+                        found = monthly[request]
                     except Exception as exc:
                         self._error(f"Travelpayouts 單程 {rid} {origin}→{destination} {month} 失敗（{type(exc).__name__}）")
                         continue
@@ -160,8 +170,9 @@ class Scanner:
 
     def _splice(self, rid: str, a: Offer, b: Offer) -> Offer:
         """去程 a＋回程 b。bag_fee 回傳來回行李費，單程各取一半，依該段航空公司計算。"""
-        fee_a, est_a = bag_fee(self.cfg, rid, a.airline_code)
-        fee_b, est_b = bag_fee(self.cfg, rid, b.airline_code)
+        route = self.routes[rid]
+        fee_a, est_a = bag_fee(self.cfg, route["destination"] if route.get("return_origin") else rid, a.airline_code)
+        fee_b, est_b = bag_fee(self.cfg, route.get("return_origin", rid), b.airline_code)
         fare, fee = a.price + b.price, (fee_a + fee_b) / 2
         return Offer("travelpayouts", a.outbound, b.outbound, fare + fee, a.currency,
                      a.airline if a.airline == b.airline else f"{a.airline}／{b.airline}", a.direct and b.direct,
@@ -204,6 +215,8 @@ class Scanner:
         budget = self._run_budget()
         if not budget:
             return []
+        keys = [k for k in keys if not self.routes[split_key(k)[0]].get("return_origin")]
+        eligible = {rid for rid, route in self.routes.items() if not route.get("return_origin")}
         sc = self.cfg["sources"]["serpapi"]
         digest = self.cfg["thresholds"]["digest"]
 
@@ -211,7 +224,7 @@ class Scanner:
             b = baselines.get(split_key(key)[0])
             return b.ratio(tp_best[key].price) if b else None
         # pass 1：跨航線的候選優先；比例用各自航線的基準，尚無基準者排在有比例者之後。
-        cands = sorted((k for k in tp_best if ratio(k) is None or ratio(k) <= digest),
+        cands = sorted((k for k in tp_best if split_key(k)[0] in eligible and (ratio(k) is None or ratio(k) <= digest)),
                        key=lambda k: (ratio(k) is None, ratio(k) or 0, tp_best[k].price, k))
         cutoff = self.now - timedelta(hours=float(sc["reverify_hours"]))
         skipped = set()
@@ -343,7 +356,7 @@ class Scanner:
             gone = not item["verified"] and key not in tp_best
             old = item["verified"] and parse_time(item["at"]) < self.now - timedelta(days=7)
             baseline = baselines.get(split_key(key)[0])
-            if split_key(key)[1] < self.now.date().isoformat() or gone or old or key in checked:
+            if split_key(key)[0] not in self.routes or split_key(key)[1] < self.now.date().isoformat() or gone or old or key in checked:
                 del items[key]
             else:
                 item["ratio"] = baseline.ratio(item["price"]) if baseline else None
@@ -377,7 +390,7 @@ class Scanner:
             baseline = baselines.get(offer.route_id)
             if key in checked:
                 continue
-            if self.tp_only:
+            if self.tp_only or self.routes[offer.route_id].get("return_origin"):
                 self._maybe_instant(key, offer, baseline, ratio, False, at)
             if ratio is None:   # 沒有基準：摘要池維持原狀
                 continue

@@ -17,7 +17,7 @@ SCALE = {"TYO": 1.6}
 def make_sources(now: datetime, cfg: dict):
     at = now.isoformat(timespec="seconds")
     # SerpApi 收到的是 arrival_id（可能是 "NRT,HND"），Travelpayouts 收到 destination；兩者都對回航線。
-    by_code = {code: route for route in cfg["routes"] for code in (route["destination"], route["serpapi_arrival"])}
+    by_code = {code: route for route in cfg["routes"] if not route.get("return_origin") for code in (route["destination"], route["serpapi_arrival"])}
 
     def flight(route: dict, code: str, outbound: str, inbound: str) -> dict:
         """示範用的班次資料（時間為當地時間；只為了讓預覽畫面完整，不是真實班表）。"""
@@ -55,12 +55,19 @@ def make_sources(now: datetime, cfg: dict):
         scale = SCALE.get(route["id"], 1)
         return SearchResult(offers, Insights(value, "low" if value < 7200 * scale else "typical", 7200 * scale, 10000 * scale, history), url, 2)
 
-    def tp(origin, destination, month, token, currency="TWD", direct_only=True):
-        route = by_code[destination]
+    def tp(origin, destination, month, token, currency="TWD", direct_only=True, one_way=False):
+        route = by_code[origin if destination == "TPE" else destination]
         year, month_number = map(int, month.split("-"))
         offers = []
         for day in range(1, calendar.monthrange(year, month_number)[1] + 1):
             out = date(year, month_number, day)
+            if one_way:
+                day_text = out.isoformat()
+                details = flight(route, "IT", day_text, day_text)
+                details.update(origin_airport=origin, destination_airport=destination)
+                offers.append(Offer("travelpayouts", day_text, day_text, price(route["id"], day_text, day_text) / 2,
+                                    currency, "台灣虎航", True, "https://www.aviasales.com", at, **details))
+                continue
             for nights in route["stay_nights"]:
                 back = out + timedelta(days=nights)
                 if (day + nights) % 4 == 0:

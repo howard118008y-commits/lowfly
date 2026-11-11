@@ -111,7 +111,7 @@
     const hasTimes = item.depart_time && item.arrive_time;
     const names = `<div class="t-places"><span>${e(AIRPORT_ZH[origin] || origin)}${hasTimes ? ` <b>${e(item.depart_time)}</b>` : ""}</span><span>${e(AIRPORT_ZH[dest] || dest)}${hasTimes ? ` <b>${e(item.arrive_time)}</b>` : ""}</span></div>`;
     const back = item.return_depart_time ? ` ${e(item.return_depart_time)} 起飛` : "";
-    const dates = `<p class="t-dates"><span>去 ${e(dayLabel(item.outbound))}</span><span>回 ${e(dayLabel(item.inbound))}${back}</span><span>${e(item.nights)} 晚</span></p>`;
+    const dates = `<p class="t-dates"><span>去 ${e(dayLabel(item.outbound))}</span><span>回 ${e(dayLabel(item.inbound))}${r.return_origin ? "・" + e(AIRPORT_ZH[r.return_origin] || r.return_origin) : ""}${back}</span><span>${e(item.nights)} 晚</span></p>`;
     const ratio = ratioText(r, item), source = baselineSource(r);
     return `<article class="ticket${kind ? " is-half" : ""}" style="--route:${routeColor(r)}" aria-label="${e(label)}"><div class="t-body"><div class="t-head"><span class="airline">${logo(item.airline_code)}<span>${e(airline || r.label)}</span></span><span class="t-tag">${item.split ? "兩張單程" : modeText(r)}</span></div>${codes}${names}${dates}</div><div class="tear" aria-hidden="true"></div><div class="t-price">${kind ? `<div class="stamp" role="img" aria-label="${kind}">${kind}</div>` : ""}${fareBlock(item)}${notesBlock(item)}<p class="t-state">${verified ? "Google 已驗證" : "Travelpayouts 快取價，未經 Google 驗證"}</p>${barcode(r, item.outbound)}<p class="t-ratio"><strong>${e(ratio)}</strong>${source ? `<span>${e(source)}</span>` : ""}</p>${avgLine(r)}<div class="t-actions">${externalLink(item.google_flights_url, "去訂票", "btn")}<a class="t-link" href="#calendar">看其他日期</a></div></div></article>`;
   }
@@ -197,7 +197,7 @@
   function renderCalendar() {
     const only = $("deals-only").checked;
     // 日曆很長（每條航線數十列）：頂端加跳轉按鈕，鍵盤不必 Tab 過整張表（WCAG 2.4.1）。分頁用 hash 路由，所以不用錨點。
-    const jump = bundle.summary.routes.length > 1 ? `<nav class="jump" aria-label="跳到航線">${bundle.summary.routes.map(r => `<button type="button" class="secondary-button" data-jump="cal-${e(r.id)}">${e(AIRPORT_ZH[r.destination] || r.label)}</button>`).join("")}</nav>` : "";
+    const jump = bundle.summary.routes.length > 1 ? `<nav class="jump" aria-label="跳到航線">${bundle.summary.routes.map(r => `<button type="button" class="secondary-button" data-jump="cal-${e(r.id)}">${e(r.return_origin ? r.label : AIRPORT_ZH[r.destination] || r.label)}</button>`).join("")}</nav>` : "";
     $("heatmap").innerHTML = jump + bundle.summary.routes.map(r => routeHeatmap(r, only)).join("");
     $("heatmap").querySelectorAll("[data-jump]").forEach(button => button.addEventListener("click", () => {
       const heading = $(button.dataset.jump);
@@ -275,7 +275,7 @@
     const watched = s.airline_sales?.enabled ? s.airline_sales.airlines.length : 0;
     const members = [
       ["🗼", "塔台", "總監", "收你的口述，複述確認後派工並驗收", t.report_date ? `最近團隊週報 ${md(t.report_date)}` : "團隊週報：每週一 09:00 後送出", "green"],
-      ["🧭", "領航員", "票價分析", "盯三條航線的含行李價、基準與推播品質", `近 7 天推播 ${t.alerts_7d} 則，有價組合 ${s.budget.tp_pairs} 組`, light],
+      ["🧭", "領航員", "票價分析", "追蹤各航線含行李價、基準與推播", `近 7 天推播 ${t.alerts_7d} 則，有價組合 ${s.budget.tp_pairs} 組`, light],
       ["🔭", "瞭望員", "促銷情報", `監看 ${watched} 家廉航的促銷消息與規則`, `近 7 天推出促銷消息 ${t.sales_7d} 則`, watched ? "green" : "amber"],
       ["🛠️", "地勤", "維運", "排程掃描、失敗告警、看門狗與資安", hours > 8 ? `資料已 ${Math.floor(hours)} 小時沒更新，看門狗會自動補跑` : `已完成 ${t.runs} 輪掃描，最近 ${clock(s.generated_at)}`, light]];
     $("team-cards").innerHTML = members.map(([icon, name, role, duty, now, state]) => `<article class="member"><div class="avatar" aria-hidden="true">${icon}</div><div class="member-body"><p class="member-head"><strong>${e(name)}</strong><span>${e(role)}</span><span class="light ${state}">${label[state]}</span></p><p class="muted small">${e(duty)}</p><p class="member-now">${e(now)}</p></div></article>`).join("");
@@ -283,7 +283,7 @@
   function renderSettings() {
     const s = bundle.summary, q = s.budget;
     $("settings-overview").innerHTML = s.routes.map(r => `<p><strong>${e(r.label)}</strong>　${modeText(r)}　${r.adults || 1} 位成人　${r.stay_nights.join("／")} 晚</p>`).join("") + `<p class="muted small">每天自動掃描 ${e(s.schedule.runs_per_day)} 次${s.schedule.promo_months?.length ? `，促銷月（${e(s.schedule.promo_months.join("、"))} 月）${e(s.schedule.promo_runs_per_day)} 次` : ""}</p>`;
-    const routeFields = s.routes.map(r => [r.label, `${r.origin} ⇄ ${r.destination}　${modeText(r)}　${r.adults || 1} 位成人　${r.stay_nights.join("／")} 晚`]);
+    const routeFields = s.routes.map(r => [r.label, `${r.return_origin ? `${r.origin} → ${r.destination}／${r.return_origin} → ${r.origin}` : `${r.origin} ⇄ ${r.destination}`}　${modeText(r)}　${r.adults || 1} 位成人　${r.stay_nights.join("／")} 晚`]);
     const fields = [...routeFields, ["幣別", s.currency], ["行李", s.baggage?.checked_kg > 0 ? `來回各 ${s.baggage.pieces_each_way} 件 ${s.baggage.checked_kg}kg。顯示「不含行李｜含行李」，半價以含行李價判斷` : "只帶手提，總價＝票價"], ["掃描窗口", `後天起至未來 ${s.window.days_ahead} 天（最早 ${s.window.min_lead_days} 天）`], ["立即推播", `≤ 基準 ${s.thresholds.instant * 100}%，或含行李總價 ≤ 好價線（${s.routes.filter(r => r.good_price != null).map(r => `${AIRPORT_ZH[r.destination] || r.label} ${fmtMoney(r.good_price)}`).join("、") || "未設定"}）${s.new_low?.days ? `，或比近 ${s.new_low.days} 天航線最低價再低 ${s.dedupe.min_drop_ratio * 100}%（紀錄滿 ${s.new_low.min_days} 天才開始）` : ""}，Google 驗證（SerpApi 未啟用時為 Travelpayouts 快取價），單次最多 ${s.thresholds.max_instant_per_run ?? 5} 則`], ...(s.airline_sales?.enabled ? [["促銷消息", `${s.airline_sales.airlines.join("、")}：新聞與 PTT 標題有促銷字眼、${s.airline_sales.max_age_hours} 小時內的新消息，每輪合成一則推播`]] : []), ["每日摘要", `≤ 基準 ${s.thresholds.digest * 100}%，${s.digest.hour_local}:00 後首次掃描`], ["基準回看", `${s.routes[0].baseline.lookback_days} 天`], ["SerpAPI 額度", `每日 ${e(q.serpapi_daily_budget)}／每月 ${e(q.serpapi_quota)}，安全額 ${q.monthly_safety}`], ["候選保留", `每次最多 ${q.reserve_for_candidates} 組；${q.reverify_hours} 小時內未降價不重驗`], ["重發條件", `再降 ≥${s.dedupe.min_drop_ratio * 100}% 或超過 ${s.dedupe.cooldown_hours} 小時`], ["排程", `台北 09:17／15:17／21:17／03:17${s.schedule.promo_months?.length ? `；促銷月加跑 00:17／06:17／12:17／18:17` : ""}`]];
     $("settings-values").innerHTML = `<dl class="details">${fields.map(([name, value]) => `<div><dt>${e(name)}</dt><dd>${e(value)}</dd></div>`).join("")}</dl>`;
     const config = window.LOWFLY_CONFIG;

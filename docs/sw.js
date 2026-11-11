@@ -1,6 +1,6 @@
 "use strict";
 importScripts("./utils.js");
-const VERSION = "v1.14.2";
+const VERSION = "v1.15.0";
 const PREFIX = `lowfly:${new URL(self.registration.scope).pathname}:`;
 const SHELL_CACHE = PREFIX + "shell-" + VERSION;
 const DATA_CACHE = PREFIX + "data-" + VERSION;

@@ -95,7 +95,7 @@ def build_summary(cfg: dict, state: dict, now: datetime, pair_keys=None, tp_coun
         verified = [p for p in mine if p["verified"]]
         cached = [p for p in mine if p["source"] == "travelpayouts"]
         routes.append({"id": route["id"], "label": route["label"], "origin": route["origin"],
-                       "destination": route["destination"], "direct_only": route["direct_only"], "adults": route["adults"],
+                       "destination": route["destination"], "return_origin": route.get("return_origin"), "direct_only": route["direct_only"], "adults": route["adults"],
                        "stay_nights": route["stay_nights"], "color": route.get("color"), "good_price": good_price(route),
                        "baseline": {"value": baseline.value if baseline else None,
                                     "google_low": baseline.google_low if baseline else None, "google_high": baseline.google_high if baseline else None,
@@ -161,7 +161,7 @@ def build_alerts(cfg: dict, state: dict, rows: list[dict], now: datetime) -> dic
     for record in records:
         key = record["pair_key"]
         route_id, out, back = split_key(key)
-        if out < cutoff:
+        if route_id not in labels or out < cutoff:
             continue
         price = record["price"]
         observations = [r for r in rows if r.get("pair_key") == key and r.get("source") == "serpapi"
@@ -184,6 +184,8 @@ def build_alerts(cfg: dict, state: dict, rows: list[dict], now: datetime) -> dic
 
 def export_all(cfg: dict, state: dict, now: datetime, rows: list[dict], output_dir: Path | None = None) -> dict:
     target = Path(output_dir or ROOT / "docs/data")
+    active = {route["id"] for route in cfg["routes"]}
+    rows = [row for row in rows if row.get("pair_key", "").partition(":")[0] in active]
     payloads = {"summary": build_summary(cfg, state, now), "pairs": build_pairs(cfg, state, now),
                 "history": build_history(rows, now), "alerts": build_alerts(cfg, state, rows, now)}
     for name, payload in payloads.items():

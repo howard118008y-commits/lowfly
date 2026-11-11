@@ -21,16 +21,22 @@ routes:
     direct_only: true
     adults: 1
     good_price_twd: 5000
-  - id: "TYO"
-    color: "#23468F"      # 前端票根左緣色條
+  - id: "HKG_MFM"
+    color: "#7E315F"
     origin: "TPE"
-    destination: "TYO"
-    serpapi_arrival: "NRT,HND"
-    label: "桃園 ⇄ 東京"
+    destination: "HKG"
+    return_origin: "MFM"
+    label: "香港去、澳門回"
     direct_only: true
     adults: 1
-    stay_nights: [1, 2, 4, 5, 6]   # 含 2天1夜、3天2夜
-    good_price_twd: 9000
+  - id: "MFM_HKG"
+    color: "#265D72"
+    origin: "TPE"
+    destination: "MFM"
+    return_origin: "HKG"
+    label: "澳門去、香港回"
+    direct_only: true
+    adults: 1
 window:
   days_ahead: 60            # 社群好價貼文多在出發前 1～2 個月；Travelpayouts 依月份抓，60 天約跨 3 個月
   min_lead_days: 2

@@ -43,4 +43,7 @@ def fmt_date(value: str | date) -> str:
 
 def google_url(cfg: dict, route: dict, outbound: str, inbound: str) -> str:
     query = f"Round trip flights {route['origin']} to {route['destination']} {outbound} return {inbound} nonstop {route['adults']} adult"
+    if route.get("return_origin"):
+        query = (f"Multi-city flights {route['origin']} to {route['destination']} {outbound}, "
+                 f"{route['return_origin']} to {route['origin']} {inbound}, nonstop {route['adults']} adult")
     return "https://www.google.com/travel/flights?" + urlencode({"q": query, "curr": cfg["currency"], "hl": "zh-TW"})
