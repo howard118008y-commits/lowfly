@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-11T15:47:20+08:00",
+  "generated_at": "2026-11-11T16:03:48+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -7,6 +7,7 @@
       "label": "桃園 ⇄ 香港",
       "origin": "TPE",
       "destination": "HKG",
+      "return_origin": null,
       "direct_only": true,
       "adults": 1,
       "stay_nights": [
@@ -137,10 +138,10 @@
           "手提＋隨身物品合計 7kg，腰包也算一件"
         ],
         "verified": false,
-        "checked_at": "2026-11-11T15:47:20+08:00",
+        "checked_at": "2026-11-11T16:03:48+08:00",
         "price_level": null,
         "tp_price": 6727.0,
-        "tp_at": "2026-11-11T15:47:20+08:00",
+        "tp_at": "2026-11-11T16:03:48+08:00",
         "url": "https://www.aviasales.com/search/TPE1311HKG1?t=UO17946045001794612300000130TPEHKG_1bd3b892fc3ad2912db0b6e802e424b2_5106&search_date=06112026&expected_price_uuid=01a1b09a-f911-8031-6e1c-b8423fc97965&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=2045",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+HKG+2026-11-13+return+2026-11-16+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -150,6 +151,7 @@
       "label": "桃園 ⇄ 澳門",
       "origin": "TPE",
       "destination": "MFM",
+      "return_origin": null,
       "direct_only": true,
       "adults": 1,
       "stay_nights": [
@@ -278,92 +280,93 @@
         "airline_code": "NX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-11T15:47:20+08:00",
+        "checked_at": "2026-11-11T16:03:48+08:00",
         "price_level": null,
         "tp_price": 6369.0,
-        "tp_at": "2026-11-11T15:47:20+08:00",
+        "tp_at": "2026-11-11T16:03:48+08:00",
         "url": "https://www.aviasales.com/search/TPE0501MFM09011?t=NX17991846001799191500000115TPEMFM17994960001799502000000100MFMTPE_af837c9a189034908c5a44616ac6e347_16020&search_date=10112026&expected_price_uuid=01a1c623-3636-8030-e65a-f6ea6f141965&static_fare_key=TY%7CP1%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=IBjkUC5LEAJjR7vLkuW71g&expected_price_source=share&expected_price_currency=twd&expected_price=6369",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+MFM+2027-01-05+return+2027-01-09+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
     },
     {
-      "id": "TYO",
-      "label": "桃園 ⇄ 東京",
+      "id": "HKG_MFM",
+      "label": "香港去、澳門回",
       "origin": "TPE",
-      "destination": "TYO",
+      "destination": "HKG",
+      "return_origin": "MFM",
       "direct_only": true,
       "adults": 1,
       "stay_nights": [
         1,
         2,
+        3,
         4,
-        5,
-        6
+        5
       ],
-      "color": "#23468F",
-      "good_price": 9000.0,
+      "color": "#7E315F",
+      "good_price": null,
       "baseline": {
-        "value": 11038.0,
+        "value": 6657.5,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
         "lookback_days": 45,
         "source": "travelpayouts",
-        "samples": 490,
+        "samples": 18,
         "min_samples": 15
       },
       "average": {
-        "value": 11439,
-        "samples": 490,
+        "value": 7015,
+        "samples": 18,
         "days": 30
       },
       "market": {
         "updated_at": "2026-11-11T00:50:58+08:00",
         "past_3m": {
-          "total": 11439,
-          "n": 490,
-          "days": 10
+          "total": 7015,
+          "n": 18,
+          "days": 1
         },
         "past_6m": {
-          "total": 11439,
-          "n": 490,
-          "days": 10
+          "total": 7015,
+          "n": 18,
+          "days": 1
         },
         "months": [
           {
             "month": "2026-11",
-            "total": 11858,
-            "fare": 9754,
-            "min": 9571.0,
-            "n": 5
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
           },
           {
             "month": "2026-12",
-            "total": 13287,
-            "fare": 11419,
-            "min": 10471.0,
-            "n": 7
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
           },
           {
             "month": "2027-01",
-            "total": 12418,
-            "fare": 10534,
-            "min": 10859.0,
-            "n": 5
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
           },
           {
             "month": "2027-02",
-            "total": 14306,
-            "fare": 12426,
-            "min": 11778.0,
-            "n": 4
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
           },
           {
             "month": "2027-03",
-            "total": 11166,
-            "fare": 9306,
-            "min": 9434.0,
-            "n": 3
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
           },
           {
             "month": "2027-04",
@@ -374,57 +377,189 @@
           }
         ],
         "next_3m": {
-          "total": 12611,
-          "fare": 10669,
-          "n": 17
+          "total": null,
+          "fare": null,
+          "n": 0
         },
         "next_6m": {
-          "total": 12713,
-          "fare": 10791,
-          "n": 24
+          "total": null,
+          "fare": null,
+          "n": 0
         },
-        "reference": [
-          {
-            "source": "Kayak",
-            "url": "https://www.tw.kayak.com/flight-routes/Taipei-Taiwan-Taoyuan-Intl-TPE/Tokyo-TYO",
-            "text": "過去 12 個月最便宜 5 月 NT$8,553、最貴 2 月 NT$15,772；頁面平均來回 NT$9,300（期間未註明）"
-          }
-        ]
+        "reference": []
       },
       "deals": [],
       "cheapest_verified": null,
       "cheapest_cached": {
-        "pair_key": "TYO:2026-11-27_2026-12-01",
-        "route_id": "TYO",
-        "outbound": "2026-11-27",
-        "inbound": "2026-12-01",
-        "nights": 4,
-        "price": 9571.0,
+        "pair_key": "HKG_MFM:2026-12-02_2026-12-03",
+        "route_id": "HKG_MFM",
+        "outbound": "2026-12-02",
+        "inbound": "2026-12-03",
+        "nights": 1,
+        "price": 6528.0,
         "source": "travelpayouts",
-        "total": 9571.0,
-        "fare": 7691.0,
-        "bag_fee": 1880.0,
+        "total": 6528.0,
+        "fare": 5128.0,
+        "bag_fee": 1400.0,
         "bag_estimated": false,
-        "ratio": 0.8670954883131002,
-        "airline": "酷航",
-        "flight_no": "TR 874",
-        "depart_time": "14:25",
-        "arrive_time": "18:30",
-        "return_depart_time": "22:25",
+        "ratio": 0.9805482538490424,
+        "airline": "香港快運／澳門航空",
+        "flight_no": "UO 117／NX 2902",
+        "depart_time": "21:15",
+        "arrive_time": "23:25",
+        "return_depart_time": "08:00",
         "origin_airport": "TPE",
-        "destination_airport": "NRT",
-        "duration_to": 185,
-        "duration_back": 245,
-        "split": null,
-        "airline_code": "TR",
+        "destination_airport": "HKG",
+        "duration_to": 130,
+        "duration_back": 95,
+        "split": true,
+        "airline_code": "UO",
+        "notes": [
+          "手提＋隨身物品合計 7kg，腰包也算一件"
+        ],
+        "verified": false,
+        "checked_at": "2026-11-11T16:03:48+08:00",
+        "price_level": null,
+        "tp_price": 6528.0,
+        "tp_at": "2026-11-11T16:03:48+08:00",
+        "url": "https://www.aviasales.com/search/TPE0212HKG1?t=UO17962461001796253900000130TPEHKG_91083ebe9cca97286ac2609ff1bf64cc_4727&search_date=09112026&expected_price_uuid=01a1c183-66f3-8031-2847-1085105d0c7d&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1878",
+        "google_flights_url": "https://www.google.com/travel/flights?q=Multi-city+flights+TPE+to+HKG+2026-12-02%2C+MFM+to+TPE+2026-12-03%2C+nonstop+1+adult&curr=TWD&hl=zh-TW"
+      }
+    },
+    {
+      "id": "MFM_HKG",
+      "label": "澳門去、香港回",
+      "origin": "TPE",
+      "destination": "MFM",
+      "return_origin": "HKG",
+      "direct_only": true,
+      "adults": 1,
+      "stay_nights": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "color": "#265D72",
+      "good_price": null,
+      "baseline": {
+        "value": null,
+        "google_low": null,
+        "google_high": null,
+        "n_ranges": 0,
+        "lookback_days": 45,
+        "source": null,
+        "samples": 14,
+        "min_samples": 15
+      },
+      "average": {
+        "value": 9029,
+        "samples": 14,
+        "days": 30
+      },
+      "market": {
+        "updated_at": "2026-11-11T00:50:58+08:00",
+        "past_3m": {
+          "total": 9029,
+          "n": 14,
+          "days": 1
+        },
+        "past_6m": {
+          "total": 9029,
+          "n": 14,
+          "days": 1
+        },
+        "months": [
+          {
+            "month": "2026-11",
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
+          },
+          {
+            "month": "2026-12",
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
+          },
+          {
+            "month": "2027-01",
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
+          },
+          {
+            "month": "2027-02",
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
+          },
+          {
+            "month": "2027-03",
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
+          },
+          {
+            "month": "2027-04",
+            "total": null,
+            "fare": null,
+            "min": null,
+            "n": 0
+          }
+        ],
+        "next_3m": {
+          "total": null,
+          "fare": null,
+          "n": 0
+        },
+        "next_6m": {
+          "total": null,
+          "fare": null,
+          "n": 0
+        },
+        "reference": []
+      },
+      "deals": [],
+      "cheapest_verified": null,
+      "cheapest_cached": {
+        "pair_key": "MFM_HKG:2026-11-20_2026-11-21",
+        "route_id": "MFM_HKG",
+        "outbound": "2026-11-20",
+        "inbound": "2026-11-21",
+        "nights": 1,
+        "price": 7516.0,
+        "source": "travelpayouts",
+        "total": 7516.0,
+        "fare": 6116.0,
+        "bag_fee": 1400.0,
+        "bag_estimated": false,
+        "ratio": null,
+        "airline": "星宇航空／香港快運",
+        "flight_no": "JX 205／UO 114",
+        "depart_time": "17:25",
+        "arrive_time": "19:25",
+        "return_depart_time": "15:00",
+        "origin_airport": "TPE",
+        "destination_airport": "MFM",
+        "duration_to": 120,
+        "duration_back": 105,
+        "split": true,
+        "airline_code": "JX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-11T15:47:20+08:00",
+        "checked_at": "2026-11-11T16:03:48+08:00",
         "price_level": null,
-        "tp_price": 9571.0,
-        "tp_at": "2026-11-11T15:47:20+08:00",
-        "url": "https://www.aviasales.com/search/TPE2711TYO01121?t=GK17957895001795804200000185TPENRT17961639001796175000000245NRTTPE_18b4d387d89d3bb40cf25941500c7953_19111&search_date=04112026&expected_price_uuid=01a1a59b-3202-8040-a4fd-f6b8f3f00138&static_fare_key=TY%7CP1_JW%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=vEbqiSUN9xAI8eKCEWR8oA&expected_price_source=share&expected_price_currency=twd&expected_price=7691",
-        "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+TYO+2026-11-27+return+2026-12-01+nonstop+1+adult&curr=TWD&hl=zh-TW"
+        "tp_price": 7516.0,
+        "tp_at": "2026-11-11T16:03:48+08:00",
+        "url": "https://www.aviasales.com/search/TPE2011MFM1?t=JX17951955001795202700000120TPEMFM_1164256008db05267a159b68e02ec669_8686&search_date=09112026&expected_price_uuid=01a1bf23-ccb0-8031-223a-c0b968980ead&static_fare_key=TY%7CP1%7CH0%7CL1_1_23%7CCH0%7CR0%7CTBC1&itinerary_key=8plkB_i62nDVGNFj2FK3UQ&expected_price_source=share&expected_price_currency=twd&expected_price=3479",
+        "google_flights_url": "https://www.google.com/travel/flights?q=Multi-city+flights+TPE+to+MFM+2026-11-20%2C+HKG+to+TPE+2026-11-21%2C+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
     }
   ],
@@ -459,12 +594,12 @@
     "monthly_safety": 10,
     "reserve_for_candidates": 3,
     "reverify_hours": 12,
-    "tp_pairs": 162
+    "tp_pairs": 156
   },
   "stats": {
     "alerts_sent": 10,
     "digests_sent": 10,
-    "runs": 111
+    "runs": 112
   },
   "schedule": {
     "runs_per_day": 4,
@@ -489,7 +624,7 @@
     "alerts_7d": 9,
     "sales_7d": 10,
     "sample_days": 10,
-    "runs": 111
+    "runs": 112
   },
   "airline_sales": {
     "enabled": true,
