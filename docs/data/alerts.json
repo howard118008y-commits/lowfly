@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-12T21:50:59+08:00",
+  "generated_at": "2026-11-13T00:51:11+08:00",
   "alerts": [
     {
       "pair_key": "HKG:2026-11-12_2026-11-16",
@@ -14,7 +14,7 @@
       "min_price_after": 6256.0,
       "outbound": "2026-11-12",
       "inbound": "2026-11-16",
-      "verdict": "持平"
+      "verdict": "已結束"
     }
   ]
 }
