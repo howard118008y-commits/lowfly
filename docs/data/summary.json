@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-14T21:50:54+08:00",
+  "generated_at": "2026-11-15T00:51:02+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -20,46 +20,46 @@
       "color": "#B0124F",
       "good_price": 4500.0,
       "baseline": {
-        "value": 7851.0,
+        "value": 7858.0,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
         "lookback_days": 45,
         "source": "travelpayouts",
-        "samples": 1526,
+        "samples": 1666,
         "min_samples": 15
       },
       "average": {
-        "value": 8079,
-        "samples": 1526,
+        "value": 8099,
+        "samples": 1666,
         "days": 30
       },
       "market": {
-        "updated_at": "2026-11-14T00:51:02+08:00",
+        "updated_at": "2026-11-15T00:51:02+08:00",
         "past_3m": {
-          "total": 8079,
-          "n": 1526,
-          "days": 13
+          "total": 8099,
+          "n": 1666,
+          "days": 14
         },
         "past_6m": {
-          "total": 8079,
-          "n": 1526,
-          "days": 13
+          "total": 8099,
+          "n": 1666,
+          "days": 14
         },
         "months": [
           {
             "month": "2026-11",
-            "total": 8077,
-            "fare": 5277,
-            "min": 7438.0,
-            "n": 8
+            "total": 8677,
+            "fare": 5877,
+            "min": 7547.0,
+            "n": 6
           },
           {
             "month": "2026-12",
-            "total": 8602,
-            "fare": 5778,
+            "total": 8366,
+            "fare": 5544,
             "min": 6995.0,
-            "n": 10
+            "n": 11
           },
           {
             "month": "2027-01",
@@ -91,14 +91,14 @@
           }
         ],
         "next_3m": {
-          "total": 8259,
-          "fare": 5449,
-          "n": 23
+          "total": 8337,
+          "fare": 5526,
+          "n": 22
         },
         "next_6m": {
-          "total": 8326,
-          "fare": 5516,
-          "n": 24
+          "total": 8403,
+          "fare": 5593,
+          "n": 23
         },
         "reference": [
           {
@@ -122,7 +122,7 @@
         "fare": 4195.0,
         "bag_fee": 2800.0,
         "bag_estimated": false,
-        "ratio": 0.8909693032734683,
+        "ratio": 0.8901756172053957,
         "airline": "香港快運",
         "flight_no": "UO 111",
         "depart_time": "13:55",
@@ -138,10 +138,10 @@
           "手提＋隨身物品合計 7kg，腰包也算一件"
         ],
         "verified": false,
-        "checked_at": "2026-11-14T21:50:54+08:00",
+        "checked_at": "2026-11-15T00:51:02+08:00",
         "price_level": null,
         "tp_price": 6995.0,
-        "tp_at": "2026-11-14T21:50:54+08:00",
+        "tp_at": "2026-11-15T00:51:02+08:00",
         "url": "https://www.aviasales.com/search/TPE0112HKG05121?t=UO17961333001796140800000125TPEHKG17964960001796502300000105HKGTPE_dd3046848eff1f7f693b516ce191048b_10561&search_date=11112026&expected_price_uuid=01a1cb05-bc80-8040-6d25-e68801b1e986&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=t1a1kSiu2crxATNsAxrtjA&expected_price_source=share&expected_price_currency=twd&expected_price=4195",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+HKG+2026-12-01+return+2026-12-05+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -164,31 +164,31 @@
       "color": "#007A4D",
       "good_price": 5000.0,
       "baseline": {
-        "value": 6803.0,
+        "value": 6811.0,
         "google_low": null,
         "google_high": null,
         "n_ranges": 0,
         "lookback_days": 45,
         "source": "travelpayouts",
-        "samples": 99,
+        "samples": 110,
         "min_samples": 15
       },
       "average": {
-        "value": 7016,
-        "samples": 99,
+        "value": 7028,
+        "samples": 110,
         "days": 30
       },
       "market": {
-        "updated_at": "2026-11-14T00:51:02+08:00",
+        "updated_at": "2026-11-15T00:51:02+08:00",
         "past_3m": {
-          "total": 7016,
-          "n": 99,
-          "days": 13
+          "total": 7028,
+          "n": 110,
+          "days": 14
         },
         "past_6m": {
-          "total": 7016,
-          "n": 99,
-          "days": 13
+          "total": 7028,
+          "n": 110,
+          "days": 14
         },
         "months": [
           {
@@ -200,9 +200,9 @@
           },
           {
             "month": "2026-12",
-            "total": 6778,
-            "fare": 6778,
-            "min": 6608.0,
+            "total": 6703,
+            "fare": 6703,
+            "min": 6381.0,
             "n": 3
           },
           {
@@ -235,13 +235,13 @@
           }
         ],
         "next_3m": {
-          "total": 6734,
-          "fare": 6734,
+          "total": 6689,
+          "fare": 6689,
           "n": 5
         },
         "next_6m": {
-          "total": 6734,
-          "fare": 6734,
+          "total": 6689,
+          "fare": 6689,
           "n": 5
         },
         "reference": [
@@ -266,7 +266,7 @@
         "fare": 6381.0,
         "bag_fee": 0.0,
         "bag_estimated": false,
-        "ratio": 0.9379685432897251,
+        "ratio": 0.936866833064161,
         "airline": "澳門航空",
         "flight_no": "NX 621",
         "depart_time": "21:30",
@@ -280,10 +280,10 @@
         "airline_code": "NX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-14T21:50:54+08:00",
+        "checked_at": "2026-11-15T00:51:02+08:00",
         "price_level": null,
         "tp_price": 6381.0,
-        "tp_at": "2026-11-14T21:50:54+08:00",
+        "tp_at": "2026-11-15T00:51:02+08:00",
         "url": "https://www.aviasales.com/search/TPE1212MFM16121?t=NX17971110001797117900000115TPEMFM17974080001797413700000095MFMTPE_27824cc6503f24ebc3213549eed80268_16044&search_date=13112026&expected_price_uuid=01a1d614-fb48-8040-2efd-6c67a668ba2f&static_fare_key=TY%7CP1%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=pRmsYOUf1TS8rMLyHWwpKw&expected_price_source=share&expected_price_currency=twd&expected_price=6381",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+MFM+2026-12-12+return+2026-12-16+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -312,25 +312,25 @@
         "n_ranges": 0,
         "lookback_days": 45,
         "source": "travelpayouts",
-        "samples": 90,
+        "samples": 114,
         "min_samples": 15
       },
       "average": {
         "value": 7357,
-        "samples": 90,
+        "samples": 114,
         "days": 30
       },
       "market": {
-        "updated_at": "2026-11-14T00:51:02+08:00",
+        "updated_at": "2026-11-15T00:51:02+08:00",
         "past_3m": {
           "total": 7357,
-          "n": 90,
-          "days": 4
+          "n": 114,
+          "days": 5
         },
         "past_6m": {
           "total": 7357,
-          "n": 90,
-          "days": 4
+          "n": 114,
+          "days": 5
         },
         "months": [
           {
@@ -418,10 +418,10 @@
           "手提＋隨身物品合計 7kg，腰包也算一件"
         ],
         "verified": false,
-        "checked_at": "2026-11-14T21:50:54+08:00",
+        "checked_at": "2026-11-15T00:51:02+08:00",
         "price_level": null,
         "tp_price": 6606.0,
-        "tp_at": "2026-11-14T21:50:54+08:00",
+        "tp_at": "2026-11-15T00:51:02+08:00",
         "url": "https://www.aviasales.com/search/TPE0212HKG1?t=UO17962197001796227200000125TPEHKG_01b683682eeaaf7426c3b83b3f8f29c2_4919&search_date=13112026&expected_price_uuid=01a1d615-be4b-8031-69ec-9984d5d10127&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=nzycoywq8rPAODv9uURKvQ&expected_price_source=share&expected_price_currency=twd&expected_price=1956",
         "google_flights_url": "https://www.google.com/travel/flights?q=Multi-city+flights+TPE+to+HKG+2026-12-02%2C+MFM+to+TPE+2026-12-03%2C+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -450,25 +450,25 @@
         "n_ranges": 0,
         "lookback_days": 45,
         "source": "travelpayouts",
-        "samples": 81,
+        "samples": 100,
         "min_samples": 15
       },
       "average": {
-        "value": 8496,
-        "samples": 81,
+        "value": 8458,
+        "samples": 100,
         "days": 30
       },
       "market": {
-        "updated_at": "2026-11-14T00:51:02+08:00",
+        "updated_at": "2026-11-15T00:51:02+08:00",
         "past_3m": {
-          "total": 8496,
-          "n": 81,
-          "days": 4
+          "total": 8458,
+          "n": 100,
+          "days": 5
         },
         "past_6m": {
-          "total": 8496,
-          "n": 81,
-          "days": 4
+          "total": 8458,
+          "n": 100,
+          "days": 5
         },
         "months": [
           {
@@ -554,10 +554,10 @@
         "airline_code": "JX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-14T21:50:54+08:00",
+        "checked_at": "2026-11-15T00:51:02+08:00",
         "price_level": null,
         "tp_price": 7437.0,
-        "tp_at": "2026-11-14T21:50:54+08:00",
+        "tp_at": "2026-11-15T00:51:02+08:00",
         "url": "https://www.aviasales.com/search/TPE2011MFM1?t=JX17951955001795202700000120TPEMFM_1164256008db05267a159b68e02ec669_8686&search_date=09112026&expected_price_uuid=01a1bf23-ccb0-8031-223a-c0b968980ead&static_fare_key=TY%7CP1%7CH0%7CL1_1_23%7CCH0%7CR0%7CTBC1&itinerary_key=8plkB_i62nDVGNFj2FK3UQ&expected_price_source=share&expected_price_currency=twd&expected_price=3479",
         "google_flights_url": "https://www.google.com/travel/flights?q=Multi-city+flights+TPE+to+MFM+2026-11-20%2C+HKG+to+TPE+2026-11-25%2C+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -594,12 +594,12 @@
     "monthly_safety": 10,
     "reserve_for_candidates": 3,
     "reverify_hours": 12,
-    "tp_pairs": 196
+    "tp_pairs": 194
   },
   "stats": {
     "alerts_sent": 10,
     "digests_sent": 13,
-    "runs": 150
+    "runs": 151
   },
   "schedule": {
     "runs_per_day": 4,
@@ -623,8 +623,8 @@
     "report_date": "2026-11-09",
     "alerts_7d": 4,
     "sales_7d": 7,
-    "sample_days": 13,
-    "runs": 150
+    "sample_days": 14,
+    "runs": 151
   },
   "airline_sales": {
     "enabled": true,
