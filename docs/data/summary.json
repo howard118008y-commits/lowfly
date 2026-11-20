@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-20T15:51:30+08:00",
+  "generated_at": "2026-11-20T16:37:04+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -26,24 +26,24 @@
         "n_ranges": 0,
         "lookback_days": 45,
         "source": "travelpayouts",
-        "samples": 2585,
+        "samples": 2589,
         "min_samples": 15
       },
       "average": {
-        "value": 8288,
-        "samples": 2585,
+        "value": 8290,
+        "samples": 2589,
         "days": 30
       },
       "market": {
         "updated_at": "2026-11-20T00:51:00+08:00",
         "past_3m": {
-          "total": 8288,
-          "n": 2585,
+          "total": 8290,
+          "n": 2589,
           "days": 19
         },
         "past_6m": {
-          "total": 8288,
-          "n": 2585,
+          "total": 8290,
+          "n": 2589,
           "days": 19
         },
         "months": [
@@ -116,13 +116,13 @@
         "outbound": "2026-12-02",
         "inbound": "2026-12-06",
         "nights": 4,
-        "price": 6987.0,
+        "price": 6988.0,
         "source": "travelpayouts",
-        "total": 6987.0,
-        "fare": 4187.0,
+        "total": 6988.0,
+        "fare": 4188.0,
         "bag_fee": 2800.0,
         "bag_estimated": false,
-        "ratio": 0.8807512920710954,
+        "ratio": 0.8808773477877222,
         "airline": "香港快運",
         "flight_no": "UO 113",
         "depart_time": "14:50",
@@ -138,11 +138,11 @@
           "手提＋隨身物品合計 7kg，腰包也算一件"
         ],
         "verified": false,
-        "checked_at": "2026-11-20T15:51:30+08:00",
+        "checked_at": "2026-11-20T16:37:04+08:00",
         "price_level": null,
-        "tp_price": 6987.0,
-        "tp_at": "2026-11-20T15:51:30+08:00",
-        "url": "https://www.aviasales.com/search/TPE0212HKG06121?t=UO17962230001796230500000125TPEHKG17965563001796562600000105HKGTPE_b4c4f84b32d7f473950c1b7a5c570263_10389&search_date=20112026&expected_price_uuid=01a1f7b2-d418-8030-64ae-3021829cae38&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=HusTv7HUBSK25gzpOk8azA&expected_price_source=share&expected_price_currency=twd&expected_price=4187",
+        "tp_price": 6988.0,
+        "tp_at": "2026-11-20T16:37:04+08:00",
+        "url": "https://www.aviasales.com/search/TPE0212HKG06121?t=UO17962230001796230500000125TPEHKG17965563001796562600000105HKGTPE_b4c4f84b32d7f473950c1b7a5c570263_10389&search_date=20112026&expected_price_uuid=01a1f7b2-d418-8030-64ae-3021829cae38&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=HusTv7HUBSK25gzpOk8azA&expected_price_source=share&expected_price_currency=twd&expected_price=4188",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+HKG+2026-12-02+return+2026-12-06+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
     },
@@ -260,13 +260,13 @@
         "outbound": "2027-01-05",
         "inbound": "2027-01-09",
         "nights": 4,
-        "price": 6297.0,
+        "price": 6299.0,
         "source": "travelpayouts",
-        "total": 6297.0,
-        "fare": 6297.0,
+        "total": 6299.0,
+        "fare": 6299.0,
         "bag_fee": 0.0,
         "bag_estimated": false,
-        "ratio": 0.8418449197860962,
+        "ratio": 0.8421122994652407,
         "airline": "澳門航空",
         "flight_no": "NX 621",
         "depart_time": "21:30",
@@ -280,11 +280,11 @@
         "airline_code": "NX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-20T15:51:30+08:00",
+        "checked_at": "2026-11-20T16:37:04+08:00",
         "price_level": null,
-        "tp_price": 6297.0,
-        "tp_at": "2026-11-20T15:51:30+08:00",
-        "url": "https://www.aviasales.com/search/TPE0501MFM09011?t=NX17991846001799191500000115TPEMFM17994816001799487300000095MFMTPE_3b0d433e340944dd0430746aa8a2bf81_15625&search_date=20112026&expected_price_uuid=01a1f7ec-b901-8030-ade9-2c1a579db6a1&static_fare_key=TY%7CP1%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=pRmsYOUf1TS8rMLyHWwpKw&expected_price_source=share&expected_price_currency=twd&expected_price=6297",
+        "tp_price": 6299.0,
+        "tp_at": "2026-11-20T16:37:04+08:00",
+        "url": "https://www.aviasales.com/search/TPE0501MFM09011?t=NX17991846001799191500000115TPEMFM17994816001799487300000095MFMTPE_3b0d433e340944dd0430746aa8a2bf81_15625&search_date=20112026&expected_price_uuid=01a1f7ec-b901-8030-ade9-2c1a579db6a1&static_fare_key=TY%7CP1%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=pRmsYOUf1TS8rMLyHWwpKw&expected_price_source=share&expected_price_currency=twd&expected_price=6299",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+MFM+2027-01-05+return+2027-01-09+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
     },
@@ -418,10 +418,10 @@
           "手提＋隨身物品合計 7kg，腰包也算一件"
         ],
         "verified": false,
-        "checked_at": "2026-11-20T15:51:30+08:00",
+        "checked_at": "2026-11-20T16:37:04+08:00",
         "price_level": null,
         "tp_price": 6536.0,
-        "tp_at": "2026-11-20T15:51:30+08:00",
+        "tp_at": "2026-11-20T16:37:04+08:00",
         "url": "https://www.aviasales.com/search/TPE0112HKG1?t=UO17961597001796167500000130TPEHKG_0c248e62d9ea6ad262c104b94109941e_4766&search_date=19112026&expected_price_uuid=01a1f2c7-a0ac-8030-2b3a-d9960596d5f7&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1909",
         "google_flights_url": "https://www.google.com/travel/flights?q=Multi-city+flights+TPE+to+HKG+2026-12-01%2C+MFM+to+TPE+2026-12-06%2C+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -554,10 +554,10 @@
         "airline_code": "NX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-20T15:51:30+08:00",
+        "checked_at": "2026-11-20T16:37:04+08:00",
         "price_level": null,
         "tp_price": 8320.0,
-        "tp_at": "2026-11-20T15:51:30+08:00",
+        "tp_at": "2026-11-20T16:37:04+08:00",
         "url": "https://www.aviasales.com/search/TPE0101MFM1?t=NX17988390001798845900000115TPEMFM_e08fe58f094dd2179877082b25514a7d_10758&search_date=15112026&expected_price_uuid=01a1dd05-b3f3-8030-65de-3f1a07f04818&static_fare_key=TY%7CP1%7CH1%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=Vq7nWHS3VOUsxlqh23Y74Q&expected_price_source=share&expected_price_currency=twd&expected_price=4272",
         "google_flights_url": "https://www.google.com/travel/flights?q=Multi-city+flights+TPE+to+MFM+2027-01-01%2C+HKG+to+TPE+2027-01-02%2C+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -594,12 +594,12 @@
     "monthly_safety": 10,
     "reserve_for_candidates": 3,
     "reverify_hours": 12,
-    "tp_pairs": 246
+    "tp_pairs": 250
   },
   "stats": {
     "alerts_sent": 10,
     "digests_sent": 19,
-    "runs": 217
+    "runs": 218
   },
   "schedule": {
     "runs_per_day": 4,
@@ -624,7 +624,7 @@
     "alerts_7d": 0,
     "sales_7d": 47,
     "sample_days": 19,
-    "runs": 217
+    "runs": 218
   },
   "airline_sales": {
     "enabled": true,
