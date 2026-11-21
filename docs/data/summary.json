@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-21T06:41:21+08:00",
+  "generated_at": "2026-11-21T09:51:04+08:00",
   "app": "低飛 LowFly",
   "routes": [
     {
@@ -116,13 +116,13 @@
         "outbound": "2027-01-07",
         "inbound": "2027-01-11",
         "nights": 4,
-        "price": 6991.0,
+        "price": 6992.0,
         "source": "travelpayouts",
-        "total": 6991.0,
-        "fare": 4191.0,
+        "total": 6992.0,
+        "fare": 4192.0,
         "bag_fee": 2800.0,
         "bag_estimated": false,
-        "ratio": 0.8812555149376025,
+        "ratio": 0.8813815706542292,
         "airline": "香港快運",
         "flight_no": "UO 113",
         "depart_time": "14:50",
@@ -138,11 +138,11 @@
           "手提＋隨身物品合計 7kg，腰包也算一件"
         ],
         "verified": false,
-        "checked_at": "2026-11-21T06:41:21+08:00",
+        "checked_at": "2026-11-21T09:51:04+08:00",
         "price_level": null,
-        "tp_price": 6991.0,
-        "tp_at": "2026-11-21T06:41:21+08:00",
-        "url": "https://www.aviasales.com/search/TPE0701HKG11011?t=UO17993334001799340900000125TPEHKG17996796001799685900000105HKGTPE_888f177075fd2550ad1419e7eb7c4a1f_10392&search_date=20112026&expected_price_uuid=01a1f9bc-e603-8040-6bc0-f154a2ce3205&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=Lh3s-ITgR20_iUvmnq2oPA&expected_price_source=share&expected_price_currency=twd&expected_price=4191",
+        "tp_price": 6992.0,
+        "tp_at": "2026-11-21T09:51:04+08:00",
+        "url": "https://www.aviasales.com/search/TPE0701HKG11011?t=UO17993334001799340900000125TPEHKG17996796001799685900000105HKGTPE_888f177075fd2550ad1419e7eb7c4a1f_10392&search_date=20112026&expected_price_uuid=01a1f9bc-e603-8040-6bc0-f154a2ce3205&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=Lh3s-ITgR20_iUvmnq2oPA&expected_price_source=share&expected_price_currency=twd&expected_price=4192",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+HKG+2027-01-07+return+2027-01-11+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
     },
@@ -260,13 +260,13 @@
         "outbound": "2027-01-05",
         "inbound": "2027-01-09",
         "nights": 4,
-        "price": 6336.0,
+        "price": 6337.0,
         "source": "travelpayouts",
-        "total": 6336.0,
-        "fare": 6336.0,
+        "total": 6337.0,
+        "fare": 6337.0,
         "bag_fee": 0.0,
         "bag_estimated": false,
-        "ratio": 0.8444622151139545,
+        "ratio": 0.8445954951352792,
         "airline": "澳門航空",
         "flight_no": "NX 621",
         "depart_time": "21:30",
@@ -280,11 +280,11 @@
         "airline_code": "NX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-21T06:41:21+08:00",
+        "checked_at": "2026-11-21T09:51:04+08:00",
         "price_level": null,
-        "tp_price": 6336.0,
-        "tp_at": "2026-11-21T06:41:21+08:00",
-        "url": "https://www.aviasales.com/search/TPE0501MFM09011?t=NX17991846001799191500000115TPEMFM17994816001799487300000095MFMTPE_3b0d433e340944dd0430746aa8a2bf81_15711&search_date=20112026&expected_price_uuid=01a1f9c4-239f-8031-69d2-8c9b17e5b32d&static_fare_key=TY%7CP1%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=pRmsYOUf1TS8rMLyHWwpKw&expected_price_source=share&expected_price_currency=twd&expected_price=6336",
+        "tp_price": 6337.0,
+        "tp_at": "2026-11-21T09:51:04+08:00",
+        "url": "https://www.aviasales.com/search/TPE0501MFM09011?t=NX17991846001799191500000115TPEMFM17994816001799487300000095MFMTPE_3b0d433e340944dd0430746aa8a2bf81_15711&search_date=20112026&expected_price_uuid=01a1f9c4-239f-8031-69d2-8c9b17e5b32d&static_fare_key=TY%7CP1%7CH0%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=pRmsYOUf1TS8rMLyHWwpKw&expected_price_source=share&expected_price_currency=twd&expected_price=6337",
         "google_flights_url": "https://www.google.com/travel/flights?q=Round+trip+flights+TPE+to+MFM+2027-01-05+return+2027-01-09+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
     },
@@ -418,10 +418,10 @@
           "手提＋隨身物品合計 7kg，腰包也算一件"
         ],
         "verified": false,
-        "checked_at": "2026-11-21T06:41:21+08:00",
+        "checked_at": "2026-11-21T09:51:04+08:00",
         "price_level": null,
         "tp_price": 6536.0,
-        "tp_at": "2026-11-21T06:41:21+08:00",
+        "tp_at": "2026-11-21T09:51:04+08:00",
         "url": "https://www.aviasales.com/search/TPE0112HKG1?t=UO17961597001796167500000130TPEHKG_0c248e62d9ea6ad262c104b94109941e_4766&search_date=19112026&expected_price_uuid=01a1f2c7-a0ac-8030-2b3a-d9960596d5f7&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH1%7CR0%7CTBC0&itinerary_key=k74bpslaavPO54RBK1UBOw&expected_price_source=share&expected_price_currency=twd&expected_price=1909",
         "google_flights_url": "https://www.google.com/travel/flights?q=Multi-city+flights+TPE+to+HKG+2026-12-01%2C+MFM+to+TPE+2026-12-06%2C+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -554,10 +554,10 @@
         "airline_code": "NX",
         "notes": [],
         "verified": false,
-        "checked_at": "2026-11-21T06:41:21+08:00",
+        "checked_at": "2026-11-21T09:51:04+08:00",
         "price_level": null,
         "tp_price": 8320.0,
-        "tp_at": "2026-11-21T06:41:21+08:00",
+        "tp_at": "2026-11-21T09:51:04+08:00",
         "url": "https://www.aviasales.com/search/TPE0101MFM1?t=NX17988390001798845900000115TPEMFM_e08fe58f094dd2179877082b25514a7d_10758&search_date=15112026&expected_price_uuid=01a1dd05-b3f3-8030-65de-3f1a07f04818&static_fare_key=TY%7CP1%7CH1%7CL1_1_32%7CCH0%7CR0%7CTBC1&itinerary_key=Vq7nWHS3VOUsxlqh23Y74Q&expected_price_source=share&expected_price_currency=twd&expected_price=4272",
         "google_flights_url": "https://www.google.com/travel/flights?q=Multi-city+flights+TPE+to+MFM+2027-01-01%2C+HKG+to+TPE+2027-01-02%2C+nonstop+1+adult&curr=TWD&hl=zh-TW"
       }
@@ -598,8 +598,8 @@
   },
   "stats": {
     "alerts_sent": 10,
-    "digests_sent": 19,
-    "runs": 224
+    "digests_sent": 20,
+    "runs": 225
   },
   "schedule": {
     "runs_per_day": 4,
@@ -624,7 +624,7 @@
     "alerts_7d": 0,
     "sales_7d": 49,
     "sample_days": 20,
-    "runs": 224
+    "runs": 225
   },
   "airline_sales": {
     "enabled": true,
