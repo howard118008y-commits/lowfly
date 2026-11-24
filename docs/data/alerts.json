@@ -1,6 +1,21 @@
 {
-  "generated_at": "2026-11-24T12:51:04+08:00",
+  "generated_at": "2026-11-24T16:04:29+08:00",
   "alerts": [
+    {
+      "pair_key": "HKG_MFM:2026-12-01_2026-12-04",
+      "route_id": "HKG_MFM",
+      "route_label": "香港去、澳門回",
+      "alerted_at": "2026-11-24T16:04:29+08:00",
+      "price_at_alert": 6204.0,
+      "baseline_at_alert": 7886.0,
+      "ratio_at_alert": 0.7867106264265787,
+      "airline": "香港快運／星宇航空",
+      "latest_price": 6204.0,
+      "min_price_after": 6204.0,
+      "outbound": "2026-12-01",
+      "inbound": "2026-12-04",
+      "verdict": "持平"
+    },
     {
       "pair_key": "HKG:2026-11-12_2026-11-16",
       "route_id": "HKG",
